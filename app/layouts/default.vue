@@ -8,6 +8,10 @@
       </v-app-bar-title>
 
       <template #append>
+        <v-spacer />
+        
+        <FeedbackDialog />
+
         <v-btn
           icon
           variant="text"

@@ -6,6 +6,11 @@ export default defineNuxtConfig({
 
     devtools: { enabled: false },
 
+    runtimeConfig: {
+        telegramBotToken: process.env.TELEGRAM_BOT_TOKEN,
+        telegramChatId: process.env.TELEGRAM_CHAT_ID,
+    },
+
     // when enabling ssr option you need to disable inlineStyles and maybe devLogs
     features: {
         devLogs: false,

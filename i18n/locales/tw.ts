@@ -32,5 +32,14 @@ export default {
             title: '圖片轉 WebP',
             description: '在本地將圖片轉換為 WebP 格式。'
         }
+    },
+    feedback: {
+        title: '意見箱',
+        nickname: '暱稱',
+        contact: '聯絡方式',
+        contactHint: 'Email 或電話 (選填)',
+        description: '敘述',
+        submit: '送出',
+        cancel: '取消'
     }
 }

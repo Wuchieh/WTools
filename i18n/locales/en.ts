@@ -32,5 +32,14 @@ export default {
             title: 'Image to WebP',
             description: 'Convert images to WebP format locally.'
         }
+    },
+    feedback: {
+        title: 'Feedback',
+        nickname: 'Nickname',
+        contact: 'Contact Info',
+        contactHint: 'Email or Phone (Optional)',
+        description: 'Description',
+        submit: 'Submit',
+        cancel: 'Cancel'
     }
 }
