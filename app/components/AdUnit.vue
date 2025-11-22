@@ -1,30 +1,31 @@
+<template>
+    <div class="ad-container my-4 text-center">
+        <ins
+            class="adsbygoogle"
+            data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+            data-ad-format="auto"
+            data-full-width-responsive="true"
+            style="display:block"
+            :data-ad-slot="props.slotId || '1234567890'"
+        />
+    </div>
+</template>
+
 <script setup lang="ts">
 const props = defineProps<{
-  slotId?: string
-}>()
+    slotId?: string;
+}>();
 
 onMounted(() => {
-  try {
+    try {
+        // eslint-disable-next-line ts/ban-ts-comment
     // @ts-ignore
-    (window.adsbygoogle = window.adsbygoogle || []).push({})
-  } catch (e) {
-    console.error('Adsense error:', e)
-  }
-})
+        (window.adsbygoogle = window.adsbygoogle || []).push({});
+    } catch (e) {
+        console.error('Adsense error:', e);
+    }
+});
 </script>
-
-<template>
-  <div class="ad-container my-4 text-center">
-    <ins
-      class="adsbygoogle"
-      style="display:block"
-      data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
-      :data-ad-slot="props.slotId || '1234567890'"
-      data-ad-format="auto"
-      data-full-width-responsive="true"
-    ></ins>
-  </div>
-</template>
 
 <style scoped>
 .ad-container {

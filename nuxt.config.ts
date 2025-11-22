@@ -1,39 +1,44 @@
+/* eslint-disable style/max-len */
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+    app: {
+        head: {
+            meta: [
+                { charset: 'utf-8' },
+                {
+                    content: 'width=device-width, initial-scale=1',
+                    name: 'viewport',
+                },
+                {
+                    content: 'WTools',
+                    property: 'og:site_name',
+                },
+                {
+                    content: 'website',
+                    property: 'og:type',
+                },
+            ],
+            script: [
+                {
+                    async: true,
+                    crossorigin: 'anonymous',
+                    src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX',
+                },
+            ],
+            titleTemplate: '%s | WTools',
+        },
+    },
+
     build: { transpile: ['vuetify'] },
 
     compatibilityDate: '2025-10-25',
 
     devtools: { enabled: false },
 
-    runtimeConfig: {
-        telegramBotToken: process.env.TELEGRAM_BOT_TOKEN,
-        telegramChatId: process.env.TELEGRAM_CHAT_ID,
-    },
-
     // when enabling ssr option you need to disable inlineStyles and maybe devLogs
     features: {
         devLogs: false,
         inlineStyles: false,
-    },
-
-    app: {
-        head: {
-            titleTemplate: '%s | WTools',
-            meta: [
-                { charset: 'utf-8' },
-                { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-                { property: 'og:site_name', content: 'WTools' },
-                { property: 'og:type', content: 'website' },
-            ],
-            script: [
-                {
-                    src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX',
-                    async: true,
-                    crossorigin: 'anonymous',
-                },
-            ],
-        },
     },
 
     i18n: {
@@ -88,6 +93,11 @@ export default defineNuxtConfig({
                 rootValue: 16,
             },
         },
+    },
+
+    runtimeConfig: {
+        telegramBotToken: process.env.TELEGRAM_BOT_TOKEN,
+        telegramChatId: process.env.TELEGRAM_CHAT_ID,
     },
 
     unocss: { nuxtLayers: true },

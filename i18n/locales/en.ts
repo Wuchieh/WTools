@@ -1,45 +1,45 @@
 export default {
-    title: 'Image to WebP Converter',
-    home: 'Home',
+    dashboard: {
+        subtitle: 'A collection of useful browser-based tools.',
+        title: 'WTools',
+    },
     description: 'Convert your images to WebP format easily and securely in your browser.',
+    feedback: {
+        cancel: 'Cancel',
+        contact: 'Contact Info',
+        contactHint: 'Email or Phone (Optional)',
+        description: 'Description',
+        nickname: 'Nickname',
+        submit: 'Submit',
+        title: 'Feedback',
+    },
     hero: {
+        subtitle: 'Convert your images to WebP format instantly in your browser. No file uploads, 100% private.',
         title: 'Image to WebP Converter',
-        subtitle: 'Convert your images to WebP format instantly in your browser. No file uploads, 100% private.'
+    },
+    home: 'Home',
+    preview: {
+        clearAll: 'Clear All',
+        convert: 'Convert to WebP',
+        selectedImages: 'Selected Images',
+    },
+    result: {
+        complete: 'Conversion Complete',
+        download: 'Download ZIP',
+        errors: 'Errors',
+        failed: 'Failed',
+        success: 'Success',
+    },
+    title: 'Image to WebP Converter',
+    tools: {
+        imageToWebP: {
+            description: 'Convert images to WebP format locally.',
+            title: 'Image to WebP',
+        },
     },
     uploader: {
         dragDrop: 'Drag & Drop images here',
         orClick: 'or click to browse',
-        selectFiles: 'Select Files'
+        selectFiles: 'Select Files',
     },
-    preview: {
-        selectedImages: 'Selected Images',
-        clearAll: 'Clear All',
-        convert: 'Convert to WebP'
-    },
-    result: {
-        complete: 'Conversion Complete',
-        success: 'Success',
-        failed: 'Failed',
-        errors: 'Errors',
-        download: 'Download ZIP'
-    },
-    dashboard: {
-        title: 'WTools',
-        subtitle: 'A collection of useful browser-based tools.'
-    },
-    tools: {
-        imageToWebP: {
-            title: 'Image to WebP',
-            description: 'Convert images to WebP format locally.'
-        }
-    },
-    feedback: {
-        title: 'Feedback',
-        nickname: 'Nickname',
-        contact: 'Contact Info',
-        contactHint: 'Email or Phone (Optional)',
-        description: 'Description',
-        submit: 'Submit',
-        cancel: 'Cancel'
-    }
-}
+};
