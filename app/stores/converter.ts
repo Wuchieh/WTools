@@ -13,6 +13,7 @@ export interface ImageFile {
 export const useConverterStore = defineStore('converter', () => {
     const images = ref<ImageFile[]>([]);
     const isConverting = ref(false);
+    const quality = ref(0.8);
     const successCount = computed(() => images.value.filter((img) => img.status === 'success').length);
     const errorCount = computed(() => images.value.filter((img) => img.status === 'error').length);
     const hasConverted = computed(() => images.value.some((img) => img.status === 'success' || img.status === 'error'));
@@ -82,7 +83,7 @@ export const useConverterStore = defineStore('converter', () => {
                     } else {
                         reject(new Error('Canvas toBlob failed'));
                     }
-                }, 'image/webp', 0.8);
+                }, 'image/webp', quality.value);
             };
             img.onerror = () => reject(new Error('Failed to load image'));
             img.src = URL.createObjectURL(file);
@@ -121,6 +122,7 @@ export const useConverterStore = defineStore('converter', () => {
         hasConverted,
         images,
         isConverting,
+        quality,
         removeFile,
         reset,
         successCount,

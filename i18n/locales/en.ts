@@ -21,6 +21,7 @@ export default {
     preview: {
         clearAll: 'Clear All',
         convert: 'Convert to WebP',
+        quality: 'Quality',
         selectedImages: 'Selected Images',
     },
     result: {

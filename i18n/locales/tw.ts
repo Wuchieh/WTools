@@ -21,6 +21,7 @@ export default {
     preview: {
         clearAll: '清除全部',
         convert: '轉換為 WebP',
+        quality: '品質',
         selectedImages: '已選圖片',
     },
     result: {
