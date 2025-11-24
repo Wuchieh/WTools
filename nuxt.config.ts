@@ -22,7 +22,7 @@ export default defineNuxtConfig({
                 {
                     async: true,
                     crossorigin: 'anonymous',
-                    src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX',
+                    src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6796422714055150',
                 },
             ],
             titleTemplate: '%s | WTools',
