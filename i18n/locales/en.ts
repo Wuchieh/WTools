@@ -20,6 +20,7 @@ export default {
     home: 'Home',
     preview: {
         clearAll: 'Clear All',
+        concurrency: 'Concurrency',
         convert: 'Convert to WebP',
         quality: 'Quality',
         selectedImages: 'Selected Images',

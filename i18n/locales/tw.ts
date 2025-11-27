@@ -20,6 +20,7 @@ export default {
     home: '首頁',
     preview: {
         clearAll: '清除全部',
+        concurrency: '併發數',
         convert: '轉換為 WebP',
         quality: '品質',
         selectedImages: '已選圖片',

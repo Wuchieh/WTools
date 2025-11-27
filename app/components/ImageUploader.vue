@@ -80,14 +80,15 @@ function triggerFileInput() {
 
 <style scoped>
 .uploader-container {
-  border: 2px dashed rgba(var(--v-theme-primary), 0.3);
-  transition: all 0.3s ease;
-  cursor: pointer;
-  background-color: rgba(var(--v-theme-surface), 0.5);
+    border: 2px dashed rgba(var(--v-theme-primary), 0.3);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    background-color: rgba(var(--v-theme-surface), 0.5);
 }
 
-.uploader-container:hover, .uploader-container.dragging {
-  border-color: rgb(var(--v-theme-primary));
-  background-color: rgba(var(--v-theme-primary), 0.05);
+.uploader-container:hover,
+.uploader-container.dragging {
+    border-color: rgb(var(--v-theme-primary));
+    background-color: rgba(var(--v-theme-primary), 0.05);
 }
 </style>

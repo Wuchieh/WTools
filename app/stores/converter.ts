@@ -1,5 +1,6 @@
 import JSZip from 'jszip';
 import { defineStore } from 'pinia';
+import { v7 as uuidv7 } from 'uuid';
 
 export interface ImageFile {
     convertedBlob?: Blob;
@@ -14,6 +15,7 @@ export const useConverterStore = defineStore('converter', () => {
     const images = ref<ImageFile[]>([]);
     const isConverting = ref(false);
     const quality = ref(0.8);
+    const concurrency = ref(4);
     const successCount = computed(() => images.value.filter((img) => img.status === 'success').length);
     const errorCount = computed(() => images.value.filter((img) => img.status === 'error').length);
     const hasConverted = computed(() => images.value.some((img) => img.status === 'success' || img.status === 'error'));
@@ -43,13 +45,16 @@ export const useConverterStore = defineStore('converter', () => {
     }
 
     async function convertImages() {
+        if (isConverting.value) return;
         isConverting.value = true;
 
-        // Reset status for pending images if re-running?
-        // Or just convert pending ones. Let's convert all pending.
+        const pendingImages = images.value.filter(
+            (img) => img.status === 'pending'
+              || img.status === 'error'
+              || img.status === 'success',
+        );
 
-        const pendingImages = images.value.filter((img) => img.status === 'pending' || img.status === 'error');
-
+        // Reset status to pending for re-conversion
         for (const img of pendingImages) {
             img.status = 'converting';
             try {
@@ -104,7 +109,7 @@ export const useConverterStore = defineStore('converter', () => {
         const content = await zip.generateAsync({ type: 'blob' });
         const link = document.createElement('a');
         link.href = URL.createObjectURL(content);
-        link.download = 'converted_images.zip';
+        link.download = `${uuidv7()}.zip`;
         link.click();
         URL.revokeObjectURL(link.href);
     }
@@ -116,6 +121,7 @@ export const useConverterStore = defineStore('converter', () => {
 
     return {
         addFiles,
+        concurrency,
         convertImages,
         downloadZip,
         errorCount,

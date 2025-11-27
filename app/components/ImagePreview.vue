@@ -29,6 +29,19 @@
                 hide-details
                 thumb-label
             />
+
+            <div class="text-subtitle-2 mb-2 mt-4">
+                {{ $t('preview.concurrency') }}: {{ store.concurrency }}
+            </div>
+            <v-slider
+                v-model="store.concurrency"
+                color="primary"
+                max="10"
+                min="1"
+                step="1"
+                hide-details
+                thumb-label
+            />
         </div>
 
         <div class="position-relative">
@@ -121,21 +134,21 @@ function onSlideChange(swiper: any) {
 
 <style scoped>
 .image-overlay {
-  pointer-events: none;
+    pointer-events: none;
 }
 
 .image-overlay .v-btn {
-  pointer-events: auto;
+    pointer-events: auto;
 }
 
 :deep(.swiper-slide) {
-  height: 100%;
+    height: 100%;
 }
 
 .image-counter {
-  position: absolute;
-  top: 16px;
-  left: 16px;
-  z-index: 20;
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    z-index: 20;
 }
 </style>
