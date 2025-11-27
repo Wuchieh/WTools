@@ -17,6 +17,10 @@ export default defineNuxtConfig({
                     content: 'website',
                     property: 'og:type',
                 },
+                {
+                    content: 'ca-pub-6796422714055150',
+                    name: 'google-adsense-account',
+                },
             ],
             script: [
                 {
