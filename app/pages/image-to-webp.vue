@@ -20,7 +20,6 @@
                 <ConversionResult
                     v-if="store.hasConverted"
                 />
-                <AdUnit slot-id="1122334455" />
             </v-col>
         </v-row>
     </v-container>

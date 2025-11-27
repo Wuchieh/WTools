@@ -56,8 +56,6 @@
                 </v-card>
             </v-col>
         </v-row>
-
-        <AdUnit slot-id="9876543210" />
     </v-container>
 </template>
 
