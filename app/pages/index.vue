@@ -159,6 +159,62 @@ const tools = [
         route: 'url-encoder',
         titleKey: 'tools.urlEncoder.title',
     },
+    {
+        descKey: 'tools.hashGenerator.description',
+        icon: 'mdi-key-variant',
+        id: 'hash-generator',
+        route: 'hash-generator',
+        titleKey: 'tools.hashGenerator.title',
+    },
+    {
+        descKey: 'tools.uuidGenerator.description',
+        icon: 'mdi-identifier',
+        id: 'uuid-generator',
+        route: 'uuid-generator',
+        titleKey: 'tools.uuidGenerator.title',
+    },
+    {
+        descKey: 'tools.qrGenerator.description',
+        icon: 'mdi-qrcode',
+        id: 'qr-generator',
+        route: 'qr-generator',
+        titleKey: 'tools.qrGenerator.title',
+    },
+    {
+        descKey: 'tools.qrReader.description',
+        icon: 'mdi-qrcode-scan',
+        id: 'qr-reader',
+        route: 'qr-reader',
+        titleKey: 'tools.qrReader.title',
+    },
+    {
+        descKey: 'tools.passwordGenerator.description',
+        icon: 'mdi-lock',
+        id: 'password-generator',
+        route: 'password-generator',
+        titleKey: 'tools.passwordGenerator.title',
+    },
+    {
+        descKey: 'tools.regexTester.description',
+        icon: 'mdi-regex',
+        id: 'regex-tester',
+        route: 'regex-tester',
+        titleKey: 'tools.regexTester.title',
+    },
+    {
+        descKey: 'tools.colorPicker.description',
+        icon: 'mdi-palette',
+        id: 'color-picker',
+        route: 'color-picker',
+        titleKey: 'tools.colorPicker.title',
+    },
+    {
+        descKey: 'tools.slugGenerator.description',
+        icon: 'mdi-format-text',
+        id: 'slug-generator',
+        route: 'slug-generator',
+        titleKey: 'tools.slugGenerator.title',
+    },
 ];
 </script>
 
