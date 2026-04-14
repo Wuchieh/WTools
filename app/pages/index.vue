@@ -131,6 +131,34 @@ const tools = [
         route: 'ico-generator',
         titleKey: 'tools.icoGenerator.title',
     },
+    {
+        descKey: 'tools.gifEditor.description',
+        icon: 'mdi-gif',
+        id: 'gif-editor',
+        route: 'gif-editor',
+        titleKey: 'tools.gifEditor.title',
+    },
+    {
+        descKey: 'tools.jwtDecoder.description',
+        icon: 'mdi-key',
+        id: 'jwt-decoder',
+        route: 'jwt-decoder',
+        titleKey: 'tools.jwtDecoder.title',
+    },
+    {
+        descKey: 'tools.base64Tool.description',
+        icon: 'mdi-lock',
+        id: 'base64-tool',
+        route: 'base64-tool',
+        titleKey: 'tools.base64Tool.title',
+    },
+    {
+        descKey: 'tools.urlEncoder.description',
+        icon: 'mdi-link',
+        id: 'url-encoder',
+        route: 'url-encoder',
+        titleKey: 'tools.urlEncoder.title',
+    },
 ];
 </script>
 
