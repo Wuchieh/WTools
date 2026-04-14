@@ -96,6 +96,13 @@ const tools = [
         route: 'image-crop',
         titleKey: 'tools.imageCrop.title',
     },
+    {
+        descKey: 'tools.imageRotate.description',
+        icon: 'mdi-rotate-3d-variant',
+        id: 'image-rotate',
+        route: 'image-rotate',
+        titleKey: 'tools.imageRotate.title',
+    },
 ];
 </script>
 

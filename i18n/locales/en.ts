@@ -50,6 +50,18 @@ export default {
             description: 'Drag to crop images with aspect ratio and format options.',
             title: 'Image Crop',
         },
+        imageRotate: {
+            description: 'Rotate and flip images at any angle.',
+            title: 'Rotate/Flip',
+        },
+        imageWatermark: {
+            description: 'Add text or image watermarks to photos.',
+            title: 'Watermark',
+        },
+        imageHeic: {
+            description: 'Convert HEIC/HEIF photos to JPG or PNG.',
+            title: 'HEIC Converter',
+        },
     },
     compressor: {
         compress: 'Compress',
@@ -69,6 +81,14 @@ export default {
         outputFormat: 'Output Format',
         quality: 'Quality ({v}%)',
         selected: 'Selected: ({x}%, {y}%) {w}% × {h}%',
+    },
+    rotate: {
+        transform: 'Transform',
+        subtitle: 'Rotate and flip images at any angle.',
+        title: 'Image Rotate/Flip',
+        rotation: 'Rotation',
+        outputFormat: 'Output Format',
+        quality: 'Quality ({v}%)',
     },
     whip: {
         bearerToken: 'Bearer Token',

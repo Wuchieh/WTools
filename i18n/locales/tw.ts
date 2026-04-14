@@ -50,6 +50,18 @@ export default {
             description: '拖曳裁切圖片，支援多種比例與格式輸出。',
             title: '圖片裁切',
         },
+        imageRotate: {
+            description: '旋轉與翻轉圖片，支援任意角度。',
+            title: '旋轉/翻轉',
+        },
+        imageWatermark: {
+            description: '為圖片加入文字或圖片浮水印。',
+            title: '浮水印',
+        },
+        imageHeic: {
+            description: '將 HEIC/HEIF 圖片格式轉換為 JPG 或 PNG。',
+            title: 'HEIC 轉換',
+        },
     },
     compressor: {
         compress: '壓縮',
@@ -69,6 +81,14 @@ export default {
         outputFormat: '輸出格式',
         quality: '品質 ({v}%)',
         selected: '選取區域: ({x}%, {y}%) {w}% × {h}%',
+    },
+    rotate: {
+        transform: '變形',
+        subtitle: '旋轉與翻轉圖片，支援任意角度。',
+        title: '圖片旋轉/翻轉',
+        rotation: '旋轉',
+        outputFormat: '輸出格式',
+        quality: '品質 ({v}%)',
     },
     whip: {
         bearerToken: 'Bearer Token',
