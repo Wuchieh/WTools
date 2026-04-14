@@ -42,6 +42,20 @@ export default {
             description: '透過 WHIP 協定推送 WebRTC 直播串流。',
             title: 'WHIP 推流',
         },
+        imageCompress: {
+            description: '壓縮圖片檔案，支援調整品質與尺寸。',
+            title: '圖片壓縮',
+        },
+    },
+    compressor: {
+        compress: '壓縮',
+        settings: '進階設定',
+        subtitle: '本地壓縮圖片，支援調整品質與尺寸限制。',
+        title: '圖片壓縮',
+        quality: '品質 ({v}%)',
+        maxWidth: '最大寬度 (px)',
+        maxHeight: '最大高度 (px)',
+        outputFormat: '輸出格式',
     },
     whip: {
         bearerToken: 'Bearer Token',

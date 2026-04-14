@@ -42,6 +42,20 @@ export default {
             description: 'Push WebRTC live streams via WHIP protocol.',
             title: 'WHIP Stream',
         },
+        imageCompress: {
+            description: 'Compress image files with quality and size controls.',
+            title: 'Image Compress',
+        },
+    },
+    compressor: {
+        compress: 'Compress',
+        settings: 'Advanced Settings',
+        subtitle: 'Compress images locally with quality and dimension controls.',
+        title: 'Image Compressor',
+        quality: 'Quality ({v}%)',
+        maxWidth: 'Max Width (px)',
+        maxHeight: 'Max Height (px)',
+        outputFormat: 'Output Format',
     },
     whip: {
         bearerToken: 'Bearer Token',

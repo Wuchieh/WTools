@@ -82,6 +82,13 @@ const tools = [
         route: 'whip-stream',
         titleKey: 'tools.whipStream.title',
     },
+    {
+        descKey: 'tools.imageCompress.description',
+        icon: 'mdi-image-filter-hdr',
+        id: 'image-compress',
+        route: 'image-compress',
+        titleKey: 'tools.imageCompress.title',
+    },
 ];
 </script>
 
