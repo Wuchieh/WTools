@@ -103,6 +103,20 @@ const tools = [
         route: 'image-rotate',
         titleKey: 'tools.imageRotate.title',
     },
+    {
+        descKey: 'tools.imageWatermark.description',
+        icon: 'mdi-water',
+        id: 'image-watermark',
+        route: 'image-watermark',
+        titleKey: 'tools.imageWatermark.title',
+    },
+    {
+        descKey: 'tools.imageHeic.description',
+        icon: 'mdi-image-filter-hdr',
+        id: 'image-heic',
+        route: 'image-heic',
+        titleKey: 'tools.imageHeic.title',
+    },
 ];
 </script>
 
