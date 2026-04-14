@@ -46,6 +46,10 @@ export default {
             description: '壓縮圖片檔案，支援調整品質與尺寸。',
             title: '圖片壓縮',
         },
+        imageCrop: {
+            description: '拖曳裁切圖片，支援多種比例與格式輸出。',
+            title: '圖片裁切',
+        },
     },
     compressor: {
         compress: '壓縮',
@@ -56,6 +60,15 @@ export default {
         maxWidth: '最大寬度 (px)',
         maxHeight: '最大高度 (px)',
         outputFormat: '輸出格式',
+    },
+    crop: {
+        crop: '裁切',
+        subtitle: '拖曳裁切圖片，支援多種比例與格式輸出。',
+        title: '圖片裁切',
+        aspectRatio: '裁切比例',
+        outputFormat: '輸出格式',
+        quality: '品質 ({v}%)',
+        selected: '選取區域: ({x}%, {y}%) {w}% × {h}%',
     },
     whip: {
         bearerToken: 'Bearer Token',

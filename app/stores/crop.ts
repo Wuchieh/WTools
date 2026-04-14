@@ -1,0 +1,132 @@
+import JSZip from 'jszip';
+import { defineStore } from 'pinia';
+import { v7 as uuidv7 } from 'uuid';
+
+export interface CropFile {
+    blob?: Blob;
+    crop: { x: number; y: number; width: number; height: number };
+    error?: string;
+    file: File;
+    id: string;
+    preview: string;
+    scale: number;
+    status: 'editing' | 'pending' | 'converting' | 'error' | 'success';
+}
+
+export const useCropStore = defineStore('crop', () => {
+    const files = ref<CropFile[]>([]);
+    const isConverting = ref(false);
+    const outputFormat = ref<'image/webp' | 'image/jpeg' | 'image/png'>('image/webp');
+    const quality = ref(0.92);
+    const aspectRatio = ref<number | null>(null);
+    const successCount = computed(() => files.value.filter((f) => f.status === 'success').length);
+    const hasConverted = computed(() => files.value.some((f) => f.status === 'success' || f.status === 'error'));
+
+    function addFiles(newFiles: File[]) {
+        for (const file of newFiles) {
+            if (!file.type.startsWith('image/')) continue;
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                files.value.push({
+                    file,
+                    id: crypto.randomUUID(),
+                    preview: e.target?.result as string,
+                    crop: { x: 0, y: 0, width: 100, height: 100 },
+                    scale: 1,
+                    status: 'editing',
+                });
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+
+    function removeFile(id: string) {
+        const index = files.value.findIndex((f) => f.id === id);
+        if (index !== -1) files.value.splice(index, 1);
+    }
+
+    function clearAll() {
+        files.value = [];
+    }
+
+    function updateCrop(id: string, crop: { x: number; y: number; width: number; height: number }) {
+        const f = files.value.find((f) => f.id === id);
+        if (f) f.crop = crop;
+    }
+
+    async function convertFiles() {
+        if (isConverting.value) return;
+        isConverting.value = true;
+
+        for (const f of files.value) {
+            if (f.status === 'converting') continue;
+            f.status = 'converting';
+            try {
+                f.blob = await cropImage(f);
+                f.status = 'success';
+            } catch (e: any) {
+                f.status = 'error';
+                f.error = e.message || 'Crop failed';
+            }
+        }
+        isConverting.value = false;
+    }
+
+    function cropImage(f: CropFile): Promise<Blob> {
+        return new Promise((resolve, reject) => {
+            const img = new Image();
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                const { x, y, width, height } = f.crop;
+                const sw = img.width * (width / 100);
+                const sh = img.height * (height / 100);
+                const sx = img.width * (x / 100);
+                const sy = img.height * (y / 100);
+                canvas.width = sw;
+                canvas.height = sh;
+                const ctx = canvas.getContext('2d');
+                if (!ctx) { reject(new Error('Canvas context not available')); return; }
+                ctx.drawImage(img, sx, sy, sw, sh, 0, 0, sw, sh);
+                canvas.toBlob((blob) => {
+                    if (blob) resolve(blob);
+                    else reject(new Error('Canvas toBlob failed'));
+                }, outputFormat.value, quality.value);
+            };
+            img.onerror = () => reject(new Error('Failed to load image'));
+            img.src = f.preview;
+        });
+    }
+
+    async function downloadZip() {
+        const zip = new JSZip();
+        const successes = files.value.filter((f) => f.status === 'success' && f.blob);
+        if (successes.length === 0) return;
+        const ext = outputFormat.value.split('/')[1];
+        for (const f of successes) {
+            const fileName = `${f.file.name.replace(/\.[^/.]+$/, '')}_cropped.${ext}`;
+            zip.file(fileName, f.blob!);
+        }
+        const content = await zip.generateAsync({ type: 'blob' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(content);
+        link.download = `${uuidv7()}.zip`;
+        link.click();
+        URL.revokeObjectURL(link.href);
+    }
+
+    return {
+        addFiles,
+        aspectRatio,
+        clearAll,
+        convertFiles,
+        downloadZip,
+        files,
+        hasConverted,
+        isConverting,
+        outputFormat,
+        quality,
+        removeFile,
+        successCount,
+        updateCrop,
+    };
+});

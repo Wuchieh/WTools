@@ -89,6 +89,13 @@ const tools = [
         route: 'image-compress',
         titleKey: 'tools.imageCompress.title',
     },
+    {
+        descKey: 'tools.imageCrop.description',
+        icon: 'mdi-crop',
+        id: 'image-crop',
+        route: 'image-crop',
+        titleKey: 'tools.imageCrop.title',
+    },
 ];
 </script>
 

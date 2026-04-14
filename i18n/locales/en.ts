@@ -46,6 +46,10 @@ export default {
             description: 'Compress image files with quality and size controls.',
             title: 'Image Compress',
         },
+        imageCrop: {
+            description: 'Drag to crop images with aspect ratio and format options.',
+            title: 'Image Crop',
+        },
     },
     compressor: {
         compress: 'Compress',
@@ -56,6 +60,15 @@ export default {
         maxWidth: 'Max Width (px)',
         maxHeight: 'Max Height (px)',
         outputFormat: 'Output Format',
+    },
+    crop: {
+        crop: 'Crop',
+        subtitle: 'Drag to crop images with aspect ratio and format options.',
+        title: 'Image Cropper',
+        aspectRatio: 'Aspect Ratio',
+        outputFormat: 'Output Format',
+        quality: 'Quality ({v}%)',
+        selected: 'Selected: ({x}%, {y}%) {w}% × {h}%',
     },
     whip: {
         bearerToken: 'Bearer Token',
