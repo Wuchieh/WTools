@@ -75,6 +75,13 @@ const tools = [
         route: 'image-to-webp',
         titleKey: 'tools.imageToWebP.title',
     },
+    {
+        descKey: 'tools.whipStream.description',
+        icon: 'mdi-broadcast',
+        id: 'whip-stream',
+        route: 'whip-stream',
+        titleKey: 'tools.whipStream.title',
+    },
 ];
 </script>
 
