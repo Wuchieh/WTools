@@ -62,6 +62,14 @@ export default {
             description: 'Convert HEIC/HEIF photos to JPG or PNG.',
             title: 'HEIC Converter',
         },
+        svgConvert: {
+            description: 'Convert SVG vector images to PNG, JPG or WebP.',
+            title: 'SVG Converter',
+        },
+        icoGenerator: {
+            description: 'Convert images to multi-size ICO/favicon format.',
+            title: 'ICO Generator',
+        },
     },
     compressor: {
         compress: 'Compress',
@@ -108,6 +116,20 @@ export default {
         title: 'HEIC Converter',
         outputFormat: 'Output Format',
         quality: 'Quality ({v}%)',
+    },
+    svg: {
+        convert: 'Convert',
+        subtitle: 'Convert SVG vector images to raster formats.',
+        title: 'SVG Converter',
+        outputFormat: 'Output Format',
+        width: 'Width (px)',
+        height: 'Height (px)',
+    },
+    ico: {
+        generate: 'Generate ICO',
+        subtitle: 'Convert images to multi-size ICO/favicon.',
+        title: 'ICO Generator',
+        sizes: 'Sizes',
     },
     whip: {
         bearerToken: 'Bearer Token',

@@ -117,6 +117,20 @@ const tools = [
         route: 'image-heic',
         titleKey: 'tools.imageHeic.title',
     },
+    {
+        descKey: 'tools.svgConvert.description',
+        icon: 'mdi-svg',
+        id: 'svg-convert',
+        route: 'svg-convert',
+        titleKey: 'tools.svgConvert.title',
+    },
+    {
+        descKey: 'tools.icoGenerator.description',
+        icon: 'mdi-favicon',
+        id: 'ico-generator',
+        route: 'ico-generator',
+        titleKey: 'tools.icoGenerator.title',
+    },
 ];
 </script>
 

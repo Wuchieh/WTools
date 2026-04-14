@@ -62,6 +62,14 @@ export default {
             description: '將 HEIC/HEIF 圖片格式轉換為 JPG 或 PNG。',
             title: 'HEIC 轉換',
         },
+        svgConvert: {
+            description: '將 SVG 向量圖轉換為 PNG、JPG 或 WebP 點陣圖。',
+            title: 'SVG 轉換',
+        },
+        icoGenerator: {
+            description: '將圖片轉為多尺寸 ICO/favicon 格式。',
+            title: 'ICO 產生器',
+        },
     },
     compressor: {
         compress: '壓縮',
@@ -108,6 +116,20 @@ export default {
         title: 'HEIC 轉換',
         outputFormat: '輸出格式',
         quality: '品質 ({v}%)',
+    },
+    svg: {
+        convert: '轉換',
+        subtitle: '將 SVG 向量圖轉換為點陣圖格式。',
+        title: 'SVG 轉換',
+        outputFormat: '輸出格式',
+        width: '寬度 (px)',
+        height: '高度 (px)',
+    },
+    ico: {
+        generate: '產生 ICO',
+        subtitle: '將圖片轉為多尺寸 ICO/favicon。',
+        title: 'ICO 產生器',
+        sizes: '尺寸',
     },
     whip: {
         bearerToken: 'Bearer Token',
