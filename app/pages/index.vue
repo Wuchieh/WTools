@@ -215,6 +215,48 @@ const tools = [
         route: 'slug-generator',
         titleKey: 'tools.slugGenerator.title',
     },
+    {
+        descKey: 'tools.unitConverter.description',
+        icon: 'mdi-calculator',
+        id: 'unit-converter',
+        route: 'unit-converter',
+        titleKey: 'tools.unitConverter.title',
+    },
+    {
+        descKey: 'tools.todoList.description',
+        icon: 'mdi-checkbox-marked-outline',
+        id: 'todo-list',
+        route: 'todo-list',
+        titleKey: 'tools.todoList.title',
+    },
+    {
+        descKey: 'tools.randomPicker.description',
+        icon: 'mdi-shuffle-variant',
+        id: 'random-picker',
+        route: 'random-picker',
+        titleKey: 'tools.randomPicker.title',
+    },
+    {
+        descKey: 'tools.timer.description',
+        icon: 'mdi-timer-outline',
+        id: 'timer',
+        route: 'timer',
+        titleKey: 'tools.timer.title',
+    },
+    {
+        descKey: 'tools.cronParser.description',
+        icon: 'mdi-clock-outline',
+        id: 'cron-parser',
+        route: 'cron-parser',
+        titleKey: 'tools.cronParser.title',
+    },
+    {
+        descKey: 'tools.htmlEscape.description',
+        icon: 'mdi-code-tags',
+        id: 'html-escape',
+        route: 'html-escape',
+        titleKey: 'tools.htmlEscape.title',
+    },
 ];
 </script>
 
