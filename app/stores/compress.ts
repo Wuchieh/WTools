@@ -16,9 +16,9 @@ export const useCompressStore = defineStore('compress', () => {
     const files = ref<CompressedFile[]>([]);
     const isConverting = ref(false);
     const quality = ref(80);
-    const maxWidth = ref<number | null>(null);
-    const maxHeight = ref<number | null>(null);
-    const outputFormat = ref<'image/webp' | 'image/jpeg' | 'image/png'>('image/webp');
+    const maxWidth = ref<null | number>(null);
+    const maxHeight = ref<null | number>(null);
+    const outputFormat = ref<'image/jpeg' | 'image/png' | 'image/webp'>('image/webp');
     const successCount = computed(() => files.value.filter((f) => f.status === 'success').length);
     const errorCount = computed(() => files.value.filter((f) => f.status === 'error').length);
     const hasConverted = computed(() => files.value.some((f) => f.status === 'success' || f.status === 'error'));
@@ -48,8 +48,11 @@ export const useCompressStore = defineStore('compress', () => {
         files.value = [];
     }
 
-    function resizeImage(img: HTMLImageElement): { width: number; height: number } {
-        let { width, height } = { width: img.width, height: img.height };
+    function resizeImage(img: HTMLImageElement): { height: number; width: number } {
+        let { height, width } = {
+            height: img.height,
+            width: img.width,
+        };
         if (maxWidth.value && width > maxWidth.value) {
             height = Math.round((height * maxWidth.value) / width);
             width = maxWidth.value;
@@ -58,7 +61,10 @@ export const useCompressStore = defineStore('compress', () => {
             width = Math.round((width * maxHeight.value) / height);
             height = maxHeight.value;
         }
-        return { width, height };
+        return {
+            height,
+            width,
+        };
     }
 
     async function convertFiles() {
@@ -87,11 +93,15 @@ export const useCompressStore = defineStore('compress', () => {
             const objectUrl = URL.createObjectURL(file);
             img.onload = () => {
                 const canvas = document.createElement('canvas');
-                const { width, height } = resizeImage(img);
+                const { height, width } = resizeImage(img);
                 canvas.width = width;
                 canvas.height = height;
                 const ctx = canvas.getContext('2d');
-                if (!ctx) { URL.revokeObjectURL(objectUrl); reject(new Error('Canvas context not available')); return; }
+                if (!ctx) {
+                    URL.revokeObjectURL(objectUrl);
+                    reject(new Error('Canvas context not available'));
+                    return;
+                }
                 if (outputFormat.value === 'image/jpeg' || outputFormat.value === 'image/png') {
                     ctx.fillStyle = outputFormat.value === 'image/jpeg' ? '#ffffff' : 'transparent';
                     if (outputFormat.value === 'image/jpeg') ctx.fillRect(0, 0, width, height);
@@ -103,7 +113,10 @@ export const useCompressStore = defineStore('compress', () => {
                     else reject(new Error('Canvas toBlob failed'));
                 }, outputFormat.value, quality.value / 100);
             };
-            img.onerror = () => { URL.revokeObjectURL(objectUrl); reject(new Error('Failed to load image')); };
+            img.onerror = () => {
+                URL.revokeObjectURL(objectUrl);
+                reject(new Error('Failed to load image'));
+            };
             img.src = objectUrl;
         });
     }
@@ -134,10 +147,10 @@ export const useCompressStore = defineStore('compress', () => {
         files,
         hasConverted,
         isConverting,
-        quality,
-        maxWidth,
         maxHeight,
+        maxWidth,
         outputFormat,
+        quality,
         removeFile,
         successCount,
     };

@@ -93,7 +93,10 @@ export const useConverterStore = defineStore('converter', () => {
                     }
                 }, 'image/webp', quality.value);
             };
-            img.onerror = () => { URL.revokeObjectURL(objectUrl); reject(new Error('Failed to load image')); };
+            img.onerror = () => {
+                URL.revokeObjectURL(objectUrl);
+                reject(new Error('Failed to load image'));
+            };
             img.src = objectUrl;
         });
     }

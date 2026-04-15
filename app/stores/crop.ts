@@ -4,21 +4,21 @@ import { v7 as uuidv7 } from 'uuid';
 
 export interface CropFile {
     blob?: Blob;
-    crop: { x: number; y: number; width: number; height: number };
+    crop: { height: number; width: number; x: number; y: number };
     error?: string;
     file: File;
     id: string;
     preview: string;
     scale: number;
-    status: 'editing' | 'pending' | 'converting' | 'error' | 'success';
+    status: 'converting' | 'editing' | 'error' | 'pending' | 'success';
 }
 
 export const useCropStore = defineStore('crop', () => {
     const files = ref<CropFile[]>([]);
     const isConverting = ref(false);
-    const outputFormat = ref<'image/webp' | 'image/jpeg' | 'image/png'>('image/webp');
+    const outputFormat = ref<'image/jpeg' | 'image/png' | 'image/webp'>('image/webp');
     const quality = ref(0.92);
-    const aspectRatio = ref<number | null>(null);
+    const aspectRatio = ref<null | number>(null);
     const successCount = computed(() => files.value.filter((f) => f.status === 'success').length);
     const hasConverted = computed(() => files.value.some((f) => f.status === 'success' || f.status === 'error'));
 
@@ -28,10 +28,15 @@ export const useCropStore = defineStore('crop', () => {
             const reader = new FileReader();
             reader.onload = (e) => {
                 files.value.push({
+                    crop: {
+                        height: 100,
+                        width: 100,
+                        x: 0,
+                        y: 0,
+                    },
                     file,
                     id: crypto.randomUUID(),
                     preview: e.target?.result as string,
-                    crop: { x: 0, y: 0, width: 100, height: 100 },
                     scale: 1,
                     status: 'editing',
                 });
@@ -49,7 +54,7 @@ export const useCropStore = defineStore('crop', () => {
         files.value = [];
     }
 
-    function updateCrop(id: string, crop: { x: number; y: number; width: number; height: number }) {
+    function updateCrop(id: string, crop: { height: number; width: number; x: number; y: number }) {
         const f = files.value.find((f) => f.id === id);
         if (f) f.crop = crop;
     }
@@ -77,7 +82,12 @@ export const useCropStore = defineStore('crop', () => {
             const img = new Image();
             img.onload = () => {
                 const canvas = document.createElement('canvas');
-                const { x, y, width, height } = f.crop;
+                const {
+                    height,
+                    width,
+                    x,
+                    y,
+                } = f.crop;
                 const sw = img.width * (width / 100);
                 const sh = img.height * (height / 100);
                 const sx = img.width * (x / 100);
@@ -85,7 +95,10 @@ export const useCropStore = defineStore('crop', () => {
                 canvas.width = sw;
                 canvas.height = sh;
                 const ctx = canvas.getContext('2d');
-                if (!ctx) { reject(new Error('Canvas context not available')); return; }
+                if (!ctx) {
+                    reject(new Error('Canvas context not available'));
+                    return;
+                }
                 ctx.drawImage(img, sx, sy, sw, sh, 0, 0, sw, sh);
                 canvas.toBlob((blob) => {
                     if (blob) resolve(blob);

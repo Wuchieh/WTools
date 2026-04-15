@@ -1,2 +1,11 @@
 User-Agent: *
-Disallow:
+Allow: /
+
+# Sitemap
+Sitemap: https://wtools-e7g.pages.dev/sitemap.xml
+
+# Crawl delay for polite spiders
+Crawl-delay: 1
+
+# Disallow API routes
+Disallow: /api/

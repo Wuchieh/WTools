@@ -78,6 +78,7 @@
 </template>
 
 <script setup lang="ts">
+const { t } = useI18n();
 const dialog = ref(false);
 const loading = ref(false);
 const snackbar = ref(false);

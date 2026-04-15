@@ -1,10 +1,9 @@
-import type RTCPeerConnection from 'RTCPeerConnection';
 import { useWhipStore } from '~/stores/whip';
 
 export function useWhipClient() {
     const store = useWhipStore();
-    let pc: RTCPeerConnection | null = null;
-    let statsInterval: ReturnType<typeof setInterval> | null = null;
+    let pc: null | RTCPeerConnection = null;
+    let statsInterval: null | ReturnType<typeof setInterval> = null;
 
     const rtcConfig: RTCConfiguration = {
         iceServers: [
@@ -23,9 +22,9 @@ export function useWhipClient() {
             const stream = await navigator.mediaDevices.getUserMedia({
                 audio: true,
                 video: {
-                    width: { ideal: 1920 },
-                    height: { ideal: 1080 },
                     facingMode: 'user',
+                    height: { ideal: 1080 },
+                    width: { ideal: 1920 },
                 },
             });
             store.setLocalStream(stream);
@@ -33,7 +32,7 @@ export function useWhipClient() {
             // 2. Create peer connection
             pc = new RTCPeerConnection(rtcConfig);
 
-            pc.onicecandidate = (event) => {
+            pc.onicecandidate = (event: RTCPeerConnectionIceEvent) => {
                 if (event.candidate) {
                     store.incrementIceCandidates();
                 }
@@ -42,14 +41,14 @@ export function useWhipClient() {
             pc.onconnectionstatechange = () => {
                 if (!pc) return;
                 switch (pc.connectionState) {
+                    case 'closed':
+                    case 'disconnected':
+                        store.setStatus('disconnected');
+                        stopStatsPolling();
+                        break;
                     case 'connected':
                         store.setStatus('connected');
                         startStatsPolling();
-                        break;
-                    case 'disconnected':
-                    case 'closed':
-                        store.setStatus('disconnected');
-                        stopStatsPolling();
                         break;
                     case 'failed':
                         store.setError('Peer connection failed');
@@ -68,12 +67,12 @@ export function useWhipClient() {
 
             // 4. POST offer to WHIP endpoint
             const response = await fetch(endpointUrl, {
-                method: 'POST',
+                body: offer.sdp,
                 headers: {
                     'Content-Type': 'application/sdp',
-                    ...(bearerToken ? { Authorization: `Bearer ${bearerToken}` } : {}),
+                    ...bearerToken ? { Authorization: `Bearer ${bearerToken}` } : {},
                 },
-                body: offer.sdp,
+                method: 'POST',
             });
 
             if (!response.ok) {
@@ -84,13 +83,12 @@ export function useWhipClient() {
             // 5. Set remote description from answer
             const answerSdp = await response.text();
             const answer: RTCSessionDescriptionInit = {
-                type: 'answer',
                 sdp: answerSdp,
+                type: 'answer',
             };
             await pc.setRemoteDescription(answer);
             store.setRemoteDescription(answerSdp);
-        }
-        catch (err: any) {
+        } catch (err: any) {
             store.setError(err.message || 'Failed to start stream');
             cleanup();
         }
@@ -126,7 +124,7 @@ export function useWhipClient() {
                     if (report.type === 'inbound-rtp' && report.kind === 'video') {
                         // bitrate in bps
                         if (report.bytesReceived !== undefined && report.timestamp !== undefined) {
-                            const raw = (report as any);
+                            const raw = report as any;
                             if (raw.lastBytesReceived !== undefined) {
                                 const bytesDiff = report.bytesReceived - raw.lastBytesReceived;
                                 const timeDiff = (report.timestamp as any) - raw.lastTimestamp;
@@ -135,8 +133,7 @@ export function useWhipClient() {
                                 }
                                 (raw as any).lastBytesReceived = report.bytesReceived;
                                 (raw as any).lastTimestamp = report.timestamp;
-                            }
-                            else {
+                            } else {
                                 (raw as any).lastBytesReceived = report.bytesReceived;
                                 (raw as any).lastTimestamp = report.timestamp;
                             }
@@ -152,9 +149,12 @@ export function useWhipClient() {
                     }
                 });
 
-                store.updateStats({ bitrate, packetsLost, roundTripTime: rtt });
-            }
-            catch {
+                store.updateStats({
+                    bitrate,
+                    packetsLost,
+                    roundTripTime: rtt,
+                });
+            } catch {
                 // Ignore stats errors
             }
         }, 2000);
@@ -189,10 +189,10 @@ export function useWhipClient() {
     }
 
     return {
+        cleanup,
         startStream,
         stopStream,
         toggleAudio,
         toggleVideo,
-        cleanup,
     };
 }

@@ -1,18 +1,18 @@
 import { defineStore } from 'pinia';
 
-export type WhipStatus = 'idle' | 'connecting' | 'connected' | 'disconnected' | 'error';
+export type WhipStatus = 'connected' | 'connecting' | 'disconnected' | 'error' | 'idle';
 
 export interface WhipState {
-    endpointUrl: string;
     bearerToken: string;
-    status: WhipStatus;
-    errorMessage: string;
-    localStream: MediaStream | null;
-    remoteDescription: string;
-    iceCandidateCount: number;
     bitrate: number;
+    endpointUrl: string;
+    errorMessage: string;
+    iceCandidateCount: number;
+    localStream: MediaStream | null;
     packetsLost: number;
+    remoteDescription: string;
     roundTripTime: number;
+    status: WhipStatus;
 }
 
 export const useWhipStore = defineStore('whip', () => {
@@ -90,6 +90,7 @@ export const useWhipStore = defineStore('whip', () => {
         endpointUrl,
         errorMessage,
         iceCandidateCount,
+        incrementIceCandidates,
         isConnected,
         isConnecting,
         isDisconnected,
@@ -98,6 +99,7 @@ export const useWhipStore = defineStore('whip', () => {
         localStream,
         packetsLost,
         remoteDescription,
+        reset,
         roundTripTime,
         setBearerToken,
         setEndpoint,
@@ -105,8 +107,6 @@ export const useWhipStore = defineStore('whip', () => {
         setLocalStream,
         setRemoteDescription,
         setStatus,
-        incrementIceCandidates,
         updateStats,
-        reset,
     };
 });

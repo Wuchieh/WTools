@@ -1,18 +1,51 @@
 <template>
     <v-container class="py-10">
-        <h1 class="font-weight-bold text-h3 mb-2 text-center">{{ $t('random.title') }}</h1>
-        <p class="text-body-1 text-medium-emphasis mb-10 text-center">{{ $t('random.subtitle') }}</p>
+        <h1 class="font-weight-bold text-h3 mb-2 text-center">
+            {{ $t('random.title') }}
+        </h1>
+        <p class="text-body-1 text-medium-emphasis mb-10 text-center">
+            {{ $t('random.subtitle') }}
+        </p>
         <v-row justify="center">
-            <v-col cols="12" lg="8">
+            <v-col
+                cols="12"
+                lg="8"
+            >
                 <v-card border>
                     <v-card-text class="pt-4">
-                        <v-textarea v-model="itemsText" :label="$t('random.items')" rows="6" border class="mb-4" :placeholder="$t('random.placeholder')" />
-                        <v-slider v-model="pickCount" :label="$t('random.pickCount', { v: pickCount })" :min="1" :max="Math.max(1, items.length)" thumb-label class="mb-4" />
-                        <v-btn color="primary" block :disabled="items.length < pickCount" @click="pick">
+                        <v-textarea
+                            v-model="itemsText"
+                            class="mb-4"
+                            rows="6"
+                            :label="$t('random.items')"
+                            :placeholder="$t('random.placeholder')"
+                            border
+                        />
+                        <v-slider
+                            v-model="pickCount"
+                            class="mb-4"
+                            :label="$t('random.pickCount', { v: pickCount })"
+                            :max="Math.max(1, items.length)"
+                            :min="1"
+                            thumb-label
+                        />
+                        <v-btn
+                            color="primary"
+                            :disabled="items.length < pickCount"
+                            block
+                            @click="pick"
+                        >
                             {{ $t('random.pick') }}
                         </v-btn>
-                        <v-card v-if="picked.length" variant="tonal" color="success" class="mt-4 pa-3">
-                            <div class="text-h6 text-center">{{ picked.join(', ') }}</div>
+                        <v-card
+                            v-if="picked.length"
+                            class="pa-3 mt-4"
+                            color="success"
+                            variant="tonal"
+                        >
+                            <div class="text-h6 text-center">
+                                {{ picked.join(', ') }}
+                            </div>
                         </v-card>
                     </v-card-text>
                 </v-card>
@@ -23,7 +56,15 @@
 
 <script setup lang="ts">
 const { t } = useI18n();
-useHead({ meta: [{ content: t('random.subtitle'), name: 'description' }], title: t('random.title') });
+useHead({
+    meta: [
+        {
+            content: t('random.subtitle'),
+            name: 'description',
+        },
+    ],
+    title: t('random.title'),
+});
 
 const itemsText = ref('');
 const pickCount = ref(1);

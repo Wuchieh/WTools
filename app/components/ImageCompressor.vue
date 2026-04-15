@@ -2,7 +2,11 @@
     <v-card border>
         <v-card-item>
             <template #prepend>
-                <v-avatar color="primary" variant="tonal" rounded>
+                <v-avatar
+                    color="primary"
+                    variant="tonal"
+                    rounded
+                >
                     <v-icon icon="mdi-image-filter-hdr" />
                 </v-avatar>
             </template>
@@ -14,21 +18,27 @@
             <!-- Drop Zone -->
             <v-file-input
                 v-model="selectedFiles"
-                :label="$t('uploader.selectFiles')"
-                prepend-icon="mdi-camera"
-                multiple
-                accept="image/*"
-                show-size
-                border
                 class="mb-4"
+                accept="image/*"
+                prepend-icon="mdi-camera"
+                :label="$t('uploader.selectFiles')"
+                border
+                multiple
+                show-size
                 @update:model-value="handleFiles"
             />
 
             <!-- Settings -->
-            <v-expansion-panels variant="accordion" class="mb-4">
+            <v-expansion-panels
+                class="mb-4"
+                variant="accordion"
+            >
                 <v-expansion-panel>
                     <v-expansion-panel-title>
-                        <v-icon icon="mdi-tune" start />
+                        <v-icon
+                            icon="mdi-tune"
+                            start
+                        />
                         {{ $t('compressor.settings') }}
                     </v-expansion-panel-title>
                     <v-expansion-panel-text>
@@ -36,40 +46,40 @@
                             <v-col cols="6">
                                 <v-select
                                     v-model="store.outputFormat"
+                                    density="compact"
                                     :items="formats"
                                     :label="$t('compressor.outputFormat')"
-                                    density="compact"
                                 />
                             </v-col>
                             <v-col cols="6">
                                 <v-slider
                                     v-model="store.quality"
+                                    density="compact"
                                     :label="$t('compressor.quality', { v: store.quality })"
-                                    :min="10"
                                     :max="100"
+                                    :min="10"
                                     :step="5"
                                     thumb-label
-                                    density="compact"
                                 />
                             </v-col>
                             <v-col cols="6">
                                 <v-text-field
                                     v-model="store.maxWidth"
-                                    :label="$t('compressor.maxWidth')"
-                                    type="number"
                                     density="compact"
-                                    clearable
+                                    type="number"
+                                    :label="$t('compressor.maxWidth')"
                                     :min="1"
+                                    clearable
                                 />
                             </v-col>
                             <v-col cols="6">
                                 <v-text-field
                                     v-model="store.maxHeight"
-                                    :label="$t('compressor.maxHeight')"
-                                    type="number"
                                     density="compact"
-                                    clearable
+                                    type="number"
+                                    :label="$t('compressor.maxHeight')"
                                     :min="1"
+                                    clearable
                                 />
                             </v-col>
                         </v-row>
@@ -78,14 +88,21 @@
             </v-expansion-panels>
 
             <!-- File List -->
-            <v-list v-if="store.files.length > 0" class="mb-4" border>
+            <v-list
+                v-if="store.files.length > 0"
+                class="mb-4"
+                border
+            >
                 <v-list-item
                     v-for="f in store.files"
                     :key="f.id"
-                    :subtitle="formatBytes(f.convertedSize ?? f.file.size) + (f.convertedSize ? ' ← ' + formatBytes(f.file.size) : '')"
+                    :subtitle="formatBytes(f.convertedSize ?? f.file.size) + (f.convertedSize ? ` ← ${formatBytes(f.file.size)}` : '')"
                 >
                     <template #prepend>
-                        <v-avatar rounded="0" size="40">
+                        <v-avatar
+                            rounded="0"
+                            size="40"
+                        >
                             <v-img :src="f.preview" />
                         </v-avatar>
                     </template>
@@ -93,25 +110,25 @@
                     <template #append>
                         <v-chip
                             v-if="f.status === 'success'"
+                            class="mr-2"
                             color="success"
                             size="small"
-                            class="mr-2"
                         >
                             {{ formatBytes(f.convertedSize ?? 0) }}
                         </v-chip>
                         <v-chip
                             v-else-if="f.status === 'error'"
+                            class="mr-2"
                             color="error"
                             size="small"
-                            class="mr-2"
                         >
                             {{ f.error }}
                         </v-chip>
                         <v-chip
                             v-else-if="f.status === 'converting'"
+                            class="mr-2"
                             color="warning"
                             size="small"
-                            class="mr-2"
                         >
                             ...
                         </v-chip>
@@ -160,20 +177,34 @@ const store = useCompressStore();
 const selectedFiles = ref<File[]>([]);
 
 const formats = [
-    { title: 'WebP', value: 'image/webp' },
-    { title: 'JPEG', value: 'image/jpeg' },
-    { title: 'PNG', value: 'image/png' },
+    {
+        title: 'WebP',
+        value: 'image/webp',
+    },
+    {
+        title: 'JPEG',
+        value: 'image/jpeg',
+    },
+    {
+        title: 'PNG',
+        value: 'image/png',
+    },
 ];
-
-function handleFiles(files: File[]) {
-    if (files) store.addFiles(files);
-}
 
 function formatBytes(bytes: number): string {
     if (bytes === 0) return '0 B';
     const k = 1024;
-    const sizes = ['B', 'KB', 'MB', 'GB'];
+    const sizes = [
+        'B',
+        'KB',
+        'MB',
+        'GB',
+    ];
     const i = Math.floor(Math.log(bytes) / Math.log(k));
     return `${Number.parseFloat((bytes / k ** i).toFixed(1))} ${sizes[i]}`;
+}
+
+function handleFiles(files: File[]) {
+    if (files) store.addFiles(files);
 }
 </script>

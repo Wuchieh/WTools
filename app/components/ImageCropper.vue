@@ -2,7 +2,11 @@
     <v-card border>
         <v-card-item>
             <template #prepend>
-                <v-avatar color="primary" variant="tonal" rounded>
+                <v-avatar
+                    color="primary"
+                    variant="tonal"
+                    rounded
+                >
                     <v-icon icon="mdi-crop" />
                 </v-avatar>
             </template>
@@ -13,13 +17,13 @@
         <v-card-text class="pt-4">
             <v-file-input
                 v-model="selectedFiles"
-                :label="$t('uploader.selectFiles')"
-                prepend-icon="mdi-camera"
-                multiple
-                accept="image/*"
-                show-size
-                border
                 class="mb-4"
+                accept="image/*"
+                prepend-icon="mdi-camera"
+                :label="$t('uploader.selectFiles')"
+                border
+                multiple
+                show-size
                 @update:model-value="handleFiles"
             />
 
@@ -28,29 +32,29 @@
                 <v-col cols="4">
                     <v-select
                         v-model="store.outputFormat"
+                        density="compact"
                         :items="formats"
                         :label="$t('crop.outputFormat')"
-                        density="compact"
                     />
                 </v-col>
                 <v-col cols="4">
                     <v-select
                         v-model="store.aspectRatio"
+                        density="compact"
                         :items="ratios"
                         :label="$t('crop.aspectRatio')"
-                        density="compact"
                         clearable
                     />
                 </v-col>
                 <v-col cols="4">
                     <v-slider
                         v-model="store.quality"
+                        density="compact"
                         :label="$t('crop.quality', { v: Math.round(store.quality * 100) })"
-                        :min="0.1"
                         :max="1"
+                        :min="0.1"
                         :step="0.05"
                         thumb-label
-                        density="compact"
                     />
                 </v-col>
             </v-row>
@@ -65,10 +69,10 @@
                 >
                     <v-card border>
                         <v-img
-                            :src="f.preview"
-                            max-height="300"
-                            cover
                             class="crop-container"
+                            max-height="300"
+                            :src="f.preview"
+                            cover
                             @mousedown="startCrop($event, f)"
                             @touchstart.prevent="startCrop($event, f)"
                         >
@@ -79,18 +83,52 @@
                                 @touchstart.prevent.stop="startCrop($event, f)"
                             >
                                 <!-- Resize handles -->
-                                <div class="resize-handle nw" @mousedown.stop="startResize($event, f, 'nw')" @touchstart.prevent.stop="startResize($event, f, 'nw')" />
-                                <div class="resize-handle ne" @mousedown.stop="startResize($event, f, 'ne')" @touchstart.prevent.stop="startResize($event, f, 'ne')" />
-                                <div class="resize-handle sw" @mousedown.stop="startResize($event, f, 'sw')" @touchstart.prevent.stop="startResize($event, f, 'sw')" />
-                                <div class="resize-handle se" @mousedown.stop="startResize($event, f, 'se')" @touchstart.prevent.stop="startResize($event, f, 'se')" />
-                                <div class="resize-handle n" @mousedown.stop="startResize($event, f, 'n')" @touchstart.prevent.stop="startResize($event, f, 'n')" />
-                                <div class="resize-handle s" @mousedown.stop="startResize($event, f, 's')" @touchstart.prevent.stop="startResize($event, f, 's')" />
-                                <div class="resize-handle e" @mousedown.stop="startResize($event, f, 'e')" @touchstart.prevent.stop="startResize($event, f, 'e')" />
-                                <div class="resize-handle w" @mousedown.stop="startResize($event, f, 'w')" @touchstart.prevent.stop="startResize($event, f, 'w')" />
+                                <div
+                                    class="nw resize-handle"
+                                    @mousedown.stop="startResize($event, f, 'nw')"
+                                    @touchstart.prevent.stop="startResize($event, f, 'nw')"
+                                />
+                                <div
+                                    class="ne resize-handle"
+                                    @mousedown.stop="startResize($event, f, 'ne')"
+                                    @touchstart.prevent.stop="startResize($event, f, 'ne')"
+                                />
+                                <div
+                                    class="resize-handle sw"
+                                    @mousedown.stop="startResize($event, f, 'sw')"
+                                    @touchstart.prevent.stop="startResize($event, f, 'sw')"
+                                />
+                                <div
+                                    class="resize-handle se"
+                                    @mousedown.stop="startResize($event, f, 'se')"
+                                    @touchstart.prevent.stop="startResize($event, f, 'se')"
+                                />
+                                <div
+                                    class="n resize-handle"
+                                    @mousedown.stop="startResize($event, f, 'n')"
+                                    @touchstart.prevent.stop="startResize($event, f, 'n')"
+                                />
+                                <div
+                                    class="resize-handle s"
+                                    @mousedown.stop="startResize($event, f, 's')"
+                                    @touchstart.prevent.stop="startResize($event, f, 's')"
+                                />
+                                <div
+                                    class="e resize-handle"
+                                    @mousedown.stop="startResize($event, f, 'e')"
+                                    @touchstart.prevent.stop="startResize($event, f, 'e')"
+                                />
+                                <div
+                                    class="resize-handle w"
+                                    @mousedown.stop="startResize($event, f, 'w')"
+                                    @touchstart.prevent.stop="startResize($event, f, 'w')"
+                                />
                             </div>
                         </v-img>
                         <v-card-text>
-                            <div class="text-caption">{{ f.file.name }}</div>
+                            <div class="text-caption">
+                                {{ f.file.name }}
+                            </div>
                             <div class="text-caption text-medium-emphasis">
                                 {{ $t('crop.selected', { x: Math.round(f.crop.x), y: Math.round(f.crop.y), w: Math.round(f.crop.width), h: Math.round(f.crop.height) }) }}
                             </div>
@@ -98,17 +136,17 @@
                         <v-card-actions>
                             <v-chip
                                 v-if="f.status === 'success'"
+                                class="mr-2"
                                 color="success"
                                 size="small"
-                                class="mr-2"
                             >
                                 {{ $t('result.success') }}
                             </v-chip>
                             <v-chip
                                 v-else-if="f.status === 'error'"
+                                class="mr-2"
                                 color="error"
                                 size="small"
-                                class="mr-2"
                             >
                                 {{ f.error }}
                             </v-chip>
@@ -126,7 +164,11 @@
         </v-card-text>
 
         <v-card-actions v-if="store.files.length > 0">
-            <v-btn color="warning" variant="text" @click="store.clearAll()">
+            <v-btn
+                color="warning"
+                variant="text"
+                @click="store.clearAll()"
+            >
                 {{ $t('preview.clearAll') }}
             </v-btn>
             <v-spacer />
@@ -149,60 +191,80 @@
 </template>
 
 <script setup lang="ts">
-import { useCropStore, type CropFile } from '~/stores/crop';
+import { useCropStore } from '~/stores/crop';
+import type { CropFile } from '~/stores/crop';
 
 const store = useCropStore();
 const selectedFiles = ref<File[]>([]);
 
 const formats = [
-    { title: 'WebP', value: 'image/webp' },
-    { title: 'JPEG', value: 'image/jpeg' },
-    { title: 'PNG', value: 'image/png' },
+    {
+        title: 'WebP',
+        value: 'image/webp',
+    },
+    {
+        title: 'JPEG',
+        value: 'image/jpeg',
+    },
+    {
+        title: 'PNG',
+        value: 'image/png',
+    },
 ];
 
 const ratios = [
-    { title: '1:1', value: 1 },
-    { title: '4:3', value: 4 / 3 },
-    { title: '16:9', value: 16 / 9 },
-    { title: '3:2', value: 3 / 2 },
-    { title: 'Free', value: null },
+    {
+        title: '1:1',
+        value: 1,
+    },
+    {
+        title: '4:3',
+        value: 4 / 3,
+    },
+    {
+        title: '16:9',
+        value: 16 / 9,
+    },
+    {
+        title: '3:2',
+        value: 3 / 2,
+    },
+    {
+        title: 'Free',
+        value: null,
+    },
 ];
 
 let dragging = false;
 let dragFile: CropFile | null = null;
 let dragStartX = 0;
 let dragStartY = 0;
-let cropStart = { x: 0, y: 0, w: 0, h: 0 };
+let cropStart = {
+    h: 0,
+    w: 0,
+    x: 0,
+    y: 0,
+};
 let activeRect: DOMRect | null = null;
 let activeEl: HTMLElement | null = null;
 let dragMode: 'move' | 'resize' | null = null;
 let resizeHandle = '';
 
-function handleFiles(files: File[]) {
-    if (files) store.addFiles(files);
+function getCropStyle(f: CropFile) {
+    return {
+        border: '2px solid white',
+        boxShadow: '0 0 0 9999px rgba(0,0,0,0.5)',
+        cursor: 'move',
+        height: `${f.crop.height}%`,
+        left: `${f.crop.x}%`,
+        position: 'absolute',
+        top: `${f.crop.y}%`,
+        width: `${f.crop.width}%`,
+    };
 }
 
-function startCrop(e: MouseEvent | TouchEvent, f: CropFile) {
-    dragging = true;
-    dragFile = f;
-    cropStart = { ...f.crop };
-    // Use currentTarget to get the specific v-img element for this file
-    const target = e.currentTarget as HTMLElement;
-    const rect = target.getBoundingClientRect();
-    activeRect = rect;
-    activeEl = target;
-    if (e instanceof MouseEvent) {
-        dragStartX = e.clientX - rect.left;
-        dragStartY = e.clientY - rect.top;
-    } else {
-        dragStartX = e.touches[0].clientX - rect.left;
-        dragStartY = e.touches[0].clientY - rect.top;
-    }
-
-    document.addEventListener('mousemove', onDrag);
-    document.addEventListener('mouseup', stopCrop);
-    document.addEventListener('touchmove', onDrag);
-    document.addEventListener('touchend', stopCrop);
+function handleFiles(files: File[]) {
+    if (files) store.addFiles(files);
 }
 
 function onDrag(e: MouseEvent | TouchEvent) {
@@ -231,43 +293,72 @@ function onDrag(e: MouseEvent | TouchEvent) {
     if (dragMode === 'resize') {
         // Resize based on handle position
         if (resizeHandle.includes('e')) nw = cropStart.w + (dx / pw) * 100;
-        if (resizeHandle.includes('w')) { nw = cropStart.w - (dx / pw) * 100; nx = cropStart.x + (dx / pw) * 100; }
+        if (resizeHandle.includes('w')) {
+            nw = cropStart.w - (dx / pw) * 100;
+            nx = cropStart.x + (dx / pw) * 100;
+        }
         if (resizeHandle.includes('s')) nh = cropStart.h + (dy / ph) * 100;
-        if (resizeHandle.includes('n')) { nh = cropStart.h - (dy / ph) * 100; ny = cropStart.y + (dy / ph) * 100; }
+        if (resizeHandle.includes('n')) {
+            nh = cropStart.h - (dy / ph) * 100;
+            ny = cropStart.y + (dy / ph) * 100;
+        }
     } else {
         // Move
         nx = cropStart.x + (dx / pw) * 100;
         ny = cropStart.y + (dy / ph) * 100;
     }
 
-    if (nx < 0) { if (dragMode === 'resize' && resizeHandle.includes('w')) nw += nx; nx = 0; }
-    if (ny < 0) { if (dragMode === 'resize' && resizeHandle.includes('n')) nh += ny; ny = 0; }
-    if (nx + nw > 100) { nw = 100 - nx; }
-    if (ny + nh > 100) { nh = 100 - ny; }
+    if (nx < 0) {
+        if (dragMode === 'resize' && resizeHandle.includes('w')) nw += nx;
+        nx = 0;
+    }
+    if (ny < 0) {
+        if (dragMode === 'resize' && resizeHandle.includes('n')) nh += ny;
+        ny = 0;
+    }
+    if (nx + nw > 100) {
+        nw = 100 - nx;
+    }
+    if (ny + nh > 100) {
+        nh = 100 - ny;
+    }
 
     if (store.aspectRatio && dragMode === 'resize' && (resizeHandle === 'n' || resizeHandle === 's')) {
         nh = nw / store.aspectRatio;
-        if (ny + nh > 100) { ny = 100 - nh; }
+        if (ny + nh > 100) {
+            ny = 100 - nh;
+        }
     }
 
     store.updateCrop(dragFile.id, {
+        height: Math.max(5, nh),
+        width: Math.max(5, nw),
         x: Math.max(0, nx),
         y: Math.max(0, ny),
-        width: Math.max(5, nw),
-        height: Math.max(5, nh),
     });
 }
 
-function stopCrop() {
-    dragging = false;
-    dragFile = null;
-    dragMode = null;
-    activeRect = null;
-    activeEl = null;
-    document.removeEventListener('mousemove', onDrag);
-    document.removeEventListener('mouseup', stopCrop);
-    document.removeEventListener('touchmove', onDrag);
-    document.removeEventListener('touchend', stopCrop);
+function startCrop(e: MouseEvent | TouchEvent, f: CropFile) {
+    dragging = true;
+    dragFile = f;
+    cropStart = { ...f.crop };
+    // Use currentTarget to get the specific v-img element for this file
+    const target = e.currentTarget as HTMLElement;
+    const rect = target.getBoundingClientRect();
+    activeRect = rect;
+    activeEl = target;
+    if (e instanceof MouseEvent) {
+        dragStartX = e.clientX - rect.left;
+        dragStartY = e.clientY - rect.top;
+    } else {
+        dragStartX = e.touches[0].clientX - rect.left;
+        dragStartY = e.touches[0].clientY - rect.top;
+    }
+
+    document.addEventListener('mousemove', onDrag);
+    document.addEventListener('mouseup', stopCrop);
+    document.addEventListener('touchmove', onDrag);
+    document.addEventListener('touchend', stopCrop);
 }
 
 function startResize(e: MouseEvent | TouchEvent, f: CropFile, handle: string) {
@@ -294,17 +385,16 @@ function startResize(e: MouseEvent | TouchEvent, f: CropFile, handle: string) {
     document.addEventListener('touchend', stopCrop);
 }
 
-function getCropStyle(f: CropFile) {
-    return {
-        position: 'absolute',
-        left: `${f.crop.x}%`,
-        top: `${f.crop.y}%`,
-        width: `${f.crop.width}%`,
-        height: `${f.crop.height}%`,
-        border: '2px solid white',
-        boxShadow: '0 0 0 9999px rgba(0,0,0,0.5)',
-        cursor: 'move',
-    };
+function stopCrop() {
+    dragging = false;
+    dragFile = null;
+    dragMode = null;
+    activeRect = null;
+    activeEl = null;
+    document.removeEventListener('mousemove', onDrag);
+    document.removeEventListener('mouseup', stopCrop);
+    document.removeEventListener('touchmove', onDrag);
+    document.removeEventListener('touchend', stopCrop);
 }
 </script>
 
@@ -318,12 +408,48 @@ function getCropStyle(f: CropFile) {
     border-radius: 2px;
     z-index: 10;
 }
-.resize-handle.nw { top: -5px; left: -5px; cursor: nw-resize; }
-.resize-handle.ne { top: -5px; right: -5px; cursor: ne-resize; }
-.resize-handle.sw { bottom: -5px; left: -5px; cursor: sw-resize; }
-.resize-handle.se { bottom: -5px; right: -5px; cursor: se-resize; }
-.resize-handle.n { top: -5px; left: 50%; transform: translateX(-50%); cursor: n-resize; }
-.resize-handle.s { bottom: -5px; left: 50%; transform: translateX(-50%); cursor: s-resize; }
-.resize-handle.e { right: -5px; top: 50%; transform: translateY(-50%); cursor: e-resize; }
-.resize-handle.w { left: -5px; top: 50%; transform: translateY(-50%); cursor: w-resize; }
+.resize-handle.nw {
+    top: -5px;
+    left: -5px;
+    cursor: nw-resize;
+}
+.resize-handle.ne {
+    top: -5px;
+    right: -5px;
+    cursor: ne-resize;
+}
+.resize-handle.sw {
+    bottom: -5px;
+    left: -5px;
+    cursor: sw-resize;
+}
+.resize-handle.se {
+    bottom: -5px;
+    right: -5px;
+    cursor: se-resize;
+}
+.resize-handle.n {
+    top: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    cursor: n-resize;
+}
+.resize-handle.s {
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    cursor: s-resize;
+}
+.resize-handle.e {
+    right: -5px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: e-resize;
+}
+.resize-handle.w {
+    left: -5px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: w-resize;
+}
 </style>

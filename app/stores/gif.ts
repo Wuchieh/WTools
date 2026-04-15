@@ -8,15 +8,15 @@ export interface GifFile {
     file: File;
     id: string;
     preview: string;
-    status: 'pending' | 'converting' | 'error' | 'success';
+    status: 'converting' | 'error' | 'pending' | 'success';
 }
 
 export const useGifStore = defineStore('gif', () => {
     const files = ref<GifFile[]>([]);
     const isConverting = ref(false);
-    const outputFormat = ref<'image/gif' | 'image/png' | 'image/jpeg'>('image/gif');
+    const outputFormat = ref<'image/gif' | 'image/jpeg' | 'image/png'>('image/gif');
     const quality = ref(0.8);
-    const maxWidth = ref<number | null>(null);
+    const maxWidth = ref<null | number>(null);
     const successCount = computed(() => files.value.filter((f) => f.status === 'success').length);
     const hasConverted = computed(() => files.value.some((f) => f.status === 'success' || f.status === 'error'));
 
@@ -41,7 +41,9 @@ export const useGifStore = defineStore('gif', () => {
         if (index !== -1) files.value.splice(index, 1);
     }
 
-    function clearAll() { files.value = []; }
+    function clearAll() {
+        files.value = [];
+    }
 
     async function convertFiles() {
         if (isConverting.value) return;
@@ -70,7 +72,10 @@ export const useGifStore = defineStore('gif', () => {
                 canvas.width = w;
                 canvas.height = h;
                 const ctx = canvas.getContext('2d');
-                if (!ctx) { reject(new Error('Canvas context not available')); return; }
+                if (!ctx) {
+                    reject(new Error('Canvas context not available'));
+                    return;
+                }
                 ctx.drawImage(img, 0, 0, w, h);
                 canvas.toBlob((blob) => {
                     if (blob) resolve(blob);
@@ -100,7 +105,17 @@ export const useGifStore = defineStore('gif', () => {
     }
 
     return {
-        addFiles, clearAll, convertFiles, downloadZip, files,
-        hasConverted, isConverting, maxWidth, outputFormat, quality, removeFile, successCount,
+        addFiles,
+        clearAll,
+        convertFiles,
+        downloadZip,
+        files,
+        hasConverted,
+        isConverting,
+        maxWidth,
+        outputFormat,
+        quality,
+        removeFile,
+        successCount,
     };
 });

@@ -8,22 +8,22 @@ export interface SvgFile {
     file: File;
     id: string;
     preview: string;
-    status: 'pending' | 'converting' | 'error' | 'success';
+    status: 'converting' | 'error' | 'pending' | 'success';
 }
 
 export const useSvgStore = defineStore('svg', () => {
     const files = ref<SvgFile[]>([]);
     const isConverting = ref(false);
-    const outputFormat = ref<'image/png' | 'image/jpeg' | 'image/webp'>('image/png');
+    const outputFormat = ref<'image/jpeg' | 'image/png' | 'image/webp'>('image/png');
     const quality = ref(0.92);
-    const width = ref<number | null>(null);
-    const height = ref<number | null>(null);
+    const width = ref<null | number>(null);
+    const height = ref<null | number>(null);
     const successCount = computed(() => files.value.filter((f) => f.status === 'success').length);
     const hasConverted = computed(() => files.value.some((f) => f.status === 'success' || f.status === 'error'));
 
     function addFiles(newFiles: File[]) {
         for (const file of newFiles) {
-            if (!file.type === 'image/svg+xml' && !file.name.toLowerCase().endsWith('.svg')) continue;
+            if (file.type !== 'image/svg+xml' && !file.name.toLowerCase().endsWith('.svg')) continue;
             const reader = new FileReader();
             reader.onload = (e) => {
                 files.value.push({
@@ -42,7 +42,9 @@ export const useSvgStore = defineStore('svg', () => {
         if (index !== -1) files.value.splice(index, 1);
     }
 
-    function clearAll() { files.value = []; }
+    function clearAll() {
+        files.value = [];
+    }
 
     async function convertFiles() {
         if (isConverting.value) return;
@@ -69,7 +71,10 @@ export const useSvgStore = defineStore('svg', () => {
                 canvas.width = width.value ?? img.width;
                 canvas.height = height.value ?? img.height;
                 const ctx = canvas.getContext('2d');
-                if (!ctx) { reject(new Error('Canvas context not available')); return; }
+                if (!ctx) {
+                    reject(new Error('Canvas context not available'));
+                    return;
+                }
                 if (outputFormat.value === 'image/jpeg') {
                     ctx.fillStyle = '#ffffff';
                     ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -103,8 +108,18 @@ export const useSvgStore = defineStore('svg', () => {
     }
 
     return {
-        addFiles, clearAll, convertFiles, downloadZip, files,
-        hasConverted, height, isConverting, outputFormat, quality,
-        removeFile, successCount, width,
+        addFiles,
+        clearAll,
+        convertFiles,
+        downloadZip,
+        files,
+        hasConverted,
+        height,
+        isConverting,
+        outputFormat,
+        quality,
+        removeFile,
+        successCount,
+        width,
     };
 });

@@ -8,24 +8,24 @@ export interface WatermarkFile {
     file: File;
     id: string;
     preview: string;
-    status: 'pending' | 'converting' | 'error' | 'success';
+    status: 'converting' | 'error' | 'pending' | 'success';
 }
 
 export const useWatermarkStore = defineStore('watermark', () => {
     const files = ref<WatermarkFile[]>([]);
     const isConverting = ref(false);
-    const outputFormat = ref<'image/webp' | 'image/jpeg' | 'image/png'>('image/png');
+    const outputFormat = ref<'image/jpeg' | 'image/png' | 'image/webp'>('image/png');
     const quality = ref(0.92);
     const watermarkText = ref('WTools');
     const fontSize = ref(32);
     const fontColor = ref('#ffffff');
     const opacity = ref(0.7);
-    const position = ref<'top-left' | 'top-right' | 'bottom-left' | 'bottom-right' | 'center'>('bottom-right');
+    const position = ref<'bottom-left' | 'bottom-right' | 'center' | 'top-left' | 'top-right'>('bottom-right');
     const offsetX = ref(16);
     const offsetY = ref(16);
     const successCount = computed(() => files.value.filter((f) => f.status === 'success').length);
     const hasConverted = computed(() => files.value.some((f) => f.status === 'success' || f.status === 'error'));
-    const previewUrl = ref<string | null>(null);
+    const previewUrl = ref<null | string>(null);
 
     function addFiles(newFiles: File[]) {
         for (const file of newFiles) {
@@ -48,7 +48,9 @@ export const useWatermarkStore = defineStore('watermark', () => {
         if (index !== -1) files.value.splice(index, 1);
     }
 
-    function clearAll() { files.value = []; }
+    function clearAll() {
+        files.value = [];
+    }
 
     function applyWatermarkToCanvas(ctx: CanvasRenderingContext2D, w: number, h: number) {
         ctx.save();
@@ -61,12 +63,28 @@ export const useWatermarkStore = defineStore('watermark', () => {
         const metrics = ctx.measureText(text);
         const tw = metrics.width;
         const th = fontSize.value;
-        let tx = 0, ty = 0;
-        if (position.value === 'top-left') { tx = offsetX.value; ty = offsetY.value + th; }
-        else if (position.value === 'top-right') { tx = w - tw - offsetX.value; ty = offsetY.value + th; }
-        else if (position.value === 'bottom-left') { tx = offsetX.value; ty = h - offsetY.value; }
-        else if (position.value === 'bottom-right') { tx = w - tw - offsetX.value; ty = h - offsetY.value; }
-        else { tx = (w - tw) / 2; ty = (h + th) / 2; }
+        let tx = 0;
+        let ty = 0;
+        if (position.value === 'top-left') {
+            tx = offsetX.value;
+            ty = offsetY.value + th;
+        }
+        else if (position.value === 'top-right') {
+            tx = w - tw - offsetX.value;
+            ty = offsetY.value + th;
+        }
+        else if (position.value === 'bottom-left') {
+            tx = offsetX.value;
+            ty = h - offsetY.value;
+        }
+        else if (position.value === 'bottom-right') {
+            tx = w - tw - offsetX.value;
+            ty = h - offsetY.value;
+        }
+        else {
+            tx = (w - tw) / 2;
+            ty = (h + th) / 2;
+        }
         ctx.strokeText(text, tx, ty);
         ctx.fillText(text, tx, ty);
         ctx.restore();
@@ -97,7 +115,10 @@ export const useWatermarkStore = defineStore('watermark', () => {
                 canvas.width = img.width;
                 canvas.height = img.height;
                 const ctx = canvas.getContext('2d');
-                if (!ctx) { reject(new Error('Canvas context not available')); return; }
+                if (!ctx) {
+                    reject(new Error('Canvas context not available'));
+                    return;
+                }
                 ctx.drawImage(img, 0, 0);
                 applyWatermarkToCanvas(ctx, img.width, img.height);
                 canvas.toBlob((blob) => {
@@ -128,8 +149,25 @@ export const useWatermarkStore = defineStore('watermark', () => {
     }
 
     return {
-        addFiles, applyWatermarkToCanvas, clearAll, convertFiles, downloadZip,
-        files, fontColor, fontSize, hasConverted, isConverting, offsetX, offsetY,
-        opacity, outputFormat, position, previewUrl, quality, removeFile, successCount, watermarkText,
+        addFiles,
+        applyWatermarkToCanvas,
+        clearAll,
+        convertFiles,
+        downloadZip,
+        files,
+        fontColor,
+        fontSize,
+        hasConverted,
+        isConverting,
+        offsetX,
+        offsetY,
+        opacity,
+        outputFormat,
+        position,
+        previewUrl,
+        quality,
+        removeFile,
+        successCount,
+        watermarkText,
     };
 });

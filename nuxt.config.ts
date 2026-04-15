@@ -3,6 +3,19 @@
 export default defineNuxtConfig({
     app: {
         head: {
+            htmlAttrs: { lang: 'zh-TW' },
+            link: [
+                {
+                    href: 'https://wtools-e7g.pages.dev',
+                    rel: 'canonical',
+                },
+                {
+                    href: '/sitemap.xml',
+                    rel: 'alternate',
+                    title: 'WTools RSS',
+                    type: 'application/rss+xml',
+                },
+            ],
             meta: [
                 { charset: 'utf-8' },
                 {
@@ -21,6 +34,18 @@ export default defineNuxtConfig({
                     content: 'ca-pub-6796422714055150',
                     name: 'google-adsense-account',
                 },
+                {
+                    content: 'index, follow',
+                    name: 'robots',
+                },
+                {
+                    content: 'summary',
+                    name: 'twitter:card',
+                },
+                {
+                    content: '@wuchieh',
+                    name: 'twitter:site',
+                },
             ],
             script: [
                 {
@@ -33,7 +58,12 @@ export default defineNuxtConfig({
         },
     },
 
-    build: { transpile: ['vuetify', 'heic2any'] },
+    build: {
+        transpile: [
+            'vuetify',
+            'heic2any',
+        ],
+    },
 
     compatibilityDate: '2025-10-25',
 
@@ -72,6 +102,8 @@ export default defineNuxtConfig({
         '@nuxtjs/i18n',
         '@unocss/nuxt',
         '@pinia/nuxt',
+        '@nuxtjs/sitemap',
+        '@nuxt/image',
     ],
 
     nitro: {
@@ -102,6 +134,15 @@ export default defineNuxtConfig({
     runtimeConfig: {
         telegramBotToken: process.env.TELEGRAM_BOT_TOKEN,
         telegramChatId: process.env.TELEGRAM_CHAT_ID,
+    },
+
+    sitemap: {
+        defaults: {
+            changefreq: 'weekly',
+            lastmod: new Date().toISOString(),
+            priority: 0.8,
+        },
+        sources: ['/api/sitemap-urls'],
     },
 
     unocss: { nuxtLayers: true },

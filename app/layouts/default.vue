@@ -52,7 +52,11 @@
             <slot />
         </v-main>
 
-        <v-snackbar v-model="copySnackbar" :color="copySnackbarColor" timeout="2000">
+        <v-snackbar
+            v-model="copySnackbar"
+            timeout="2000"
+            :color="copySnackbarColor"
+        >
             {{ copySnackbarText }}
         </v-snackbar>
     </v-app>

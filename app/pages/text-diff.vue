@@ -1,23 +1,57 @@
 <template>
     <v-container class="py-10">
-        <h1 class="font-weight-bold text-h3 mb-2 text-center">{{ $t('diff.title') }}</h1>
-        <p class="text-body-1 text-medium-emphasis mb-10 text-center">{{ $t('diff.subtitle') }}</p>
+        <h1 class="font-weight-bold text-h3 mb-2 text-center">
+            {{ $t('diff.title') }}
+        </h1>
+        <p class="text-body-1 text-medium-emphasis mb-10 text-center">
+            {{ $t('diff.subtitle') }}
+        </p>
         <v-row justify="center">
-            <v-col cols="12" lg="10">
+            <v-col
+                cols="12"
+                lg="10"
+            >
                 <v-card border>
                     <v-card-text class="pt-4">
                         <v-row>
                             <v-col cols="6">
-                                <v-textarea v-model="text1" :label="$t('diff.original')" rows="12" border class="font-monospace" />
+                                <v-textarea
+                                    v-model="text1"
+                                    class="font-monospace"
+                                    rows="12"
+                                    :label="$t('diff.original')"
+                                    border
+                                />
                             </v-col>
                             <v-col cols="6">
-                                <v-textarea v-model="text2" :label="$t('diff.modified')" rows="12" border class="font-monospace" />
+                                <v-textarea
+                                    v-model="text2"
+                                    class="font-monospace"
+                                    rows="12"
+                                    :label="$t('diff.modified')"
+                                    border
+                                />
                             </v-col>
                         </v-row>
-                        <v-btn color="primary" block :disabled="!text1 || !text2" @click="compare">{{ $t('diff.compare') }}</v-btn>
-                        <div v-if="diffLines.length" class="mt-4">
-                            <div v-for="(line, i) in diffLines" :key="i" class="font-monospace pa-1 text-body-2" :class="line.type === 'add' ? 'bg-green-lighten-5' : line.type === 'remove' ? 'bg-red-lighten-5' : ''">
-                                <span class="mr-2 text-caption">{{ line.type === 'add' ? '+' : line.type === 'remove' ? '-' : ' ' }}</span>{{ line.text }}
+                        <v-btn
+                            color="primary"
+                            :disabled="!text1 || !text2"
+                            block
+                            @click="compare"
+                        >
+                            {{ $t('diff.compare') }}
+                        </v-btn>
+                        <div
+                            v-if="diffLines.length"
+                            class="mt-4"
+                        >
+                            <div
+                                v-for="(line, i) in diffLines"
+                                :key="i"
+                                class="font-monospace pa-1 text-body-2"
+                                :class="line.type === 'add' ? 'bg-green-lighten-5' : line.type === 'remove' ? 'bg-red-lighten-5' : ''"
+                            >
+                                <span class="text-caption mr-2">{{ line.type === 'add' ? '+' : line.type === 'remove' ? '-' : ' ' }}</span>{{ line.text }}
                             </div>
                         </div>
                     </v-card-text>
@@ -29,14 +63,55 @@
 
 <script setup lang="ts">
 const { t } = useI18n();
-useHead({ meta: [{ content: t('diff.subtitle'), name: 'description' }], title: t('diff.title') });
+useHead({
+    meta: [
+        {
+            content: t('diff.subtitle'),
+            name: 'description',
+        },
+    ],
+    title: t('diff.title'),
+});
 
 const text1 = ref('');
 const text2 = ref('');
-const diffLines = ref<{ type: 'add' | 'remove' | 'same'; text: string }[]>([]);
+const diffLines = ref<{ text: string; type: 'add' | 'remove' | 'same' }[]>([]);
+
+function compare() {
+    const lines1 = text1.value.split('\n');
+    const lines2 = text2.value.split('\n');
+    const dp = lcs(lines1, lines2);
+    const result: typeof diffLines.value = [];
+    let i = lines1.length;
+    let j = lines2.length;
+    const ops: { text: string; type: 'add' | 'remove' | 'same' }[] = [];
+    while (i > 0 || j > 0) {
+        if (i > 0 && j > 0 && lines1[i - 1] === lines2[j - 1]) {
+            ops.unshift({
+                text: lines1[i - 1] ?? '',
+                type: 'same',
+            });
+            i--; j--;
+        } else if (j > 0 && (i === 0 || dp[i]?.[j - 1]! >= dp[i - 1]?.[j]!)) {
+            ops.unshift({
+                text: lines2[j - 1] ?? '',
+                type: 'add',
+            });
+            j--;
+        } else {
+            ops.unshift({
+                text: lines1[i - 1] ?? '',
+                type: 'remove',
+            });
+            i--;
+        }
+    }
+    diffLines.value = ops;
+}
 
 function lcs(a: string[], b: string[]): number[][] {
-    const m = a.length, n = b.length;
+    const m = a.length;
+    const n = b.length;
     const dp: number[][] = Array.from({ length: m + 1 }, () => new Array(n + 1).fill(0));
     for (let i = 1; i <= m; i++) {
         for (let j = 1; j <= n; j++) {
@@ -45,27 +120,5 @@ function lcs(a: string[], b: string[]): number[][] {
         }
     }
     return dp;
-}
-
-function compare() {
-    const lines1 = text1.value.split('\n');
-    const lines2 = text2.value.split('\n');
-    const dp = lcs(lines1, lines2);
-    const result: typeof diffLines.value = [];
-    let i = lines1.length, j = lines2.length;
-    const ops: { type: 'add' | 'remove' | 'same'; text: string }[] = [];
-    while (i > 0 || j > 0) {
-        if (i > 0 && j > 0 && lines1[i - 1] === lines2[j - 1]) {
-            ops.unshift({ type: 'same', text: lines1[i - 1] });
-            i--; j--;
-        } else if (j > 0 && (i === 0 || dp[i][j - 1] >= dp[i - 1][j])) {
-            ops.unshift({ type: 'add', text: lines2[j - 1] });
-            j--;
-        } else {
-            ops.unshift({ type: 'remove', text: lines1[i - 1] });
-            i--;
-        }
-    }
-    diffLines.value = ops;
 }
 </script>

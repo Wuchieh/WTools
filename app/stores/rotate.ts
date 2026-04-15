@@ -6,18 +6,18 @@ export interface RotateFile {
     blob?: Blob;
     error?: string;
     file: File;
+    flipH: boolean;
+    flipV: boolean;
     id: string;
     preview: string;
     rotation: number;
-    flipH: boolean;
-    flipV: boolean;
-    status: 'pending' | 'converting' | 'error' | 'success';
+    status: 'converting' | 'error' | 'pending' | 'success';
 }
 
 export const useRotateStore = defineStore('rotate', () => {
     const files = ref<RotateFile[]>([]);
     const isConverting = ref(false);
-    const outputFormat = ref<'image/webp' | 'image/jpeg' | 'image/png'>('image/webp');
+    const outputFormat = ref<'image/jpeg' | 'image/png' | 'image/webp'>('image/webp');
     const quality = ref(0.92);
     const successCount = computed(() => files.value.filter((f) => f.status === 'success').length);
     const hasConverted = computed(() => files.value.some((f) => f.status === 'success' || f.status === 'error'));
@@ -29,11 +29,11 @@ export const useRotateStore = defineStore('rotate', () => {
             reader.onload = (e) => {
                 files.value.push({
                     file,
+                    flipH: false,
+                    flipV: false,
                     id: crypto.randomUUID(),
                     preview: e.target?.result as string,
                     rotation: 0,
-                    flipH: false,
-                    flipV: false,
                     status: 'pending',
                 });
             };
@@ -46,21 +46,32 @@ export const useRotateStore = defineStore('rotate', () => {
         if (index !== -1) files.value.splice(index, 1);
     }
 
-    function clearAll() { files.value = []; }
+    function clearAll() {
+        files.value = [];
+    }
 
     function rotate(id: string, angle: number) {
         const f = files.value.find((f) => f.id === id);
-        if (f) { f.rotation = (f.rotation + angle + 360) % 360; f.status = 'pending'; }
+        if (f) {
+            f.rotation = (f.rotation + angle + 360) % 360;
+            f.status = 'pending';
+        }
     }
 
     function flipH(id: string) {
         const f = files.value.find((f) => f.id === id);
-        if (f) { f.flipH = !f.flipH; f.status = 'pending'; }
+        if (f) {
+            f.flipH = !f.flipH;
+            f.status = 'pending';
+        }
     }
 
     function flipV(id: string) {
         const f = files.value.find((f) => f.id === id);
-        if (f) { f.flipV = !f.flipV; f.status = 'pending'; }
+        if (f) {
+            f.flipV = !f.flipV;
+            f.status = 'pending';
+        }
     }
 
     async function convertFiles() {
@@ -93,7 +104,10 @@ export const useRotateStore = defineStore('rotate', () => {
                 canvas.width = w;
                 canvas.height = h;
                 const ctx = canvas.getContext('2d');
-                if (!ctx) { reject(new Error('Canvas context not available')); return; }
+                if (!ctx) {
+                    reject(new Error('Canvas context not available'));
+                    return;
+                }
                 ctx.translate(w / 2, h / 2);
                 ctx.rotate(rad);
                 if (f.flipH) ctx.scale(-1, 1);
@@ -127,7 +141,19 @@ export const useRotateStore = defineStore('rotate', () => {
     }
 
     return {
-        addFiles, clearAll, convertFiles, downloadZip, files, flipH, flipV,
-        hasConverted, isConverting, outputFormat, quality, removeFile, rotate, successCount,
+        addFiles,
+        clearAll,
+        convertFiles,
+        downloadZip,
+        files,
+        flipH,
+        flipV,
+        hasConverted,
+        isConverting,
+        outputFormat,
+        quality,
+        removeFile,
+        rotate,
+        successCount,
     };
 });

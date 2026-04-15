@@ -1,9 +1,17 @@
 <template>
     <v-container class="py-10">
-        <h1 class="font-weight-bold text-h3 mb-2 text-center">{{ $t('heic.title') }}</h1>
-        <p class="text-body-1 text-medium-emphasis mb-10 text-center">{{ $t('heic.subtitle') }}</p>
+        <h1 class="font-weight-bold text-h3 mb-2 text-center">
+            {{ $t('heic.title') }}
+        </h1>
+        <p class="text-body-1 text-medium-emphasis mb-10 text-center">
+            {{ $t('heic.subtitle') }}
+        </p>
         <v-row justify="center">
-            <v-col cols="12" lg="8" md="10">
+            <v-col
+                cols="12"
+                lg="8"
+                md="10"
+            >
                 <HeicConverter />
             </v-col>
         </v-row>
@@ -12,5 +20,13 @@
 
 <script setup lang="ts">
 const { t } = useI18n();
-useHead({ meta: [{ content: t('heic.subtitle'), name: 'description' }], title: t('heic.title') });
+useHead({
+    meta: [
+        {
+            content: t('heic.subtitle'),
+            name: 'description',
+        },
+    ],
+    title: t('heic.title'),
+});
 </script>

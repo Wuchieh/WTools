@@ -1,8 +1,8 @@
+// @ts-ignore
+import heic2any from 'heic2any';
 import JSZip from 'jszip';
 import { defineStore } from 'pinia';
 import { v7 as uuidv7 } from 'uuid';
-// @ts-ignore
-import heic2any from 'heic2any';
 
 export interface HeicFile {
     blob?: Blob;
@@ -10,7 +10,7 @@ export interface HeicFile {
     file: File;
     id: string;
     preview: string;
-    status: 'pending' | 'converting' | 'error' | 'success';
+    status: 'converting' | 'error' | 'pending' | 'success';
 }
 
 export const useHeicStore = defineStore('heic', () => {
@@ -24,7 +24,7 @@ export const useHeicStore = defineStore('heic', () => {
     function addFiles(newFiles: File[]) {
         for (const file of newFiles) {
             const isHeic = file.type === 'image/heic' || file.type === 'image/heif'
-                || file.name.toLowerCase().endsWith('.heic') || file.name.toLowerCase().endsWith('.heif');
+              || file.name.toLowerCase().endsWith('.heic') || file.name.toLowerCase().endsWith('.heif');
             if (!file.type.startsWith('image/') && !isHeic) continue;
             const reader = new FileReader();
             reader.onload = (e) => {
@@ -44,7 +44,9 @@ export const useHeicStore = defineStore('heic', () => {
         if (index !== -1) files.value.splice(index, 1);
     }
 
-    function clearAll() { files.value = []; }
+    function clearAll() {
+        files.value = [];
+    }
 
     async function convertFiles() {
         if (isConverting.value) return;
@@ -55,8 +57,8 @@ export const useHeicStore = defineStore('heic', () => {
             try {
                 const blob = await heic2any({
                     blob: f.file,
-                    toType: outputFormat.value,
                     quality: quality.value,
+                    toType: outputFormat.value,
                 }) as Blob;
                 // heic2any returns single blob or array
                 const actualBlob = Array.isArray(blob) ? blob[0] : blob;
@@ -90,7 +92,16 @@ export const useHeicStore = defineStore('heic', () => {
     }
 
     return {
-        addFiles, clearAll, convertFiles, downloadZip, files,
-        hasConverted, isConverting, outputFormat, quality, removeFile, successCount,
+        addFiles,
+        clearAll,
+        convertFiles,
+        downloadZip,
+        files,
+        hasConverted,
+        isConverting,
+        outputFormat,
+        quality,
+        removeFile,
+        successCount,
     };
 });

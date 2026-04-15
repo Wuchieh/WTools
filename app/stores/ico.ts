@@ -8,13 +8,20 @@ export interface IcoFile {
     file: File;
     id: string;
     preview: string;
-    status: 'pending' | 'converting' | 'error' | 'success';
+    status: 'converting' | 'error' | 'pending' | 'success';
 }
 
 export const useIcoStore = defineStore('ico', () => {
     const files = ref<IcoFile[]>([]);
     const isConverting = ref(false);
-    const sizes = ref<number[]>([16, 32, 48, 64, 128, 256]);
+    const sizes = ref<number[]>([
+        16,
+        32,
+        48,
+        64,
+        128,
+        256,
+    ]);
     const successCount = computed(() => files.value.filter((f) => f.status === 'success').length);
     const hasConverted = computed(() => files.value.some((f) => f.status === 'success' || f.status === 'error'));
 
@@ -39,7 +46,9 @@ export const useIcoStore = defineStore('ico', () => {
         if (index !== -1) files.value.splice(index, 1);
     }
 
-    function clearAll() { files.value = []; }
+    function clearAll() {
+        files.value = [];
+    }
 
     async function convertFiles() {
         if (isConverting.value) return;
@@ -100,7 +109,15 @@ export const useIcoStore = defineStore('ico', () => {
     }
 
     return {
-        addFiles, clearAll, convertFiles, downloadZip, files,
-        hasConverted, isConverting, removeFile, sizes, successCount,
+        addFiles,
+        clearAll,
+        convertFiles,
+        downloadZip,
+        files,
+        hasConverted,
+        isConverting,
+        removeFile,
+        sizes,
+        successCount,
     };
 });

@@ -1,10 +1,16 @@
 <template>
     <div class="whip-streamer">
         <!-- Endpoint Settings -->
-        <v-card class="mb-4" variant="outlined">
+        <v-card
+            class="mb-4"
+            variant="outlined"
+        >
             <v-card-item>
                 <v-card-title class="text-h6">
-                    <v-icon class="mr-2" icon="mdi-broadcast" />
+                    <v-icon
+                        class="mr-2"
+                        icon="mdi-broadcast"
+                    />
                     {{ $t('whip.settings') }}
                 </v-card-title>
             </v-card-item>
@@ -13,27 +19,27 @@
                     <v-col cols="12">
                         <v-text-field
                             v-model="endpointUrl"
+                            density="compact"
+                            prepend-inner-icon="mdi-link-variant"
+                            variant="outlined"
                             :disabled="store.isConnected || store.isConnecting"
                             :label="$t('whip.endpointUrl')"
                             :placeholder="$t('whip.endpointUrlPlaceholder')"
-                            prepend-inner-icon="mdi-link-variant"
-                            variant="outlined"
                             clearable
-                            density="compact"
                         />
                     </v-col>
                     <v-col cols="12">
                         <v-text-field
                             v-model="bearerToken"
+                            density="compact"
+                            prepend-inner-icon="mdi-key"
+                            variant="outlined"
+                            :append-inner-icon="showToken ? 'mdi-eye-off' : 'mdi-eye'"
                             :disabled="store.isConnected || store.isConnecting"
                             :label="$t('whip.bearerToken')"
                             :placeholder="$t('whip.bearerTokenPlaceholder')"
-                            prepend-inner-icon="mdi-key"
-                            variant="outlined"
-                            clearable
-                            density="compact"
                             :type="showToken ? 'text' : 'password'"
-                            :append-inner-icon="showToken ? 'mdi-eye-off' : 'mdi-eye'"
+                            clearable
                             @click:append-inner="showToken = !showToken"
                         />
                     </v-col>
@@ -42,16 +48,22 @@
         </v-card>
 
         <!-- Status & Preview -->
-        <v-card class="mb-4" variant="outlined">
+        <v-card
+            class="mb-4"
+            variant="outlined"
+        >
             <v-card-item>
                 <v-card-title class="text-h6">
-                    <v-icon class="mr-2" icon="mdi-monitor-dashboard" />
+                    <v-icon
+                        class="mr-2"
+                        icon="mdi-monitor-dashboard"
+                    />
                     {{ $t('whip.preview') }}
                 </v-card-title>
             </v-card-item>
             <v-card-text>
                 <!-- Video preview -->
-                <div class="video-wrapper rounded mb-3">
+                <div class="video-wrapper mb-3 rounded">
                     <video
                         ref="localVideoRef"
                         class="local-video"
@@ -59,42 +71,81 @@
                         muted
                         playsinline
                     />
-                    <div v-if="!store.localStream && !store.isConnecting" class="video-placeholder d-flex align-center justify-center">
-                        <div class="text-center text-medium-emphasis">
-                            <v-icon icon="mdi-video-off-outline" size="48" class="mb-2" />
+                    <div
+                        v-if="!store.localStream && !store.isConnecting"
+                        class="align-center d-flex video-placeholder justify-center"
+                    >
+                        <div class="text-medium-emphasis text-center">
+                            <v-icon
+                                class="mb-2"
+                                icon="mdi-video-off-outline"
+                                size="48"
+                            />
                             <p>{{ $t('whip.noCamera') }}</p>
                         </div>
                     </div>
-                    <div v-if="store.isConnecting" class="video-placeholder d-flex align-center justify-center">
+                    <div
+                        v-if="store.isConnecting"
+                        class="align-center d-flex video-placeholder justify-center"
+                    >
                         <div class="text-center">
-                            <v-progress-circular indeterminate color="primary" class="mb-2" />
+                            <v-progress-circular
+                                class="mb-2"
+                                color="primary"
+                                indeterminate
+                            />
                             <p>{{ $t('whip.connecting') }}</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Status chips -->
-                <div class="d-flex flex-wrap gap-2 mb-3">
+                <div class="d-flex mb-3 flex-wrap gap-2">
                     <v-chip
-                        :color="statusColor"
-                        variant="tonal"
                         size="small"
+                        variant="tonal"
+                        :color="statusColor"
                     >
-                        <v-icon start icon="mdi-circle" size="8" />
+                        <v-icon
+                            icon="mdi-circle"
+                            size="8"
+                            start
+                        />
                         {{ $t(`whip.status.${store.status}`) }}
                     </v-chip>
-                    <v-chip v-if="store.isConnected" color="success" variant="tonal" size="small">
-                        <v-icon start icon="mdi-check-circle" size="16" />
+                    <v-chip
+                        v-if="store.isConnected"
+                        color="success"
+                        size="small"
+                        variant="tonal"
+                    >
+                        <v-icon
+                            icon="mdi-check-circle"
+                            size="16"
+                            start
+                        />
                         {{ $t('whip.connected') }}
                     </v-chip>
-                    <v-chip v-if="store.errorMessage" color="error" variant="tonal" size="small">
-                        <v-icon start icon="mdi-alert-circle" size="16" />
+                    <v-chip
+                        v-if="store.errorMessage"
+                        color="error"
+                        size="small"
+                        variant="tonal"
+                    >
+                        <v-icon
+                            icon="mdi-alert-circle"
+                            size="16"
+                            start
+                        />
                         {{ store.errorMessage }}
                     </v-chip>
                 </div>
 
                 <!-- Stream Stats -->
-                <div v-if="store.isConnected" class="stats-row">
+                <div
+                    v-if="store.isConnected"
+                    class="stats-row"
+                >
                     <div class="stat-item">
                         <span class="stat-label">{{ $t('whip.stats.bitrate') }}</span>
                         <span class="stat-value">{{ formatBitrate(store.bitrate) }}</span>
@@ -122,15 +173,19 @@
                     <template v-if="!store.isConnected && !store.isConnecting">
                         <v-btn
                             color="primary"
-                            :disabled="!endpointUrl"
                             prepend-icon="mdi-broadcast"
+                            :disabled="!endpointUrl"
                             @click="handleStart"
                         >
                             {{ $t('whip.startStream') }}
                         </v-btn>
                     </template>
                     <template v-else-if="store.isConnecting">
-                        <v-btn color="warning" disabled prepend-icon="mdi-loading">
+                        <v-btn
+                            color="warning"
+                            prepend-icon="mdi-loading"
+                            disabled
+                        >
                             {{ $t('whip.connecting') }}
                         </v-btn>
                     </template>
@@ -147,17 +202,17 @@
                     <!-- Mute controls (only when streaming) -->
                     <template v-if="store.localStream">
                         <v-btn
+                            prepend-icon="mdi-microphone"
                             :color="audioEnabled ? 'default' : 'error'"
                             :variant="audioEnabled ? 'outlined' : 'tonal'"
-                            prepend-icon="mdi-microphone"
                             @click="handleToggleAudio"
                         >
                             {{ audioEnabled ? $t('whip.mute') : $t('whip.unmute') }}
                         </v-btn>
                         <v-btn
+                            prepend-icon="mdi-video"
                             :color="videoEnabled ? 'default' : 'error'"
                             :variant="videoEnabled ? 'outlined' : 'tonal'"
-                            prepend-icon="mdi-video"
                             @click="handleToggleVideo"
                         >
                             {{ videoEnabled ? $t('whip.turnOffVideo') : $t('whip.turnOnVideo') }}
@@ -169,9 +224,9 @@
                     <!-- Copy SDP -->
                     <v-btn
                         v-if="store.remoteDescription"
-                        variant="outlined"
                         prepend-icon="mdi-content-copy"
                         size="small"
+                        variant="outlined"
                         @click="copySdp"
                     >
                         {{ $t('whip.copySdp') }}
@@ -183,8 +238,8 @@
 </template>
 
 <script setup lang="ts">
-import { useWhipStore } from '~/stores/whip';
 import { useWhipClient } from '~/composables/useWhipClient';
+import { useWhipStore } from '~/stores/whip';
 
 const { t } = useI18n();
 const store = useWhipStore();
@@ -208,11 +263,26 @@ const statusColor = computed(() => {
     switch (store.status) {
         case 'connected': return 'success';
         case 'connecting': return 'warning';
-        case 'error': return 'error';
         case 'disconnected': return 'grey';
+        case 'error': return 'error';
         default: return 'default';
     }
 });
+
+async function copySdp() {
+    try {
+        await navigator.clipboard.writeText(store.remoteDescription);
+    } catch {
+        // Fallback: select text
+    }
+}
+
+function formatBitrate(bps: number): string {
+    if (bps === 0) return '0 bps';
+    if (bps < 1000) return `${bps} bps`;
+    if (bps < 1_000_000) return `${(bps / 1000).toFixed(1)} Kbps`;
+    return `${(bps / 1_000_000).toFixed(2)} Mbps`;
+}
 
 async function handleStart() {
     audioEnabled.value = true;
@@ -232,22 +302,6 @@ function handleToggleAudio() {
 function handleToggleVideo() {
     const enabled = client.toggleVideo();
     if (enabled !== null) videoEnabled.value = enabled;
-}
-
-function formatBitrate(bps: number): string {
-    if (bps === 0) return '0 bps';
-    if (bps < 1000) return `${bps} bps`;
-    if (bps < 1_000_000) return `${(bps / 1000).toFixed(1)} Kbps`;
-    return `${(bps / 1_000_000).toFixed(2)} Mbps`;
-}
-
-async function copySdp() {
-    try {
-        await navigator.clipboard.writeText(store.remoteDescription);
-    }
-    catch {
-        // Fallback: select text
-    }
 }
 
 // Cleanup on unmount
