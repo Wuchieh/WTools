@@ -257,6 +257,23 @@ const tools = [
         route: 'html-escape',
         titleKey: 'tools.htmlEscape.title',
     },
+    { descKey: 'tools.jsonFormatter.desc', icon: 'mdi-code-json', id: 'json-formatter', route: 'json-formatter', titleKey: 'tools.jsonFormatter.title' },
+    { descKey: 'tools.csvViewer.desc', icon: 'mdi-table', id: 'csv-viewer', route: 'csv-viewer', titleKey: 'tools.csvViewer.title' },
+    { descKey: 'tools.textDiff.desc', icon: 'mdi-compare', id: 'text-diff', route: 'text-diff', titleKey: 'tools.textDiff.title' },
+    { descKey: 'tools.batchRename.desc', icon: 'mdi-rename-box', id: 'batch-rename', route: 'batch-rename', titleKey: 'tools.batchRename.title' },
+    { descKey: 'tools.markdownPreview.desc', icon: 'mdi-language-markdown', id: 'markdown-preview', route: 'markdown-preview', titleKey: 'tools.markdownPreview.title' },
+    { descKey: 'tools.fileSize.desc', icon: 'mdi-harddisk', id: 'file-size', route: 'file-size', titleKey: 'tools.fileSize.title' },
+    { descKey: 'tools.timestamp.desc', icon: 'mdi-clock', id: 'timestamp', route: 'timestamp', titleKey: 'tools.timestamp.title' },
+    { descKey: 'tools.wordCounter.desc', icon: 'mdi-counter', id: 'word-counter', route: 'word-counter', titleKey: 'tools.wordCounter.title' },
+    { descKey: 'tools.hashChecker.desc', icon: 'mdi-file-check', id: 'hash-checker', route: 'hash-checker', titleKey: 'tools.hashChecker.title' },
+    { descKey: 'tools.base64File.desc', icon: 'mdi-file-lock', id: 'base64-file', route: 'base64-file', titleKey: 'tools.base64File.title' },
+    { descKey: 'tools.loremIpsum.desc', icon: 'mdi-text', id: 'lorem-ipsum', route: 'lorem-ipsum', titleKey: 'tools.loremIpsum.title' },
+    { descKey: 'tools.cssFormatter.desc', icon: 'mdi-language-css3', id: 'css-formatter', route: 'css-formatter', titleKey: 'tools.cssFormatter.title' },
+    { descKey: 'tools.sentenceCounter.desc', icon: 'mdi-text-short', id: 'sentence-counter', route: 'sentence-counter', titleKey: 'tools.sentenceCounter.title' },
+    { descKey: 'tools.percentageCalc.desc', icon: 'mdi-percent', id: 'percentage-calc', route: 'percentage-calc', titleKey: 'tools.percentageCalc.title' },
+    { descKey: 'tools.jsonYaml.desc', icon: 'mdi-code-braces', id: 'json-yaml', route: 'json-yaml', titleKey: 'tools.jsonYaml.title' },
+    { descKey: 'tools.binaryCalc.desc', icon: 'mdi-numeric', id: 'binary-calc', route: 'binary-calc', titleKey: 'tools.binaryCalc.title' },
+    { descKey: 'tools.encDecText.desc', icon: 'mdi-lock-open', id: 'enc-dec-text', route: 'enc-dec-text', titleKey: 'tools.encDecText.title' },
 ];
 </script>
 
