@@ -1,10 +1,10 @@
 <template>
     <v-container class="py-10">
         <h1 class="font-weight-bold text-h3 mb-2 text-center">
-            {{ $t('wordcount.title') }}
+            {{ $t('wordCounter.title') }}
         </h1>
         <p class="text-body-1 text-medium-emphasis mb-10 text-center">
-            {{ $t('wordcount.subtitle') }}
+            {{ $t('wordCounter.subtitle') }}
         </p>
         <v-row justify="center">
             <v-col
@@ -17,7 +17,7 @@
                             v-model="text"
                             class="mb-4"
                             rows="10"
-                            :label="$t('wordcount.input')"
+                            :label="$t('wordCounter.input')"
                             border
                         />
                         <v-row>
@@ -52,11 +52,11 @@ const { t } = useI18n();
 useHead({
     meta: [
         {
-            content: t('wordcount.subtitle'),
+            content: t('wordCounter.subtitle'),
             name: 'description',
-        },
+        }
     ],
-    title: t('wordcount.title'),
+    title: t('wordCounter.title'),
 });
 
 const text = ref('');
@@ -68,19 +68,19 @@ const stats = computed(() => {
     const lines = text.value ? text.value.split('\n').length : 0;
     return [
         {
-            label: t('wordcount.words'),
+            label: t('wordCounter.words'),
             value: words,
         },
         {
-            label: t('wordcount.chars'),
+            label: t('wordCounter.chars'),
             value: chars,
         },
         {
-            label: t('wordcount.charsNoSpace'),
+            label: t('wordCounter.charsNoSpace'),
             value: charsNoSpace,
         },
         {
-            label: t('wordcount.lines'),
+            label: t('wordCounter.lines'),
             value: lines,
         },
     ];

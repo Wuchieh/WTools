@@ -1,10 +1,10 @@
 <template>
     <v-container class="py-10">
         <h1 class="font-weight-bold text-h3 mb-2 text-center">
-            {{ $t('encdec.title') }}
+            {{ $t('encDecText.title') }}
         </h1>
         <p class="text-body-1 text-medium-emphasis mb-10 text-center">
-            {{ $t('encdec.subtitle') }}
+            {{ $t('encDecText.subtitle') }}
         </p>
         <v-row justify="center">
             <v-col
@@ -17,14 +17,14 @@
                             v-model="cipher"
                             class="mb-4"
                             :items="ciphers"
-                            :label="$t('encdec.cipher')"
+                            :label="$t('encDecText.cipher')"
                         />
                         <v-text-field
                             v-if="cipher !== 'rot13'"
                             v-model="key"
                             class="mb-4"
                             type="number"
-                            :label="$t('encdec.key')"
+                            :label="$t('encDecText.key')"
                             border
                         />
                         <v-btn-toggle
@@ -34,23 +34,23 @@
                             color="primary"
                         >
                             <v-btn value="encrypt">
-                                {{ $t('encdec.encrypt') }}
+                                {{ $t('encDecText.encrypt') }}
                             </v-btn>
                             <v-btn value="decrypt">
-                                {{ $t('encdec.decrypt') }}
+                                {{ $t('encDecText.decrypt') }}
                             </v-btn>
                         </v-btn-toggle>
                         <p
                             v-if="cipher === 'rot13'"
                             class="text-caption text-medium-emphasis mb-4"
                         >
-                            ROT13 是對稱加密，加密與解密結果相同
+                            {{ $t('encDecText.rot13Note') }}
                         </p>
                         <v-textarea
                             v-model="input"
                             class="mb-4"
                             rows="4"
-                            :label="$t('encdec.input')"
+                            :label="$t('encDecText.input')"
                             border
                         />
                         <v-btn
@@ -59,14 +59,14 @@
                             block
                             @click="process"
                         >
-                            {{ mode === 'encrypt' ? $t('encdec.encrypt') : $t('encdec.decrypt') }}
+                            {{ mode === 'encrypt' ? $t('encDecText.encrypt') : $t('encDecText.decrypt') }}
                         </v-btn>
                         <v-textarea
                             v-if="output"
                             v-model="output"
                             class="mt-4"
                             rows="4"
-                            :label="$t('encdec.output')"
+                            :label="$t('encDecText.output')"
                             border
                             readonly
                         />
@@ -77,7 +77,7 @@
                             block
                             @click="copy"
                         >
-                            {{ $t('encdec.copy') }}
+                            {{ $t('encDecText.copy') }}
                         </v-btn>
                     </v-card-text>
                 </v-card>
@@ -91,11 +91,11 @@ const { t } = useI18n();
 useHead({
     meta: [
         {
-            content: t('encdec.subtitle'),
+            content: t('encDecText.subtitle'),
             name: 'description',
-        },
+        }
     ],
-    title: t('encdec.title'),
+    title: t('encDecText.title'),
 });
 
 const cipher = ref('caesar');
@@ -117,10 +117,10 @@ const ciphers = [
 function copy() {
     navigator.clipboard.writeText(output.value).then(() => {
         const showCopySnackbar = inject<(text: string, color?: string) => void>('showCopySnackbar');
-        if (showCopySnackbar) showCopySnackbar('已複製到剪貼簿！');
+        if (showCopySnackbar) showCopySnackbar(t('encDecText.copied'));
     }).catch(() => {
         const showCopySnackbar = inject<(text: string, color?: string) => void>('showCopySnackbar');
-        if (showCopySnackbar) showCopySnackbar('複製失敗', 'error');
+        if (showCopySnackbar) showCopySnackbar(t('encDecText.copyFailed'), 'error');
     });
 }
 

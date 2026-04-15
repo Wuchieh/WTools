@@ -1,10 +1,10 @@
 <template>
     <v-container class="py-10">
         <h1 class="font-weight-bold text-h3 mb-2 text-center">
-            {{ $t('diff.title') }}
+            {{ $t('textDiff.title') }}
         </h1>
         <p class="text-body-1 text-medium-emphasis mb-10 text-center">
-            {{ $t('diff.subtitle') }}
+            {{ $t('textDiff.subtitle') }}
         </p>
         <v-row justify="center">
             <v-col
@@ -19,7 +19,7 @@
                                     v-model="text1"
                                     class="font-monospace"
                                     rows="12"
-                                    :label="$t('diff.original')"
+                                    :label="$t('textDiff.original')"
                                     border
                                 />
                             </v-col>
@@ -28,7 +28,7 @@
                                     v-model="text2"
                                     class="font-monospace"
                                     rows="12"
-                                    :label="$t('diff.modified')"
+                                    :label="$t('textDiff.modified')"
                                     border
                                 />
                             </v-col>
@@ -39,7 +39,7 @@
                             block
                             @click="compare"
                         >
-                            {{ $t('diff.compare') }}
+                            {{ $t('textDiff.compare') }}
                         </v-btn>
                         <div
                             v-if="diffLines.length"
@@ -70,11 +70,11 @@ const { t } = useI18n();
 useHead({
     meta: [
         {
-            content: t('diff.subtitle'),
+            content: t('textDiff.subtitle'),
             name: 'description',
-        },
+        }
     ],
-    title: t('diff.title'),
+    title: t('textDiff.title'),
 });
 
 const text1 = ref('');

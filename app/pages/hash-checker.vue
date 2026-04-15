@@ -1,10 +1,10 @@
 <template>
     <v-container class="py-10">
         <h1 class="font-weight-bold text-h3 mb-2 text-center">
-            {{ $t('hashcheck.title') }}
+            {{ $t('hashChecker.title') }}
         </h1>
         <p class="text-body-1 text-medium-emphasis mb-10 text-center">
-            {{ $t('hashcheck.subtitle') }}
+            {{ $t('hashChecker.subtitle') }}
         </p>
         <v-row justify="center">
             <v-col
@@ -17,7 +17,7 @@
                             v-model="files"
                             class="mb-4"
                             accept=".*"
-                            :label="$t('hashcheck.selectFiles')"
+                            :label="$t('hashChecker.selectFiles')"
                             border
                             multiple
                             show-size
@@ -42,7 +42,7 @@
                             block
                             @click="compute"
                         >
-                            {{ $t('hashcheck.compute') }}
+                            {{ $t('hashChecker.compute') }}
                         </v-btn>
                         <v-list
                             v-if="results.length"
@@ -81,11 +81,11 @@ const { t } = useI18n();
 useHead({
     meta: [
         {
-            content: t('hashcheck.subtitle'),
+            content: t('hashChecker.subtitle'),
             name: 'description',
-        },
+        }
     ],
-    title: t('hashcheck.title'),
+    title: t('hashChecker.title'),
 });
 
 const files = ref<File[] | null>(null);
@@ -120,10 +120,10 @@ async function compute() {
 function copy(text: string) {
     navigator.clipboard.writeText(text).then(() => {
         const showCopySnackbar = inject<(text: string, color?: string) => void>('showCopySnackbar');
-        if (showCopySnackbar) showCopySnackbar('已複製到剪貼簿！');
+        if (showCopySnackbar) showCopySnackbar(t('hashChecker.copied'));
     }).catch(() => {
         const showCopySnackbar = inject<(text: string, color?: string) => void>('showCopySnackbar');
-        if (showCopySnackbar) showCopySnackbar('複製失敗', 'error');
+        if (showCopySnackbar) showCopySnackbar(t('hashChecker.copyFailed'), 'error');
     });
 }
 </script>

@@ -1,10 +1,10 @@
 <template>
     <v-container class="py-10">
         <h1 class="font-weight-bold text-h3 mb-2 text-center">
-            {{ $t('batchrename.title') }}
+            {{ $t('batchRename.title') }}
         </h1>
         <p class="text-body-1 text-medium-emphasis mb-10 text-center">
-            {{ $t('batchrename.subtitle') }}
+            {{ $t('batchRename.subtitle') }}
         </p>
         <v-row justify="center">
             <v-col
@@ -17,7 +17,7 @@
                             v-model="files"
                             class="mb-4"
                             prepend-icon="mdi-file"
-                            :label="$t('batchrename.selectFiles')"
+                            :label="$t('batchRename.selectFiles')"
                             border
                             multiple
                             show-size
@@ -26,7 +26,7 @@
                             v-model="pattern"
                             class="mb-2"
                             placeholder="{n}_{date}"
-                            :label="$t('batchrename.pattern')"
+                            :label="$t('batchRename.pattern')"
                             border
                         />
                         <v-select
@@ -34,7 +34,7 @@
                             class="mb-4"
                             density="compact"
                             :items="caseOptions"
-                            :label="$t('batchrename.caseStyle')"
+                            :label="$t('batchRename.caseStyle')"
                         />
                         <v-btn
                             color="primary"
@@ -42,7 +42,7 @@
                             block
                             @click="rename"
                         >
-                            {{ $t('batchrename.rename') }}
+                            {{ $t('batchRename.rename') }}
                         </v-btn>
                         <v-btn
                             v-if="results.length"
@@ -51,7 +51,7 @@
                             block
                             @click="downloadZip"
                         >
-                            {{ $t('batchrename.downloadZip') }}
+                            {{ $t('batchRename.downloadZip') }}
                         </v-btn>
                         <v-list
                             v-if="results.length"
@@ -94,35 +94,35 @@ const { t } = useI18n();
 useHead({
     meta: [
         {
-            content: t('batchrename.subtitle'),
+            content: t('batchRename.subtitle'),
             name: 'description',
-        },
+        }
     ],
-    title: t('batchrename.title'),
+    title: t('batchRename.title'),
 });
 
 const files = ref<File[] | null>(null);
 const pattern = ref('{name}');
 const caseStyle = ref('keep');
 const results = ref<{ new: string; old: string }[]>([]);
-const caseOptions = [
+const caseOptions = computed(() => [
     {
-        title: 'Keep Original',
+        title: t('batchRename.keepOriginal'),
         value: 'keep',
     },
     {
-        title: 'lowercase',
+        title: t('batchRename.lowercase'),
         value: 'lower',
     },
     {
-        title: 'UPPERCASE',
+        title: t('batchRename.uppercase'),
         value: 'upper',
     },
     {
-        title: 'Title Case',
+        title: t('batchRename.titleCase'),
         value: 'title',
     },
-];
+]);
 
 async function downloadZip() {
     if (!files.value || !results.value.length) return;

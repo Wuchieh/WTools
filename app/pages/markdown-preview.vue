@@ -1,10 +1,10 @@
 <template>
     <v-container class="py-10">
         <h1 class="font-weight-bold text-h3 mb-2 text-center">
-            {{ $t('markdown.title') }}
+            {{ $t('markdownPreview.title') }}
         </h1>
         <p class="text-body-1 text-medium-emphasis mb-10 text-center">
-            {{ $t('markdown.subtitle') }}
+            {{ $t('markdownPreview.subtitle') }}
         </p>
         <v-row justify="center">
             <v-col
@@ -17,7 +17,7 @@
                             v-model="input"
                             class="font-monospace mb-4"
                             rows="12"
-                            :label="$t('markdown.input')"
+                            :label="$t('markdownPreview.input')"
                             border
                         />
                         <!-- eslint-disable vue/no-v-html -->
@@ -39,11 +39,11 @@ const { t } = useI18n();
 useHead({
     meta: [
         {
-            content: t('markdown.subtitle'),
+            content: t('markdownPreview.subtitle'),
             name: 'description',
-        },
+        }
     ],
-    title: t('markdown.title'),
+    title: t('markdownPreview.title'),
 });
 
 const input = ref('');

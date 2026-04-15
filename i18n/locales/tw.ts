@@ -1,6 +1,8 @@
 export default {
     base64: {
         copy: '複製',
+        copied: '已複製到剪貼簿！',
+        copyFailed: '複製失敗',
         decode: '解碼',
         encode: '編碼',
         inputBase64: '輸入 Base64',
@@ -21,19 +23,31 @@ export default {
     batchRename: {
         caseStyle: '大小寫風格',
         downloadZip: '下載 ZIP',
+        keepOriginal: '保留原始',
+        lowercase: '小寫',
         pattern: '命名模式',
         rename: '重新命名',
         selectFiles: '選擇檔案',
         subtitle: '批次重新命名多個檔案。',
         title: '批次命名',
+        titleCase: '首字母大寫',
+        uppercase: '大寫',
     },
-    binaryCalc: {
+    binary: {
+        bin: 'Bin',
+        binary: 'Binary',
+        dec: 'Dec',
+        decimal: 'Decimal',
+        hex: 'Hex',
+        hexFull: 'Hexadecimal',
         input: '輸入數字',
         subtitle: '二進制、十進制、十六進制數字轉換。',
         title: '進位計算器',
     },
     color: {
         copy: '複製',
+        copied: '已複製到剪貼簿！',
+        copyFailed: '複製失敗',
         palette: '調色盤',
         preview: '預覽',
         subtitle: '選取顏色並轉換 HEX、RGB、HSL 格式。',
@@ -66,6 +80,7 @@ export default {
         title: '圖片裁切',
     },
     cssFormatter: {
+        copied: '已複製到剪貼簿！',
         copy: '複製',
         format: '格式化',
         input: '輸入 CSS',
@@ -97,11 +112,14 @@ export default {
     encDecText: {
         cipher: '加密法',
         copy: '複製',
+        copied: '已複製到剪貼簿！',
+        copyFailed: '複製失敗',
         decrypt: '解密',
         encrypt: '加密',
         input: '輸入文字',
         key: '金鑰（位移）',
         output: '輸出結果',
+        rot13Note: 'ROT13 是對稱加密，加密與解密結果相同',
         subtitle: 'Caesar 密碼與 ROT13 文字加解密。',
         title: '文字加解密',
     },
@@ -130,12 +148,18 @@ export default {
         title: 'GIF 編輯器',
     },
     hash: {
+        copy: '複製',
+        copied: '已複製到剪貼簿！',
+        copyFailed: '複製失敗',
         generate: '產生',
         input: '輸入文字',
         subtitle: '產生密碼學 Hash 值（MD5、SHA1、SHA256 等）。',
         title: 'Hash 產生器',
     },
     hashChecker: {
+        copy: '複製',
+        copied: '已複製到剪貼簿！',
+        copyFailed: '複製失敗',
         compute: '計算',
         selectFiles: '選擇檔案',
         subtitle: '計算檔案的 MD5、SHA1、SHA256 等 Hash 值。',
@@ -155,6 +179,8 @@ export default {
     home: '首頁',
     html: {
         copy: '複製',
+        copied: '已複製到剪貼簿！',
+        copyFailed: '複製失敗',
         escape: 'Escape',
         input: '輸入',
         output: '輸出',
@@ -170,6 +196,8 @@ export default {
     },
     jsonFormatter: {
         copy: '複製',
+        copied: '已複製到剪貼簿！',
+        copyFailed: '複製失敗',
         format: '格式化',
         input: '輸入 JSON',
         minify: '最小化',
@@ -182,6 +210,8 @@ export default {
     jsonYaml: {
         convert: '轉換',
         copy: '複製',
+        copied: '已複製到剪貼簿！',
+        copyFailed: '複製失敗',
         json2yaml: 'JSON → YAML',
         subtitle: 'JSON 與 YAML 格式互轉。',
         title: 'JSON/YAML 轉換',
@@ -201,8 +231,11 @@ export default {
     },
     lorem: {
         copy: '複製',
+        copied: '已複製到剪貼簿！',
         count: '數量 ({v})',
         generate: '產生',
+        stepConfigure: '設定',
+        stepResult: '結果',
         subtitle: '產生假字文字。',
         title: 'Lorem Ipsum',
         unit: '單位',
@@ -238,6 +271,8 @@ export default {
         title: '密碼產生器',
         uppercase: '大寫字母',
         weak: '弱',
+        copied: '已複製到剪貼簿！',
+        copyFailed: '複製失敗',
     },
     qr: {
         download: '下載',
@@ -251,6 +286,8 @@ export default {
     },
     qrreader: {
         copy: '複製',
+        copied: '已複製到剪貼簿！',
+        copyFailed: '複製失敗',
         notFound: '找不到 QR Code',
         selectImage: '選擇圖片',
         subtitle: '從圖片或相機讀取 QR Code。',
@@ -303,6 +340,8 @@ export default {
         strict: '嚴格模式',
         subtitle: '將文字轉為 URL 友善的 slug。',
         title: 'Slug 產生器',
+        copied: '已複製到剪貼簿！',
+        copyFailed: '複製失敗',
     },
     svg: {
         convert: '轉換',
@@ -332,6 +371,8 @@ export default {
     },
     timestamp: {
         copy: '複製',
+        copied: '已複製到剪貼簿！',
+        copyFailed: '複製失敗',
         subtitle: 'Unix 時間戳記與日期格式轉換。',
         timestamp: '時間戳記',
         title: '時間戳記',
@@ -537,6 +578,8 @@ export default {
     },
     urlenc: {
         copy: '複製',
+        copied: '已複製到剪貼簿！',
+        copyFailed: '複製失敗',
         decode: '解碼',
         encode: '編碼',
         input: '輸入內容',
@@ -550,6 +593,8 @@ export default {
         subtitle: '產生 UUID v4 隨機碼與 v7 時間戳版本。',
         title: 'UUID 產生器',
         version: '版本',
+        copied: '已複製到剪貼簿！',
+        copyFailed: '複製失敗',
     },
     watermark: {
         apply: '加入浮水印',

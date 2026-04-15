@@ -1,10 +1,10 @@
 <template>
     <v-container class="py-10">
         <h1 class="font-weight-bold text-h3 mb-2 text-center">
-            {{ $t('json.title') }}
+            {{ $t('jsonFormatter.title') }}
         </h1>
         <p class="text-body-1 text-medium-emphasis mb-10 text-center">
-            {{ $t('json.subtitle') }}
+            {{ $t('jsonFormatter.subtitle') }}
         </p>
         <v-row justify="center">
             <v-col
@@ -19,20 +19,20 @@
                             color="primary"
                         >
                             <v-btn value="format">
-                                {{ $t('json.format') }}
+                                {{ $t('jsonFormatter.format') }}
                             </v-btn>
                             <v-btn value="minify">
-                                {{ $t('json.minify') }}
+                                {{ $t('jsonFormatter.minify') }}
                             </v-btn>
                             <v-btn value="validate">
-                                {{ $t('json.validate') }}
+                                {{ $t('jsonFormatter.validate') }}
                             </v-btn>
                         </v-btn-toggle>
                         <v-textarea
                             v-model="input"
                             class="font-monospace mb-4"
                             rows="8"
-                            :label="$t('json.input')"
+                            :label="$t('jsonFormatter.input')"
                             border
                         />
                         <v-row class="mb-4">
@@ -43,7 +43,7 @@
                                     block
                                     @click="process"
                                 >
-                                    {{ $t('json.process') }}
+                                    {{ $t('jsonFormatter.process') }}
                                 </v-btn>
                             </v-col>
                             <v-col cols="6">
@@ -53,7 +53,7 @@
                                     block
                                     @click="copy"
                                 >
-                                    {{ $t('json.copy') }}
+                                    {{ $t('jsonFormatter.copy') }}
                                 </v-btn>
                             </v-col>
                         </v-row>
@@ -62,7 +62,7 @@
                             v-model="output"
                             class="font-monospace"
                             rows="8"
-                            :label="$t('json.output')"
+                            :label="$t('jsonFormatter.output')"
                             border
                             readonly
                         />
@@ -85,11 +85,11 @@ const { t } = useI18n();
 useHead({
     meta: [
         {
-            content: t('json.subtitle'),
+            content: t('jsonFormatter.subtitle'),
             name: 'description',
-        },
+        }
     ],
-    title: t('json.title'),
+    title: t('jsonFormatter.title'),
 });
 
 const mode = ref('format');
@@ -100,10 +100,10 @@ const error = ref('');
 function copy() {
     navigator.clipboard.writeText(output.value).then(() => {
         const showCopySnackbar = inject<(text: string, color?: string) => void>('showCopySnackbar');
-        if (showCopySnackbar) showCopySnackbar('已複製到剪貼簿！');
+        if (showCopySnackbar) showCopySnackbar(t('jsonFormatter.copied'));
     }).catch(() => {
         const showCopySnackbar = inject<(text: string, color?: string) => void>('showCopySnackbar');
-        if (showCopySnackbar) showCopySnackbar('複製失敗', 'error');
+        if (showCopySnackbar) showCopySnackbar(t('jsonFormatter.copyFailed'), 'error');
     });
 }
 

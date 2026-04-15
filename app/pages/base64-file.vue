@@ -1,10 +1,10 @@
 <template>
     <v-container class="py-10">
         <h1 class="font-weight-bold text-h3 mb-2 text-center">
-            {{ $t('base64file.title') }}
+            {{ $t('base64File.title') }}
         </h1>
         <p class="text-body-1 text-medium-emphasis mb-10 text-center">
-            {{ $t('base64file.subtitle') }}
+            {{ $t('base64File.subtitle') }}
         </p>
         <v-row justify="center">
             <v-col
@@ -19,17 +19,17 @@
                             color="primary"
                         >
                             <v-btn value="encode">
-                                {{ $t('base64file.encode') }}
+                                {{ $t('base64File.encode') }}
                             </v-btn>
                             <v-btn value="decode">
-                                {{ $t('base64file.decode') }}
+                                {{ $t('base64File.decode') }}
                             </v-btn>
                         </v-btn-toggle>
                         <v-file-input
                             v-if="mode === 'encode'"
                             v-model="file"
                             class="mb-4"
-                            :label="$t('base64file.selectFile')"
+                            :label="$t('base64File.selectFile')"
                             border
                             show-size
                             @update:model-value="encodeFile"
@@ -39,7 +39,7 @@
                             v-model="base64"
                             class="mb-4"
                             rows="4"
-                            :label="$t('base64file.inputBase64')"
+                            :label="$t('base64File.inputBase64')"
                             border
                         />
                         <v-btn
@@ -49,7 +49,7 @@
                             block
                             @click="decodeFile"
                         >
-                            {{ $t('base64file.decode') }}
+                            {{ $t('base64File.decode') }}
                         </v-btn>
                         <v-card
                             v-if="decodedUrl"
@@ -76,7 +76,7 @@
                                     size="small"
                                     @click="downloadDecoded"
                                 >
-                                    {{ $t('base64file.download') }}
+                                    {{ $t('base64File.download') }}
                                 </v-btn>
                             </v-card-text>
                         </v-card>
@@ -99,11 +99,11 @@ const { t } = useI18n();
 useHead({
     meta: [
         {
-            content: t('base64file.subtitle'),
+            content: t('base64File.subtitle'),
             name: 'description',
-        },
+        }
     ],
-    title: t('base64file.title'),
+    title: t('base64File.title'),
 });
 
 const mode = ref<'decode' | 'encode'>('encode');

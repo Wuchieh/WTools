@@ -1,10 +1,10 @@
 <template>
     <v-container class="py-10">
         <h1 class="font-weight-bold text-h3 mb-2 text-center">
-            {{ $t('csv.title') }}
+            {{ $t('csvViewer.title') }}
         </h1>
         <p class="text-body-1 text-medium-emphasis mb-10 text-center">
-            {{ $t('csv.subtitle') }}
+            {{ $t('csvViewer.subtitle') }}
         </p>
         <v-row justify="center">
             <v-col
@@ -18,7 +18,7 @@
                             class="mb-4"
                             accept=".csv,.tsv,.txt"
                             prepend-icon="mdi-file"
-                            :label="$t('csv.selectFile')"
+                            :label="$t('csvViewer.selectFile')"
                             border
                             show-size
                             @update:model-value="loadFile"
@@ -28,7 +28,7 @@
                             v-model="text"
                             class="font-monospace mb-4"
                             rows="10"
-                            :label="$t('csv.pasteData')"
+                            :label="$t('csvViewer.pasteData')"
                             border
                         />
                         <v-btn-toggle
@@ -39,13 +39,13 @@
                                 size="small"
                                 @click="toJson"
                             >
-                                {{ $t('csv.toJson') }}
+                                {{ $t('csvViewer.toJson') }}
                             </v-btn>
                             <v-btn
                                 size="small"
                                 @click="toTsv"
                             >
-                                {{ $t('csv.toTsv') }}
+                                {{ $t('csvViewer.toTsv') }}
                             </v-btn>
                         </v-btn-toggle>
                         <v-data-table
@@ -74,11 +74,11 @@ const { t } = useI18n();
 useHead({
     meta: [
         {
-            content: t('csv.subtitle'),
+            content: t('csvViewer.subtitle'),
             name: 'description',
-        },
+        }
     ],
-    title: t('csv.title'),
+    title: t('csvViewer.title'),
 });
 
 const file = ref<File[] | null>(null);

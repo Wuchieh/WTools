@@ -78,16 +78,16 @@ const isProcessing = ref(false);
 const successMessage = ref('');
 const currentStep = ref(0);
 
-const steps: ToolStep[] = [
+const steps = computed<ToolStep[]>(() => [
     {
         key: 'configure',
-        label: '設定',
+        label: t('lorem.stepConfigure'),
     },
     {
         key: 'result',
-        label: '結果',
+        label: t('lorem.stepResult'),
     },
-];
+]);
 
 const unitOptions = [
     {
@@ -106,7 +106,7 @@ const unitOptions = [
 
 function copy(): void {
     navigator.clipboard.writeText(text.value).then(() => {
-        successMessage.value = '已複製到剪貼簿！';
+        successMessage.value = t('lorem.copied');
     }).catch(() => {
         successMessage.value = '';
     });

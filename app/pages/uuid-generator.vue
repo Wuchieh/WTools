@@ -123,10 +123,10 @@ const versions = [
 function copy(text: string) {
     navigator.clipboard.writeText(text).then(() => {
         const showCopySnackbar = inject<(text: string, color?: string) => void>('showCopySnackbar');
-        if (showCopySnackbar) showCopySnackbar('已複製到剪貼簿！');
+        if (showCopySnackbar) showCopySnackbar(t('uuid.copied'));
     }).catch(() => {
         const showCopySnackbar = inject<(text: string, color?: string) => void>('showCopySnackbar');
-        if (showCopySnackbar) showCopySnackbar('複製失敗', 'error');
+        if (showCopySnackbar) showCopySnackbar(t('uuid.copyFailed'), 'error');
     });
 }
 

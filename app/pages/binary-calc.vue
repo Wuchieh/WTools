@@ -37,19 +37,19 @@
                             variant="tonal"
                         >
                             <div class="text-caption text-medium-emphasis mb-2">
-                                Decimal
+                                {{ $t('binary.decimal') }}
                             </div>
                             <div class="font-monospace text-h6 mb-3">
                                 {{ decimal }}
                             </div>
                             <div class="text-caption text-medium-emphasis mb-2">
-                                Binary
+                                {{ $t('binary.binary') }}
                             </div>
                             <div class="font-monospace text-h6 mb-3">
                                 {{ binary }}
                             </div>
                             <div class="text-caption text-medium-emphasis mb-2">
-                                Hexadecimal
+                                {{ $t('binary.hex') }}
                             </div>
                             <div class="font-monospace text-h6">
                                 {{ hex }}
@@ -76,20 +76,20 @@ useHead({
 
 const input = ref('255');
 const fromBase = ref(10);
-const bases = [
+const bases = computed(() => [
     {
-        label: 'Dec',
+        label: t('binary.dec'),
         value: 10,
     },
     {
-        label: 'Bin',
+        label: t('binary.bin'),
         value: 2,
     },
     {
-        label: 'Hex',
+        label: t('binary.hex'),
         value: 16,
     },
-];
+]);
 
 const decimal = computed(() => {
     try {

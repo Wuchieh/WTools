@@ -1,10 +1,10 @@
 <template>
     <v-container class="py-10">
         <h1 class="font-weight-bold text-h3 mb-2 text-center">
-            {{ $t('cssfmt.title') }}
+            {{ $t('cssFormatter.title') }}
         </h1>
         <p class="text-body-1 text-medium-emphasis mb-10 text-center">
-            {{ $t('cssfmt.subtitle') }}
+            {{ $t('cssFormatter.subtitle') }}
         </p>
         <v-row justify="center">
             <v-col
@@ -17,7 +17,7 @@
                             v-model="input"
                             class="font-monospace mb-4"
                             rows="10"
-                            :label="$t('cssfmt.input')"
+                            :label="$t('cssFormatter.input')"
                             border
                         />
                         <v-btn
@@ -26,14 +26,14 @@
                             block
                             @click="format"
                         >
-                            {{ $t('cssfmt.format') }}
+                            {{ $t('cssFormatter.format') }}
                         </v-btn>
                         <v-textarea
                             v-if="output"
                             v-model="output"
                             class="font-monospace mt-4"
                             rows="10"
-                            :label="$t('cssfmt.output')"
+                            :label="$t('cssFormatter.output')"
                             border
                             readonly
                         />
@@ -44,7 +44,7 @@
                             block
                             @click="copy"
                         >
-                            {{ $t('cssfmt.copy') }}
+                            {{ $t('cssFormatter.copy') }}
                         </v-btn>
                     </v-card-text>
                 </v-card>
@@ -58,11 +58,11 @@ const { t } = useI18n();
 useHead({
     meta: [
         {
-            content: t('cssfmt.subtitle'),
+            content: t('cssFormatter.subtitle'),
             name: 'description',
-        },
+        }
     ],
-    title: t('cssfmt.title'),
+    title: t('cssFormatter.title'),
 });
 
 const input = ref('');
@@ -71,10 +71,10 @@ const output = ref('');
 function copy() {
     navigator.clipboard.writeText(output.value).then(() => {
         const showCopySnackbar = inject<(text: string, color?: string) => void>('showCopySnackbar');
-        if (showCopySnackbar) showCopySnackbar('已複製到剪貼簿！');
+        if (showCopySnackbar) showCopySnackbar(t('cssFormatter.copied'));
     }).catch(() => {
         const showCopySnackbar = inject<(text: string, color?: string) => void>('showCopySnackbar');
-        if (showCopySnackbar) showCopySnackbar('複製失敗', 'error');
+        if (showCopySnackbar) showCopySnackbar(t('cssFormatter.copyFailed'), 'error');
     });
 }
 

@@ -1,10 +1,10 @@
 <template>
     <v-container class="py-10">
         <h1 class="font-weight-bold text-h3 mb-2 text-center">
-            {{ $t('filesize.title') }}
+            {{ $t('fileSize.title') }}
         </h1>
         <p class="text-body-1 text-medium-emphasis mb-10 text-center">
-            {{ $t('filesize.subtitle') }}
+            {{ $t('fileSize.subtitle') }}
         </p>
         <v-row justify="center">
             <v-col
@@ -18,7 +18,7 @@
                             class="mb-4"
                             min="0"
                             type="number"
-                            :label="$t('filesize.bytes')"
+                            :label="$t('fileSize.bytes')"
                             border
                         />
                         <div class="d-flex flex-wrap gap-2">
@@ -43,11 +43,11 @@ const { t } = useI18n();
 useHead({
     meta: [
         {
-            content: t('filesize.subtitle'),
+            content: t('fileSize.subtitle'),
             name: 'description',
-        },
+        }
     ],
-    title: t('filesize.title'),
+    title: t('fileSize.title'),
 });
 
 const bytes = ref(1024);

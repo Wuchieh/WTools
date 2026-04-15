@@ -1,10 +1,10 @@
 <template>
     <v-container class="py-10">
         <h1 class="font-weight-bold text-h3 mb-2 text-center">
-            {{ $t('jsonyaml.title') }}
+            {{ $t('jsonYaml.title') }}
         </h1>
         <p class="text-body-1 text-medium-emphasis mb-10 text-center">
-            {{ $t('jsonyaml.subtitle') }}
+            {{ $t('jsonYaml.subtitle') }}
         </p>
         <v-row justify="center">
             <v-col
@@ -19,10 +19,10 @@
                             color="primary"
                         >
                             <v-btn value="json2yaml">
-                                {{ $t('jsonyaml.json2yaml') }}
+                                {{ $t('jsonYaml.json2yaml') }}
                             </v-btn>
                             <v-btn value="yaml2json">
-                                {{ $t('jsonyaml.yaml2json') }}
+                                {{ $t('jsonYaml.yaml2json') }}
                             </v-btn>
                         </v-btn-toggle>
                         <v-textarea
@@ -38,7 +38,7 @@
                             block
                             @click="convert"
                         >
-                            {{ $t('jsonyaml.convert') }}
+                            {{ $t('jsonYaml.convert') }}
                         </v-btn>
                         <v-textarea
                             v-if="output"
@@ -56,7 +56,7 @@
                             block
                             @click="copy"
                         >
-                            {{ $t('jsonyaml.copy') }}
+                            {{ $t('jsonYaml.copy') }}
                         </v-btn>
                         <v-alert
                             v-if="error"
@@ -77,11 +77,11 @@ const { t } = useI18n();
 useHead({
     meta: [
         {
-            content: t('jsonyaml.subtitle'),
+            content: t('jsonYaml.subtitle'),
             name: 'description',
-        },
+        }
     ],
-    title: t('jsonyaml.title'),
+    title: t('jsonYaml.title'),
 });
 
 const mode = ref('json2yaml');
@@ -107,10 +107,10 @@ function convert() {
 function copy() {
     navigator.clipboard.writeText(output.value).then(() => {
         const showCopySnackbar = inject<(text: string, color?: string) => void>('showCopySnackbar');
-        if (showCopySnackbar) showCopySnackbar('已複製到剪貼簿！');
+        if (showCopySnackbar) showCopySnackbar(t('jsonYaml.copied'));
     }).catch(() => {
         const showCopySnackbar = inject<(text: string, color?: string) => void>('showCopySnackbar');
-        if (showCopySnackbar) showCopySnackbar('複製失敗', 'error');
+        if (showCopySnackbar) showCopySnackbar(t('jsonYaml.copyFailed'), 'error');
     });
 }
 
