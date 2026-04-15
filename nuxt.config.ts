@@ -33,7 +33,7 @@ export default defineNuxtConfig({
         },
     },
 
-    build: { transpile: ['vuetify'] },
+    build: { transpile: ['vuetify', 'heic2any'] },
 
     compatibilityDate: '2025-10-25',
 

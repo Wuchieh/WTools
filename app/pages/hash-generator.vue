@@ -15,15 +15,17 @@
                             class="mb-4"
                         />
 
-                        <v-row class="mb-4">
-                            <v-col cols="12">
-                                <v-chip-group v-model="algorithms" multiple selected-class="text-primary">
-                                    <v-chip v-for="a in algorithmsList" :key="a" :value="a" filter>
-                                        {{ a.toUpperCase() }}
-                                    </v-chip>
-                                </v-chip-group>
-                            </v-col>
-                        </v-row>
+                        <div class="mb-4 d-flex flex-wrap gap-2">
+                            <v-chip
+                                v-for="a in algorithmsList"
+                                :key="a"
+                                :color="algorithms.includes(a) ? 'primary' : undefined"
+                                :variant="algorithms.includes(a) ? 'flat' : 'outlined'"
+                                @click="toggleAlg(a)"
+                            >
+                                {{ a.toUpperCase() }}
+                            </v-chip>
+                        </div>
 
                         <v-btn color="primary" block :disabled="!input" @click="generate">
                             {{ $t('hash.generate') }}
@@ -44,12 +46,12 @@
                                             icon="mdi-content-copy"
                                             size="x-small"
                                             variant="text"
-                                            @click="copy(r.hash)"
+                                            @click="copyText(r.hash)"
                                         />
                                     </div>
                                 </v-card-text>
                             </v-card>
-                        </v-btn>
+                        </div>
                     </v-card-text>
                 </v-card>
             </v-col>
@@ -67,6 +69,13 @@ const algorithms = ref(['sha256']);
 const results = ref<{ alg: string; hash: string }[]>([]);
 const algorithmsList = ['md5', 'sha1', 'sha256', 'sha384', 'sha512'];
 
+function toggleAlg(a: string) {
+    const idx = algorithms.value.indexOf(a);
+    if (idx >= 0) algorithms.value.splice(idx, 1);
+    else algorithms.value.push(a);
+    if (algorithms.value.length === 0) algorithms.value.push('sha256');
+}
+
 async function generate() {
     results.value = [];
     const data = new TextEncoder().encode(input.value);
@@ -78,7 +87,7 @@ async function generate() {
     }
 }
 
-function copy(text: string) {
+function copyText(text: string) {
     navigator.clipboard.writeText(text);
 }
 </script>
