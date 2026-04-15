@@ -62,6 +62,8 @@
 </template>
 
 <script setup lang="ts">
+import { v7 as uuidv7 } from 'uuid';
+
 const { t } = useI18n();
 
 useHead({ meta: [{ content: t('uuid.subtitle'), name: 'description' }], title: t('uuid.title') });
@@ -79,11 +81,7 @@ function generate() {
     if (version.value === 'v4') {
         uuid = crypto.randomUUID();
     } else {
-        // UUID v7: timestamp-based
-        const ts = Date.now();
-        const tsl = ts.toString(16).padStart(12, '0');
-        const rand = crypto.randomUUID().replace(/-/g, '').slice(-13);
-        uuid = `${tsl.slice(0,8)}-${tsl.slice(8,12)}-7${rand.slice(0,3)}-${rand.slice(3,6)}-000000000000`.replace(/-/g, '').replace(/(.{8})(.{4})(.{4})(.{4})(.{12})/, '$1-$2-$3-$4-$5');
+        uuid = uuidv7();
     }
     generated.value = uuid;
     if (!history.value.includes(uuid)) {
@@ -93,6 +91,12 @@ function generate() {
 }
 
 function copy(text: string) {
-    navigator.clipboard.writeText(text);
+    navigator.clipboard.writeText(text).then(() => {
+        const showCopySnackbar = inject<(text: string, color?: string) => void>('showCopySnackbar');
+        if (showCopySnackbar) showCopySnackbar('已複製到剪貼簿！');
+    }).catch(() => {
+        const showCopySnackbar = inject<(text: string, color?: string) => void>('showCopySnackbar');
+        if (showCopySnackbar) showCopySnackbar('複製失敗', 'error');
+    });
 }
 </script>

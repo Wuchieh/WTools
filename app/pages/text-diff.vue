@@ -35,19 +35,37 @@ const text1 = ref('');
 const text2 = ref('');
 const diffLines = ref<{ type: 'add' | 'remove' | 'same'; text: string }[]>([]);
 
+function lcs(a: string[], b: string[]): number[][] {
+    const m = a.length, n = b.length;
+    const dp: number[][] = Array.from({ length: m + 1 }, () => new Array(n + 1).fill(0));
+    for (let i = 1; i <= m; i++) {
+        for (let j = 1; j <= n; j++) {
+            if (a[i - 1] === b[j - 1]) dp[i][j] = dp[i - 1][j - 1] + 1;
+            else dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+        }
+    }
+    return dp;
+}
+
 function compare() {
     const lines1 = text1.value.split('\n');
     const lines2 = text2.value.split('\n');
+    const dp = lcs(lines1, lines2);
     const result: typeof diffLines.value = [];
-    const maxLen = Math.max(lines1.length, lines2.length);
-    for (let i = 0; i < maxLen; i++) {
-        if (lines1[i] === undefined) { result.push({ type: 'add', text: lines2[i] }); }
-        else if (lines2[i] === undefined) { result.push({ type: 'remove', text: lines1[i] }); }
-        else if (lines1[i] !== lines2[i]) {
-            result.push({ type: 'remove', text: lines1[i] });
-            result.push({ type: 'add', text: lines2[i] });
-        } else { result.push({ type: 'same', text: lines1[i] }); }
+    let i = lines1.length, j = lines2.length;
+    const ops: { type: 'add' | 'remove' | 'same'; text: string }[] = [];
+    while (i > 0 || j > 0) {
+        if (i > 0 && j > 0 && lines1[i - 1] === lines2[j - 1]) {
+            ops.unshift({ type: 'same', text: lines1[i - 1] });
+            i--; j--;
+        } else if (j > 0 && (i === 0 || dp[i][j - 1] >= dp[i - 1][j])) {
+            ops.unshift({ type: 'add', text: lines2[j - 1] });
+            j--;
+        } else {
+            ops.unshift({ type: 'remove', text: lines1[i - 1] });
+            i--;
+        }
     }
-    diffLines.value = result;
+    diffLines.value = ops;
 }
 </script>

@@ -88,13 +88,25 @@ const hslString = computed(() => {
 
 const textColor = computed(() => {
     const r = parseInt(color.value.slice(1, 3), 16);
-    return r > 128 ? '#000' : '#fff';
+    const g = parseInt(color.value.slice(3, 5), 16);
+    const b = parseInt(color.value.slice(5, 7), 16);
+    const luminance = 0.299 * r + 0.587 * g + 0.114 * b;
+    return luminance > 128 ? '#000' : '#fff';
 });
 
 function textColorFor(c: string) {
     const r = parseInt(c.slice(1, 3), 16);
-    return r > 128 ? '#000' : '#fff';
+    const g = parseInt(c.slice(3, 5), 16);
+    const b = parseInt(c.slice(5, 7), 16);
+    const luminance = 0.299 * r + 0.587 * g + 0.114 * b;
+    return luminance > 128 ? '#000' : '#fff';
 }
 
-function copy(text: string) { navigator.clipboard.writeText(text); }
+function copy(text: string) { navigator.clipboard.writeText(text).then(() => {
+    const showCopySnackbar = inject<(text: string, color?: string) => void>('showCopySnackbar');
+    if (showCopySnackbar) showCopySnackbar('已複製到剪貼簿！');
+}).catch(() => {
+    const showCopySnackbar = inject<(text: string, color?: string) => void>('showCopySnackbar');
+    if (showCopySnackbar) showCopySnackbar('複製失敗', 'error');
+}); }
 </script>

@@ -72,4 +72,8 @@ function reset() {
     remaining.value = 0;
     alarm.value = false;
 }
+
+onUnmounted(() => {
+    if (interval) { clearInterval(interval); interval = null; }
+});
 </script>

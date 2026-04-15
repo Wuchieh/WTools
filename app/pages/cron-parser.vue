@@ -39,6 +39,76 @@ const error = ref('');
 const result = ref<Record<string, string> | null>(null);
 const nextRuns = ref<string[]>([]);
 
+function parseField(field: string, min: number, max: number): number[] {
+    const values: number[] = [];
+    if (field === '*') {
+        for (let i = min; i <= max; i++) values.push(i);
+        return values;
+    }
+    const parts = field.split(',');
+    for (const part of parts) {
+        if (part.includes('/')) {
+            const [range, step] = part.split('/');
+            const stepNum = parseInt(step, 10);
+            let start = min, end = max;
+            if (range !== '*') {
+                if (range.includes('-')) {
+                    [start, end] = range.split('-').map(Number);
+                } else {
+                    start = parseInt(range, 10);
+                }
+            }
+            for (let i = start; i <= end; i += stepNum) values.push(i);
+        } else if (part.includes('-')) {
+            const [start, end] = part.split('-').map(Number);
+            for (let i = start; i <= end; i++) values.push(i);
+        } else {
+            values.push(parseInt(part, 10));
+        }
+    }
+    return [...new Set(values)].sort((a, b) => a - b);
+}
+
+function getNextRuns(expr: string, count = 5): string[] {
+    const parts = expr.trim().split(/\s+/);
+    if (parts.length < 5) return [];
+
+    const [minField, hourField, domField, monthField, dowField] = parts;
+    const runs: string[] = [];
+    const d = new Date();
+    d.setSeconds(0, 0);
+    d.setMinutes(d.getMinutes() + 1);
+
+    const monthVals = parseField(monthField, 1, 12);
+    const domVals = parseField(domField, 1, 31);
+    const dowVals = parseField(dowField, 0, 6);
+    const hourVals = parseField(hourField, 0, 23);
+    const minVals = parseField(minField, 0, 59);
+
+    let attempts = 0;
+    while (runs.length < count && attempts < 100000) {
+        attempts++;
+        const m = d.getMonth() + 1;
+        const dom = d.getDate();
+        const dow = d.getDay();
+        const h = d.getHours();
+        const mi = d.getMinutes();
+
+        if (monthVals.includes(m)
+            && domVals.includes(dom)
+            && dowVals.includes(dow)
+            && hourVals.includes(h)
+            && minVals.includes(mi)) {
+            runs.push(d.toLocaleString());
+            d.setMinutes(d.getMinutes() + 1);
+        } else {
+            // Advance to next minute
+            d.setMinutes(d.getMinutes() + 1);
+        }
+    }
+    return runs;
+}
+
 function parse() {
     error.value = '';
     result.value = null;
@@ -47,15 +117,6 @@ function parse() {
     if (parts.length < 5) { error.value = 'Invalid cron expression (need 5 fields)'; return; }
     const [min, hour, dom, month, dow] = parts;
     result.value = { minute: min, hour, 'day-of-month': dom, month, 'day-of-week': dow };
-
-    // Calculate next 5 runs (simple approximation)
-    const now = new Date();
-    const runs: string[] = [];
-    let d = new Date(now);
-    for (let i = 0; i < 5; i++) {
-        d = new Date(d.getTime() + 60000);
-        runs.push(d.toLocaleString());
-    }
-    nextRuns.value = runs;
+    nextRuns.value = getNextRuns(expression.value, 5);
 }
 </script>

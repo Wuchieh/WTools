@@ -72,17 +72,20 @@ export const useConverterStore = defineStore('converter', () => {
     function convertToWebP(file: File): Promise<Blob> {
         return new Promise((resolve, reject) => {
             const img = new Image();
+            const objectUrl = URL.createObjectURL(file);
             img.onload = () => {
                 const canvas = document.createElement('canvas');
                 canvas.width = img.width;
                 canvas.height = img.height;
                 const ctx = canvas.getContext('2d');
                 if (!ctx) {
+                    URL.revokeObjectURL(objectUrl);
                     reject(new Error('Canvas context not available'));
                     return;
                 }
                 ctx.drawImage(img, 0, 0);
                 canvas.toBlob((blob) => {
+                    URL.revokeObjectURL(objectUrl);
                     if (blob) {
                         resolve(blob);
                     } else {
@@ -90,8 +93,8 @@ export const useConverterStore = defineStore('converter', () => {
                     }
                 }, 'image/webp', quality.value);
             };
-            img.onerror = () => reject(new Error('Failed to load image'));
-            img.src = URL.createObjectURL(file);
+            img.onerror = () => { URL.revokeObjectURL(objectUrl); reject(new Error('Failed to load image')); };
+            img.src = objectUrl;
         });
     }
 
