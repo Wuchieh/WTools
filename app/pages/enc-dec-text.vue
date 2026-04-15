@@ -8,10 +8,11 @@
                     <v-card-text class="pt-4">
                         <v-select v-model="cipher" :items="ciphers" :label="$t('encdec.cipher')" class="mb-4" />
                         <v-text-field v-if="cipher !== 'rot13'" v-model="key" :label="$t('encdec.key')" type="number" border class="mb-4" />
-                        <v-btn-toggle v-model="mode" class="mb-4" color="primary">
+                        <v-btn-toggle v-if="cipher !== 'rot13'" v-model="mode" class="mb-4" color="primary">
                             <v-btn value="encrypt">{{ $t('encdec.encrypt') }}</v-btn>
                             <v-btn value="decrypt">{{ $t('encdec.decrypt') }}</v-btn>
                         </v-btn-toggle>
+                        <p v-if="cipher === 'rot13'" class="text-caption text-medium-emphasis mb-4">ROT13 是對稱加密，加密與解密結果相同</p>
                         <v-textarea v-model="input" :label="$t('encdec.input')" rows="4" border class="mb-4" />
                         <v-btn color="primary" block :disabled="!input" @click="process">{{ mode === 'encrypt' ? $t('encdec.encrypt') : $t('encdec.decrypt') }}</v-btn>
                         <v-textarea v-if="output" v-model="output" :label="$t('encdec.output')" rows="4" border readonly class="mt-4" />
@@ -53,5 +54,13 @@ function process() {
     output.value = result;
 }
 
-function copy() { navigator.clipboard.writeText(output.value); }
+function copy() {
+    navigator.clipboard.writeText(output.value).then(() => {
+        const showCopySnackbar = inject<(text: string, color?: string) => void>('showCopySnackbar');
+        if (showCopySnackbar) showCopySnackbar('已複製到剪貼簿！');
+    }).catch(() => {
+        const showCopySnackbar = inject<(text: string, color?: string) => void>('showCopySnackbar');
+        if (showCopySnackbar) showCopySnackbar('複製失敗', 'error');
+    });
+}
 </script>

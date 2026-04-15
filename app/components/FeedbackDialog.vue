@@ -111,7 +111,7 @@ async function submit() {
             method: 'POST',
         });
 
-        snackbarText.value = 'Feedback sent successfully!';
+        snackbarText.value = t('feedback.success');
         snackbarColor.value = 'success';
         snackbar.value = true;
         dialog.value = false;
@@ -121,7 +121,7 @@ async function submit() {
             nickname: '',
         };
     } catch {
-        snackbarText.value = 'Failed to send feedback. Please try again.';
+        snackbarText.value = t('feedback.error');
         snackbarColor.value = 'error';
         snackbar.value = true;
     } finally {

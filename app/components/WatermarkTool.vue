@@ -36,6 +36,7 @@
                                     v-model="store.watermarkText"
                                     :label="$t('watermark.text')"
                                     density="compact"
+                                    @update:model-value="updatePreview"
                                 />
                             </v-col>
                             <v-col cols="6">
@@ -46,6 +47,7 @@
                                     density="compact"
                                     :min="8"
                                     :max="200"
+                                    @update:model-value="updatePreview"
                                 />
                             </v-col>
                             <v-col cols="4">
@@ -54,6 +56,7 @@
                                     :label="$t('watermark.fontColor')"
                                     type="color"
                                     density="compact"
+                                    @update:model-value="updatePreview"
                                 />
                             </v-col>
                             <v-col cols="4">
@@ -63,6 +66,7 @@
                                     :min="0.1" :max="1" :step="0.05"
                                     thumb-label
                                     density="compact"
+                                    @update:model-value="updatePreview"
                                 />
                             </v-col>
                             <v-col cols="4">
@@ -71,7 +75,12 @@
                                     :items="positions"
                                     :label="$t('watermark.position')"
                                     density="compact"
+                                    @update:model-value="updatePreview"
                                 />
+                            </v-col>
+                            <v-col v-if="store.previewUrl" cols="12">
+                                <p class="text-caption text-medium-emphasis mb-2">{{ $t('watermark.preview') || '即時預覽' }}</p>
+                                <img :src="store.previewUrl" style="max-width:100%; max-height:200px; border:1px solid #ccc; border-radius:4px;" />
                             </v-col>
                             <v-col cols="6">
                                 <v-select
@@ -137,5 +146,23 @@ const positions = [
 
 function handleFiles(files: File[]) {
     if (files) store.addFiles(files);
+    updatePreview();
+}
+
+function updatePreview() {
+    const firstFile = store.files[0];
+    if (!firstFile) { store.previewUrl = null; return; }
+    const img = new Image();
+    img.onload = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = img.width;
+        canvas.height = img.height;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return;
+        ctx.drawImage(img, 0, 0);
+        store.applyWatermarkToCanvas(ctx, img.width, img.height);
+        store.previewUrl = canvas.toDataURL();
+    };
+    img.src = firstFile.preview;
 }
 </script>

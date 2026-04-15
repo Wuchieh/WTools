@@ -75,7 +75,19 @@
                             <div
                                 class="crop-overlay"
                                 :style="getCropStyle(f)"
-                            />
+                                @mousedown.stop="startCrop($event, f)"
+                                @touchstart.prevent.stop="startCrop($event, f)"
+                            >
+                                <!-- Resize handles -->
+                                <div class="resize-handle nw" @mousedown.stop="startResize($event, f, 'nw')" @touchstart.prevent.stop="startResize($event, f, 'nw')" />
+                                <div class="resize-handle ne" @mousedown.stop="startResize($event, f, 'ne')" @touchstart.prevent.stop="startResize($event, f, 'ne')" />
+                                <div class="resize-handle sw" @mousedown.stop="startResize($event, f, 'sw')" @touchstart.prevent.stop="startResize($event, f, 'sw')" />
+                                <div class="resize-handle se" @mousedown.stop="startResize($event, f, 'se')" @touchstart.prevent.stop="startResize($event, f, 'se')" />
+                                <div class="resize-handle n" @mousedown.stop="startResize($event, f, 'n')" @touchstart.prevent.stop="startResize($event, f, 'n')" />
+                                <div class="resize-handle s" @mousedown.stop="startResize($event, f, 's')" @touchstart.prevent.stop="startResize($event, f, 's')" />
+                                <div class="resize-handle e" @mousedown.stop="startResize($event, f, 'e')" @touchstart.prevent.stop="startResize($event, f, 'e')" />
+                                <div class="resize-handle w" @mousedown.stop="startResize($event, f, 'w')" @touchstart.prevent.stop="startResize($event, f, 'w')" />
+                            </div>
                         </v-img>
                         <v-card-text>
                             <div class="text-caption">{{ f.file.name }}</div>
@@ -161,6 +173,10 @@ let dragFile: CropFile | null = null;
 let dragStartX = 0;
 let dragStartY = 0;
 let cropStart = { x: 0, y: 0, w: 0, h: 0 };
+let activeRect: DOMRect | null = null;
+let activeEl: HTMLElement | null = null;
+let dragMode: 'move' | 'resize' | null = null;
+let resizeHandle = '';
 
 function handleFiles(files: File[]) {
     if (files) store.addFiles(files);
@@ -170,7 +186,11 @@ function startCrop(e: MouseEvent | TouchEvent, f: CropFile) {
     dragging = true;
     dragFile = f;
     cropStart = { ...f.crop };
-    const rect = (e.target as HTMLElement).getBoundingClientRect();
+    // Use currentTarget to get the specific v-img element for this file
+    const target = e.currentTarget as HTMLElement;
+    const rect = target.getBoundingClientRect();
+    activeRect = rect;
+    activeEl = target;
     if (e instanceof MouseEvent) {
         dragStartX = e.clientX - rect.left;
         dragStartY = e.clientY - rect.top;
@@ -186,9 +206,8 @@ function startCrop(e: MouseEvent | TouchEvent, f: CropFile) {
 }
 
 function onDrag(e: MouseEvent | TouchEvent) {
-    if (!dragging || !dragFile) return;
-    const rect = document.querySelector('.crop-container')?.getBoundingClientRect();
-    if (!rect) return;
+    if (!dragging || !dragFile || !activeRect) return;
+    const rect = activeRect;
 
     let cx: number, cy: number;
     if (e instanceof MouseEvent) {
@@ -204,17 +223,29 @@ function onDrag(e: MouseEvent | TouchEvent) {
     const pw = rect.width;
     const ph = rect.height;
 
-    let nx = cropStart.x + (dx / pw) * 100;
-    let ny = cropStart.y + (dy / ph) * 100;
+    let nx = cropStart.x;
+    let ny = cropStart.y;
     let nw = cropStart.w;
     let nh = cropStart.h;
 
-    if (nx < 0) { nw += nx; nx = 0; }
-    if (ny < 0) { nh += ny; ny = 0; }
+    if (dragMode === 'resize') {
+        // Resize based on handle position
+        if (resizeHandle.includes('e')) nw = cropStart.w + (dx / pw) * 100;
+        if (resizeHandle.includes('w')) { nw = cropStart.w - (dx / pw) * 100; nx = cropStart.x + (dx / pw) * 100; }
+        if (resizeHandle.includes('s')) nh = cropStart.h + (dy / ph) * 100;
+        if (resizeHandle.includes('n')) { nh = cropStart.h - (dy / ph) * 100; ny = cropStart.y + (dy / ph) * 100; }
+    } else {
+        // Move
+        nx = cropStart.x + (dx / pw) * 100;
+        ny = cropStart.y + (dy / ph) * 100;
+    }
+
+    if (nx < 0) { if (dragMode === 'resize' && resizeHandle.includes('w')) nw += nx; nx = 0; }
+    if (ny < 0) { if (dragMode === 'resize' && resizeHandle.includes('n')) nh += ny; ny = 0; }
     if (nx + nw > 100) { nw = 100 - nx; }
     if (ny + nh > 100) { nh = 100 - ny; }
 
-    if (store.aspectRatio) {
+    if (store.aspectRatio && dragMode === 'resize' && (resizeHandle === 'n' || resizeHandle === 's')) {
         nh = nw / store.aspectRatio;
         if (ny + nh > 100) { ny = 100 - nh; }
     }
@@ -230,10 +261,37 @@ function onDrag(e: MouseEvent | TouchEvent) {
 function stopCrop() {
     dragging = false;
     dragFile = null;
+    dragMode = null;
+    activeRect = null;
+    activeEl = null;
     document.removeEventListener('mousemove', onDrag);
     document.removeEventListener('mouseup', stopCrop);
     document.removeEventListener('touchmove', onDrag);
     document.removeEventListener('touchend', stopCrop);
+}
+
+function startResize(e: MouseEvent | TouchEvent, f: CropFile, handle: string) {
+    dragging = true;
+    dragFile = f;
+    resizeHandle = handle;
+    cropStart = { ...f.crop };
+    dragMode = 'resize';
+    const target = e.currentTarget as HTMLElement;
+    const parentEl = target.closest('.v-img') as HTMLElement;
+    const rect = parentEl.getBoundingClientRect();
+    activeRect = rect;
+    activeEl = parentEl;
+    if (e instanceof MouseEvent) {
+        dragStartX = e.clientX - rect.left;
+        dragStartY = e.clientY - rect.top;
+    } else {
+        dragStartX = e.touches[0].clientX - rect.left;
+        dragStartY = e.touches[0].clientY - rect.top;
+    }
+    document.addEventListener('mousemove', onDrag);
+    document.addEventListener('mouseup', stopCrop);
+    document.addEventListener('touchmove', onDrag);
+    document.addEventListener('touchend', stopCrop);
 }
 
 function getCropStyle(f: CropFile) {
@@ -249,3 +307,23 @@ function getCropStyle(f: CropFile) {
     };
 }
 </script>
+
+<style scoped>
+.resize-handle {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: white;
+    border: 1px solid #888;
+    border-radius: 2px;
+    z-index: 10;
+}
+.resize-handle.nw { top: -5px; left: -5px; cursor: nw-resize; }
+.resize-handle.ne { top: -5px; right: -5px; cursor: ne-resize; }
+.resize-handle.sw { bottom: -5px; left: -5px; cursor: sw-resize; }
+.resize-handle.se { bottom: -5px; right: -5px; cursor: se-resize; }
+.resize-handle.n { top: -5px; left: 50%; transform: translateX(-50%); cursor: n-resize; }
+.resize-handle.s { bottom: -5px; left: 50%; transform: translateX(-50%); cursor: s-resize; }
+.resize-handle.e { right: -5px; top: 50%; transform: translateY(-50%); cursor: e-resize; }
+.resize-handle.w { left: -5px; top: 50%; transform: translateY(-50%); cursor: w-resize; }
+</style>
