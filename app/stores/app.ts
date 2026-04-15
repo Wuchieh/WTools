@@ -1,4 +1,1 @@
-export const useAppStore = defineStore('app', () => {
-    const count = ref(0);
-    return { count };
-});
+// This store is intentionally empty — app-level state should live in individual feature stores.

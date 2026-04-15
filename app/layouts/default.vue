@@ -51,6 +51,10 @@
         <v-main>
             <slot />
         </v-main>
+
+        <v-snackbar v-model="copySnackbar" :color="copySnackbarColor" timeout="2000">
+            {{ copySnackbarText }}
+        </v-snackbar>
     </v-app>
 </template>
 
@@ -64,9 +68,20 @@ const switchLocalePath = useSwitchLocalePath();
 
 const availableLocales = locales;
 
+const copySnackbar = ref(false);
+const copySnackbarText = ref('');
+const copySnackbarColor = ref('success');
+
 function toggleTheme() {
     theme.global.name.value = theme.global.current.value.dark ? 'light' : 'dark';
 }
+
+// Provide copy snackbar globally
+provide('showCopySnackbar', (text: string, color = 'success') => {
+    copySnackbarText.value = text;
+    copySnackbarColor.value = color;
+    copySnackbar.value = true;
+});
 </script>
 
 <style scoped lang="scss">

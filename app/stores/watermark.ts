@@ -25,6 +25,7 @@ export const useWatermarkStore = defineStore('watermark', () => {
     const offsetY = ref(16);
     const successCount = computed(() => files.value.filter((f) => f.status === 'success').length);
     const hasConverted = computed(() => files.value.some((f) => f.status === 'success' || f.status === 'error'));
+    const previewUrl = ref<string | null>(null);
 
     function addFiles(newFiles: File[]) {
         for (const file of newFiles) {
@@ -129,6 +130,6 @@ export const useWatermarkStore = defineStore('watermark', () => {
     return {
         addFiles, applyWatermarkToCanvas, clearAll, convertFiles, downloadZip,
         files, fontColor, fontSize, hasConverted, isConverting, offsetX, offsetY,
-        opacity, outputFormat, position, quality, removeFile, successCount, watermarkText,
+        opacity, outputFormat, position, previewUrl, quality, removeFile, successCount, watermarkText,
     };
 });

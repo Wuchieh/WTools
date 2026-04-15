@@ -84,25 +84,27 @@ export const useCompressStore = defineStore('compress', () => {
     function compressImage(file: File): Promise<Blob> {
         return new Promise((resolve, reject) => {
             const img = new Image();
+            const objectUrl = URL.createObjectURL(file);
             img.onload = () => {
                 const canvas = document.createElement('canvas');
                 const { width, height } = resizeImage(img);
                 canvas.width = width;
                 canvas.height = height;
                 const ctx = canvas.getContext('2d');
-                if (!ctx) { reject(new Error('Canvas context not available')); return; }
+                if (!ctx) { URL.revokeObjectURL(objectUrl); reject(new Error('Canvas context not available')); return; }
                 if (outputFormat.value === 'image/jpeg' || outputFormat.value === 'image/png') {
                     ctx.fillStyle = outputFormat.value === 'image/jpeg' ? '#ffffff' : 'transparent';
                     if (outputFormat.value === 'image/jpeg') ctx.fillRect(0, 0, width, height);
                 }
                 ctx.drawImage(img, 0, 0, width, height);
                 canvas.toBlob((blob) => {
+                    URL.revokeObjectURL(objectUrl);
                     if (blob) resolve(blob);
                     else reject(new Error('Canvas toBlob failed'));
                 }, outputFormat.value, quality.value / 100);
             };
-            img.onerror = () => reject(new Error('Failed to load image'));
-            img.src = URL.createObjectURL(file);
+            img.onerror = () => { URL.revokeObjectURL(objectUrl); reject(new Error('Failed to load image')); };
+            img.src = objectUrl;
         });
     }
 
