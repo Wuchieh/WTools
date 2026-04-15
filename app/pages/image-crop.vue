@@ -30,5 +30,8 @@ useHead({
         },
     ],
     title: t('crop.title'),
-});
+
+    ogImage: '/og/image-crop.png',
+    twitterCard: 'summary_large_image',
+    twitterImage: '/og/image-crop.png'});
 </script>

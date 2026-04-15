@@ -30,5 +30,8 @@ useHead({
         },
     ],
     title: t('compressor.title'),
-});
+
+    ogImage: '/og/image-compress.png',
+    twitterCard: 'summary_large_image',
+    twitterImage: '/og/image-compress.png'});
 </script>

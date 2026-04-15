@@ -30,5 +30,8 @@ useHead({
         },
     ],
     title: t('tools.whipStream.title'),
-});
+
+    ogImage: '/og/whip-stream.png',
+    twitterCard: 'summary_large_image',
+    twitterImage: '/og/whip-stream.png'});
 </script>

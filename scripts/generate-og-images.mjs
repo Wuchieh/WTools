@@ -127,7 +127,7 @@ function generateSVG(tool) {
 }
 
 async function generateOGImages() {
-    const sharp = (await import('./node_modules/.pnpm/sharp@0.33.5/node_modules/sharp/lib/index.js')).default;
+    const sharp = (await import('../node_modules/.pnpm/sharp@0.33.5/node_modules/sharp/lib/index.js')).default;
 
     for (const tool of tools) {
         const svg = generateSVG(tool);

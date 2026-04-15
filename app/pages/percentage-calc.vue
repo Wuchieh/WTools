@@ -64,7 +64,10 @@ useHead({
         },
     ],
     title: t('percent.title'),
-});
+
+    ogImage: '/og/percentage-calc.png',
+    twitterCard: 'summary_large_image',
+    twitterImage: '/og/percentage-calc.png'});
 
 const mode = ref('whatIsXOfY');
 const a = ref(0);

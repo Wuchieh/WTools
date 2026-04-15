@@ -39,5 +39,8 @@ useHead({
         },
     ],
     title: t('title'),
-});
+
+    ogImage: '/og/image-to-webp.png',
+    twitterCard: 'summary_large_image',
+    twitterImage: '/og/image-to-webp.png'});
 </script>

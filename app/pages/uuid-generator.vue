@@ -104,7 +104,10 @@ useHead({
         },
     ],
     title: t('uuid.title'),
-});
+
+    ogImage: '/og/uuid-generator.png',
+    twitterCard: 'summary_large_image',
+    twitterImage: '/og/uuid-generator.png'});
 
 const version = ref('v4');
 const generated = ref('');

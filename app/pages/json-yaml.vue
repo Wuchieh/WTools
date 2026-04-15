@@ -82,7 +82,10 @@ useHead({
         }
     ],
     title: t('jsonYaml.title'),
-});
+
+    ogImage: '/og/json-yaml.png',
+    twitterCard: 'summary_large_image',
+    twitterImage: '/og/json-yaml.png'});
 
 const mode = ref('json2yaml');
 const input = ref('');

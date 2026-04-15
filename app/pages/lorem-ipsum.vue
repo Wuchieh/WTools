@@ -67,8 +67,11 @@ const { t } = useI18n();
 useSeoMeta({
     description: t('lorem.subtitle'),
     ogDescription: t('lorem.subtitle'),
+    ogImage: '/og/lorem-ipsum.png',
     ogTitle: t('lorem.title'),
     title: t('lorem.title'),
+    twitterCard: 'summary_large_image',
+    twitterImage: '/og/lorem-ipsum.png',
 });
 
 const unit = ref<'paragraphs' | 'sentences' | 'words'>('paragraphs');

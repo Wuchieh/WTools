@@ -120,7 +120,10 @@ useHead({
         },
     ],
     title: t('jwt.title'),
-});
+
+    ogImage: '/og/jwt-decoder.png',
+    twitterCard: 'summary_large_image',
+    twitterImage: '/og/jwt-decoder.png'});
 
 const input = ref('');
 const tab = ref('header');

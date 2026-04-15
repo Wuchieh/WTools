@@ -48,7 +48,10 @@ useHead({
         }
     ],
     title: t('fileSize.title'),
-});
+
+    ogImage: '/og/file-size.png',
+    twitterCard: 'summary_large_image',
+    twitterImage: '/og/file-size.png'});
 
 const bytes = ref(1024);
 const units = [

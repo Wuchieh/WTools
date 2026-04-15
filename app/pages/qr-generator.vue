@@ -93,7 +93,10 @@ useHead({
         },
     ],
     title: t('qr.title'),
-});
+
+    ogImage: '/og/qr-generator.png',
+    twitterCard: 'summary_large_image',
+    twitterImage: '/og/qr-generator.png'});
 
 const input = ref('');
 const format = ref<'image/jpeg' | 'image/png' | 'image/webp'>('image/png');

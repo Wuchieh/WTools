@@ -75,7 +75,10 @@ useHead({
         }
     ],
     title: t('textDiff.title'),
-});
+
+    ogImage: '/og/text-diff.png',
+    twitterCard: 'summary_large_image',
+    twitterImage: '/og/text-diff.png'});
 
 const text1 = ref('');
 const text2 = ref('');

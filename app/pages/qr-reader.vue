@@ -87,7 +87,10 @@ useHead({
         },
     ],
     title: t('qrreader.title'),
-});
+
+    ogImage: '/og/qr-reader.png',
+    twitterCard: 'summary_large_image',
+    twitterImage: '/og/qr-reader.png'});
 
 const file = ref<File[] | null>(null);
 const result = ref('');

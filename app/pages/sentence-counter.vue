@@ -47,7 +47,10 @@ useHead({
         }
     ],
     title: t('sentenceCounter.title'),
-});
+
+    ogImage: '/og/sentence-counter.png',
+    twitterCard: 'summary_large_image',
+    twitterImage: '/og/sentence-counter.png'});
 const text = ref('');
 const count = computed(() => (text.value.match(/[.!?]+/g) || []).length);
 </script>

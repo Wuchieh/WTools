@@ -91,7 +91,10 @@ useHead({
         },
     ],
     title: t('urlenc.title'),
-});
+
+    ogImage: '/og/url-encoder.png',
+    twitterCard: 'summary_large_image',
+    twitterImage: '/og/url-encoder.png'});
 
 const mode = ref<'decode' | 'encode'>('encode');
 const input = ref('');

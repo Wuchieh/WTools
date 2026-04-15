@@ -87,7 +87,10 @@ useHead({
         },
     ],
     title: t('hash.title'),
-});
+
+    ogImage: '/og/hash-generator.png',
+    twitterCard: 'summary_large_image',
+    twitterImage: '/og/hash-generator.png'});
 
 const input = ref('');
 const algorithms = ref(['sha256']);

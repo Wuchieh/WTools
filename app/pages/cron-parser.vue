@@ -90,7 +90,10 @@ useHead({
         },
     ],
     title: t('cron.title'),
-});
+
+    ogImage: '/og/cron-parser.png',
+    twitterCard: 'summary_large_image',
+    twitterImage: '/og/cron-parser.png'});
 
 const expression = ref('');
 const error = ref('');

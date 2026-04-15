@@ -72,7 +72,10 @@ useHead({
         },
     ],
     title: t('binary.title'),
-});
+
+    ogImage: '/og/binary-calc.png',
+    twitterCard: 'summary_large_image',
+    twitterImage: '/og/binary-calc.png'});
 
 const input = ref('255');
 const fromBase = ref(10);

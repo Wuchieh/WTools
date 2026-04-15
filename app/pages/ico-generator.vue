@@ -28,5 +28,8 @@ useHead({
         },
     ],
     title: t('ico.title'),
-});
+
+    ogImage: '/og/ico-generator.png',
+    twitterCard: 'summary_large_image',
+    twitterImage: '/og/ico-generator.png'});
 </script>

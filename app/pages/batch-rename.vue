@@ -99,7 +99,10 @@ useHead({
         }
     ],
     title: t('batchRename.title'),
-});
+
+    ogImage: '/og/batch-rename.png',
+    twitterCard: 'summary_large_image',
+    twitterImage: '/og/batch-rename.png'});
 
 const files = ref<File[] | null>(null);
 const pattern = ref('{name}');

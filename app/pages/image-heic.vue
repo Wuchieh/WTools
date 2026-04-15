@@ -28,5 +28,8 @@ useHead({
         },
     ],
     title: t('heic.title'),
-});
+
+    ogImage: '/og/image-heic.png',
+    twitterCard: 'summary_large_image',
+    twitterImage: '/og/image-heic.png'});
 </script>

@@ -63,7 +63,10 @@ useHead({
         }
     ],
     title: t('cssFormatter.title'),
-});
+
+    ogImage: '/og/css-formatter.png',
+    twitterCard: 'summary_large_image',
+    twitterImage: '/og/css-formatter.png'});
 
 const input = ref('');
 const output = ref('');

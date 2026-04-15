@@ -110,7 +110,10 @@ useHead({
         },
     ],
     title: t('color.title'),
-});
+
+    ogImage: '/og/color-picker.png',
+    twitterCard: 'summary_large_image',
+    twitterImage: '/og/color-picker.png'});
 
 const color = ref('#1976D2');
 const palette = [

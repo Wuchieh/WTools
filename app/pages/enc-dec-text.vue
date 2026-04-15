@@ -96,7 +96,10 @@ useHead({
         }
     ],
     title: t('encDecText.title'),
-});
+
+    ogImage: '/og/enc-dec-text.png',
+    twitterCard: 'summary_large_image',
+    twitterImage: '/og/enc-dec-text.png'});
 
 const cipher = ref('caesar');
 const key = ref(3);

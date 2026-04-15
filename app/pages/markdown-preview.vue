@@ -44,7 +44,10 @@ useHead({
         }
     ],
     title: t('markdownPreview.title'),
-});
+
+    ogImage: '/og/markdown-preview.png',
+    twitterCard: 'summary_large_image',
+    twitterImage: '/og/markdown-preview.png'});
 
 const input = ref('');
 

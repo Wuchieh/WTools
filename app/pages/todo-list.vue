@@ -64,7 +64,10 @@ useHead({
         },
     ],
     title: t('todo.title'),
-});
+
+    ogImage: '/og/todo-list.png',
+    twitterCard: 'summary_large_image',
+    twitterImage: '/og/todo-list.png'});
 
 const newTask = ref('');
 const tasks = ref<{ done: boolean; text: string }[]>([]);

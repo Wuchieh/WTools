@@ -117,7 +117,10 @@
 const localePath = useLocalePath();
 const { t } = useI18n();
 
-useHead({ title: t('home') });
+useHead({ title: t('home'),
+ogImage: '/og/index.png',
+    twitterCard: 'summary_large_image',
+    twitterImage: '/og/index.png'});
 
 definePageMeta({ name: 'index' });
 

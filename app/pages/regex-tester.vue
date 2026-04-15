@@ -106,7 +106,10 @@ useHead({
         },
     ],
     title: t('regex.title'),
-});
+
+    ogImage: '/og/regex-tester.png',
+    twitterCard: 'summary_large_image',
+    twitterImage: '/og/regex-tester.png'});
 
 const pattern = ref('');
 const text = ref('');

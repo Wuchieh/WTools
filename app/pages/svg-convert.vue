@@ -28,5 +28,8 @@ useHead({
         },
     ],
     title: t('svg.title'),
-});
+
+    ogImage: '/og/svg-convert.png',
+    twitterCard: 'summary_large_image',
+    twitterImage: '/og/svg-convert.png'});
 </script>

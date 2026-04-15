@@ -82,7 +82,10 @@ useHead({
         },
     ],
     title: t('slug.title'),
-});
+
+    ogImage: '/og/slug-generator.png',
+    twitterCard: 'summary_large_image',
+    twitterImage: '/og/slug-generator.png'});
 
 const input = ref('');
 const slug = ref('');

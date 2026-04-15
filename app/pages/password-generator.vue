@@ -105,7 +105,10 @@ useHead({
         },
     ],
     title: t('pwd.title'),
-});
+
+    ogImage: '/og/password-generator.png',
+    twitterCard: 'summary_large_image',
+    twitterImage: '/og/password-generator.png'});
 
 const length = ref(16);
 const upper = ref(true);

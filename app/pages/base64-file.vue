@@ -104,7 +104,10 @@ useHead({
         }
     ],
     title: t('base64File.title'),
-});
+
+    ogImage: '/og/base64-file.png',
+    twitterCard: 'summary_large_image',
+    twitterImage: '/og/base64-file.png'});
 
 const mode = ref<'decode' | 'encode'>('encode');
 const file = ref<File[] | null>(null);

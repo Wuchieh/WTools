@@ -75,7 +75,10 @@ useHead({
         },
     ],
     title: t('unit.title'),
-});
+
+    ogImage: '/og/unit-converter.png',
+    twitterCard: 'summary_large_image',
+    twitterImage: '/og/unit-converter.png'});
 
 const category = ref('length');
 const fromValue = ref(1);

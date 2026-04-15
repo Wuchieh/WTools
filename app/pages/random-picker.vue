@@ -64,7 +64,10 @@ useHead({
         },
     ],
     title: t('random.title'),
-});
+
+    ogImage: '/og/random-picker.png',
+    twitterCard: 'summary_large_image',
+    twitterImage: '/og/random-picker.png'});
 
 const itemsText = ref('');
 const pickCount = ref(1);

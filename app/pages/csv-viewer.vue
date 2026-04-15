@@ -79,7 +79,10 @@ useHead({
         }
     ],
     title: t('csvViewer.title'),
-});
+
+    ogImage: '/og/csv-viewer.png',
+    twitterCard: 'summary_large_image',
+    twitterImage: '/og/csv-viewer.png'});
 
 const file = ref<File[] | null>(null);
 const text = ref('');

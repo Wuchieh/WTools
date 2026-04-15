@@ -86,7 +86,10 @@ useHead({
         }
     ],
     title: t('hashChecker.title'),
-});
+
+    ogImage: '/og/hash-checker.png',
+    twitterCard: 'summary_large_image',
+    twitterImage: '/og/hash-checker.png'});
 
 const files = ref<File[] | null>(null);
 const algorithm = ref('sha256');

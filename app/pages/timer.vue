@@ -96,7 +96,10 @@ useHead({
         },
     ],
     title: t('timer.title'),
-});
+
+    ogImage: '/og/timer.png',
+    twitterCard: 'summary_large_image',
+    twitterImage: '/og/timer.png'});
 
 const _totalSeconds = ref(0);
 const remaining = ref(0);

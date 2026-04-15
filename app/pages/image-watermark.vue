@@ -28,5 +28,8 @@ useHead({
         },
     ],
     title: t('watermark.title'),
-});
+
+    ogImage: '/og/image-watermark.png',
+    twitterCard: 'summary_large_image',
+    twitterImage: '/og/image-watermark.png'});
 </script>

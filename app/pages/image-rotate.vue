@@ -28,5 +28,8 @@ useHead({
         },
     ],
     title: t('rotate.title'),
-});
+
+    ogImage: '/og/image-rotate.png',
+    twitterCard: 'summary_large_image',
+    twitterImage: '/og/image-rotate.png'});
 </script>

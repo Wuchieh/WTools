@@ -90,7 +90,10 @@ useHead({
         }
     ],
     title: t('jsonFormatter.title'),
-});
+
+    ogImage: '/og/json-formatter.png',
+    twitterCard: 'summary_large_image',
+    twitterImage: '/og/json-formatter.png'});
 
 const mode = ref('format');
 const input = ref('');
