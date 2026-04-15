@@ -130,7 +130,12 @@
                                 {{ f.file.name }}
                             </div>
                             <div class="text-caption text-medium-emphasis">
-                                {{ $t('crop.selected', { x: Math.round(f.crop.x), y: Math.round(f.crop.y), w: Math.round(f.crop.width), h: Math.round(f.crop.height) }) }}
+                                {{ $t('crop.selected', {
+                                    x: Math.round(f.crop.x),
+                                    y: Math.round(f.crop.y),
+                                    w: Math.round(f.crop.width),
+                                    h: Math.round(f.crop.height),
+                                }) }}
                             </div>
                         </v-card-text>
                         <v-card-actions>
@@ -246,25 +251,28 @@ let cropStart = {
     y: 0,
 };
 let activeRect: DOMRect | null = null;
-let activeEl: HTMLElement | null = null;
+let _activeEl: HTMLElement | null = null;
 let dragMode: 'move' | 'resize' | null = null;
 let resizeHandle = '';
 
-function getCropStyle(f: CropFile) {
+function getCropStyle(f: CropFile): Record<string, string> {
     return {
         border: '2px solid white',
         boxShadow: '0 0 0 9999px rgba(0,0,0,0.5)',
         cursor: 'move',
         height: `${f.crop.height}%`,
         left: `${f.crop.x}%`,
-        position: 'absolute',
+        position: 'absolute' as const,
         top: `${f.crop.y}%`,
         width: `${f.crop.width}%`,
     };
 }
 
-function handleFiles(files: File[]) {
-    if (files) store.addFiles(files);
+function handleFiles(files: File | File[]) {
+    if (files) {
+        const fileArray = Array.isArray(files) ? files : [files];
+        store.addFiles(fileArray);
+    }
 }
 
 function onDrag(e: MouseEvent | TouchEvent) {
@@ -276,8 +284,10 @@ function onDrag(e: MouseEvent | TouchEvent) {
         cx = e.clientX - rect.left;
         cy = e.clientY - rect.top;
     } else {
-        cx = e.touches[0].clientX - rect.left;
-        cy = e.touches[0].clientY - rect.top;
+        const touch = e.touches[0];
+        if (!touch) return;
+        cx = touch.clientX - rect.left;
+        cy = touch.clientY - rect.top;
     }
 
     const dx = cx - dragStartX;
@@ -341,18 +351,26 @@ function onDrag(e: MouseEvent | TouchEvent) {
 function startCrop(e: MouseEvent | TouchEvent, f: CropFile) {
     dragging = true;
     dragFile = f;
-    cropStart = { ...f.crop };
+    cropStart = {
+        h: f.crop.height,
+        w: f.crop.width,
+        x: f.crop.x,
+        y: f.crop.y,
+    };
     // Use currentTarget to get the specific v-img element for this file
     const target = e.currentTarget as HTMLElement;
     const rect = target.getBoundingClientRect();
     activeRect = rect;
-    activeEl = target;
+    _activeEl = target;
     if (e instanceof MouseEvent) {
         dragStartX = e.clientX - rect.left;
         dragStartY = e.clientY - rect.top;
     } else {
-        dragStartX = e.touches[0].clientX - rect.left;
-        dragStartY = e.touches[0].clientY - rect.top;
+        const touch = e.touches[0];
+        if (touch) {
+            dragStartX = touch.clientX - rect.left;
+            dragStartY = touch.clientY - rect.top;
+        }
     }
 
     document.addEventListener('mousemove', onDrag);
@@ -365,19 +383,27 @@ function startResize(e: MouseEvent | TouchEvent, f: CropFile, handle: string) {
     dragging = true;
     dragFile = f;
     resizeHandle = handle;
-    cropStart = { ...f.crop };
+    cropStart = {
+        h: f.crop.height,
+        w: f.crop.width,
+        x: f.crop.x,
+        y: f.crop.y,
+    };
     dragMode = 'resize';
     const target = e.currentTarget as HTMLElement;
     const parentEl = target.closest('.v-img') as HTMLElement;
     const rect = parentEl.getBoundingClientRect();
     activeRect = rect;
-    activeEl = parentEl;
+    _activeEl = parentEl;
     if (e instanceof MouseEvent) {
         dragStartX = e.clientX - rect.left;
         dragStartY = e.clientY - rect.top;
     } else {
-        dragStartX = e.touches[0].clientX - rect.left;
-        dragStartY = e.touches[0].clientY - rect.top;
+        const touch = e.touches[0];
+        if (touch) {
+            dragStartX = touch.clientX - rect.left;
+            dragStartY = touch.clientY - rect.top;
+        }
     }
     document.addEventListener('mousemove', onDrag);
     document.addEventListener('mouseup', stopCrop);
@@ -390,7 +416,7 @@ function stopCrop() {
     dragFile = null;
     dragMode = null;
     activeRect = null;
-    activeEl = null;
+    _activeEl = null;
     document.removeEventListener('mousemove', onDrag);
     document.removeEventListener('mouseup', stopCrop);
     document.removeEventListener('touchmove', onDrag);

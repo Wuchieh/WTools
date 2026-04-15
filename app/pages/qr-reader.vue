@@ -106,7 +106,7 @@ function copy(text: string) {
     });
 }
 
-async function readQr(files: File | File[] | null) {
+function readQr(files: File | File[] | null) {
     result.value = '';
     error.value = '';
     if (!files) return;

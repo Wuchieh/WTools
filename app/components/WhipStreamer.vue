@@ -241,7 +241,6 @@
 import { useWhipClient } from '~/composables/useWhipClient';
 import { useWhipStore } from '~/stores/whip';
 
-const { t } = useI18n();
 const store = useWhipStore();
 const client = useWhipClient();
 
@@ -296,12 +295,12 @@ async function handleStop() {
 
 function handleToggleAudio() {
     const enabled = client.toggleAudio();
-    if (enabled !== null) audioEnabled.value = enabled;
+    if (enabled !== undefined && enabled !== null) audioEnabled.value = enabled;
 }
 
 function handleToggleVideo() {
     const enabled = client.toggleVideo();
-    if (enabled !== null) videoEnabled.value = enabled;
+    if (enabled !== undefined && enabled !== null) videoEnabled.value = enabled;
 }
 
 // Cleanup on unmount

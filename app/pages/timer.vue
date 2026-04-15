@@ -98,7 +98,7 @@ useHead({
     title: t('timer.title'),
 });
 
-const totalSeconds = ref(0);
+const _totalSeconds = ref(0);
 const remaining = ref(0);
 const running = ref(false);
 const alarm = ref(false);

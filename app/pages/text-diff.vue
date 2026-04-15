@@ -49,9 +49,13 @@
                                 v-for="(line, i) in diffLines"
                                 :key="i"
                                 class="font-monospace pa-1 text-body-2"
-                                :class="line.type === 'add' ? 'bg-green-lighten-5' : line.type === 'remove' ? 'bg-red-lighten-5' : ''"
+                                :class="line.type === 'add' ? 'bg-green-lighten-5'
+                                    : line.type === 'remove' ? 'bg-red-lighten-5' : ''"
                             >
-                                <span class="text-caption mr-2">{{ line.type === 'add' ? '+' : line.type === 'remove' ? '-' : ' ' }}</span>{{ line.text }}
+                                <span class="text-caption mr-2">
+                                    {{ line.type === 'add' ? '+' : line.type === 'remove' ? '-' : ' ' }}
+                                </span>
+                                {{ line.text }}
                             </div>
                         </div>
                     </v-card-text>
@@ -81,29 +85,40 @@ function compare() {
     const lines1 = text1.value.split('\n');
     const lines2 = text2.value.split('\n');
     const dp = lcs(lines1, lines2);
-    const result: typeof diffLines.value = [];
+    diffLines.value = [];
     let i = lines1.length;
     let j = lines2.length;
     const ops: { text: string; type: 'add' | 'remove' | 'same' }[] = [];
     while (i > 0 || j > 0) {
-        if (i > 0 && j > 0 && lines1[i - 1] === lines2[j - 1]) {
+        if (i > 0 && j > 0) {
+            const line1 = lines1[i - 1];
+            const line2 = lines2[j - 1];
+            if (line1 !== undefined && line2 !== undefined && line1 === line2) {
+                ops.unshift({
+                    text: line1,
+                    type: 'same',
+                });
+                i -= 1;
+                j -= 1;
+                continue;
+            }
+        }
+        if (j > 0 && (i === 0 || (dp[i]?.[j - 1] ?? 0) >= (dp[i - 1]?.[j] ?? 0))) {
+            const text = lines2[j - 1] ?? '';
             ops.unshift({
-                text: lines1[i - 1] ?? '',
-                type: 'same',
-            });
-            i--; j--;
-        } else if (j > 0 && (i === 0 || dp[i]?.[j - 1]! >= dp[i - 1]?.[j]!)) {
-            ops.unshift({
-                text: lines2[j - 1] ?? '',
+                text,
                 type: 'add',
             });
             j--;
-        } else {
+        } else if (i > 0) {
+            const text = lines1[i - 1] ?? '';
             ops.unshift({
-                text: lines1[i - 1] ?? '',
+                text,
                 type: 'remove',
             });
             i--;
+        } else {
+            break;
         }
     }
     diffLines.value = ops;
@@ -112,11 +127,19 @@ function compare() {
 function lcs(a: string[], b: string[]): number[][] {
     const m = a.length;
     const n = b.length;
-    const dp: number[][] = Array.from({ length: m + 1 }, () => new Array(n + 1).fill(0));
+    const dp: number[][] = Array.from({ length: m + 1 }, () => Array.from<number>({ length: n + 1 }).fill(0));
     for (let i = 1; i <= m; i++) {
         for (let j = 1; j <= n; j++) {
-            if (a[i - 1] === b[j - 1]) dp[i][j] = dp[i - 1][j - 1] + 1;
-            else dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+            const prevDiag = dp[i - 1]?.[j - 1] ?? 0;
+            const prevLeft = dp[i - 1]?.[j] ?? 0;
+            const prevTop = dp[i]?.[j - 1] ?? 0;
+            const aVal = a[i - 1];
+            const bVal = b[j - 1];
+            if (aVal !== undefined && bVal !== undefined && aVal === bVal) {
+                dp[i]![j] = prevDiag + 1;
+            } else {
+                dp[i]![j] = Math.max(prevLeft, prevTop);
+            }
         }
     }
     return dp;

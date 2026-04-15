@@ -77,7 +77,10 @@ function pick() {
     const result: string[] = [];
     for (let i = 0; i < Math.min(pickCount.value, pool.length); i++) {
         const idx = Math.floor(Math.random() * pool.length);
-        result.push(pool.splice(idx, 1)[0]);
+        const picked_item = pool.splice(idx, 1)[0];
+        if (picked_item !== undefined) {
+            result.push(picked_item);
+        }
     }
     picked.value = result;
 }

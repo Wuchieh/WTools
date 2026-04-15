@@ -109,7 +109,10 @@ import { useIcoStore } from '~/stores/ico';
 const store = useIcoStore();
 const selectedFiles = ref<File[]>([]);
 
-function handleFiles(files: File[]) {
-    if (files) store.addFiles(files);
+function handleFiles(files: File | File[]) {
+    if (files) {
+        const fileArray = Array.isArray(files) ? files : [files];
+        store.addFiles(fileArray);
+    }
 }
 </script>

@@ -108,7 +108,7 @@ function generate() {
     // Replace spaces with hyphens
     s = s.replace(/\s+/g, '-');
     // Remove non-alphanumeric (except hyphens)
-    s = s.replace(options.strict ? /[^a-z0-9-]/gi : /[^\w-\s]/g, '');
+    s = s.replace(options.strict ? /[^a-z0-9\-]/gi : /[^\w\-\s]/g, '');
     // Remove multiple hyphens
     s = s.replace(/-+/g, '-');
     // Trim hyphens from ends

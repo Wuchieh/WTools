@@ -68,20 +68,16 @@ export const useWatermarkStore = defineStore('watermark', () => {
         if (position.value === 'top-left') {
             tx = offsetX.value;
             ty = offsetY.value + th;
-        }
-        else if (position.value === 'top-right') {
+        } else if (position.value === 'top-right') {
             tx = w - tw - offsetX.value;
             ty = offsetY.value + th;
-        }
-        else if (position.value === 'bottom-left') {
+        } else if (position.value === 'bottom-left') {
             tx = offsetX.value;
             ty = h - offsetY.value;
-        }
-        else if (position.value === 'bottom-right') {
+        } else if (position.value === 'bottom-right') {
             tx = w - tw - offsetX.value;
             ty = h - offsetY.value;
-        }
-        else {
+        } else {
             tx = (w - tw) / 2;
             ty = (h + th) / 2;
         }

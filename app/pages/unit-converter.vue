@@ -137,8 +137,11 @@ const currentUnits = computed(() => {
 
 const toValue = computed(() => {
     if (!conversionFactors[category.value]) return fromValue.value;
-    const factor = conversionFactors[category.value];
-    return (fromValue.value / (factor[fromUnit.value] ?? 1)) * (factor[toUnit.value] ?? 1);
+    const factor = conversionFactors[category.value]!;
+    const fromFactor = factor[fromUnit.value];
+    const toFactor = factor[toUnit.value];
+    if (fromFactor === undefined || toFactor === undefined) return fromValue.value;
+    return (fromValue.value / fromFactor) * toFactor;
 });
 
 function swap() {

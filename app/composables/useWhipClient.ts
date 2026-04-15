@@ -94,7 +94,7 @@ export function useWhipClient() {
         }
     }
 
-    async function stopStream() {
+    function stopStream() {
         store.setStatus('disconnected');
         cleanup();
     }

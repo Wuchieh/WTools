@@ -67,21 +67,27 @@
                             v-model="tab"
                         >
                             <v-window-item value="header">
-                                <pre class="bg-grey-lighten-4 pa-3 rounded">{{ JSON.stringify(decoded.header, null, 2) }}</pre>
+                                <pre class="bg-grey-lighten-4 pa-3 rounded">
+                                    {{ JSON.stringify(decoded.header, null, 2) }}
+                                </pre>
                             </v-window-item>
                             <v-window-item value="payload">
-                                <pre class="bg-grey-lighten-4 pa-3 rounded">{{ JSON.stringify(decoded.payload, null, 2) }}</pre>
+                                <pre class="bg-grey-lighten-4 pa-3 rounded">
+                                    {{ JSON.stringify(decoded.payload, null, 2) }}
+                                </pre>
                                 <div
                                     v-if="decoded.exp"
                                     class="text-caption text-medium-emphasis mt-2"
                                 >
-                                    {{ $t('jwt.expires') }}: {{ new Date(decoded.exp * 1000).toLocaleString() }}
+                                    {{ $t('jwt.expires') }}:
+                                    {{ new Date(decoded.exp * 1000).toLocaleString() }}
                                 </div>
                                 <div
                                     v-if="decoded.iat"
                                     class="text-caption text-medium-emphasis mt-1"
                                 >
-                                    {{ $t('jwt.issued') }}: {{ new Date(decoded.iat * 1000).toLocaleString() }}
+                                    {{ $t('jwt.issued') }}:
+                                    {{ new Date(decoded.iat * 1000).toLocaleString() }}
                                 </div>
                             </v-window-item>
                             <v-window-item value="signature">
@@ -119,7 +125,13 @@ useHead({
 const input = ref('');
 const tab = ref('header');
 const error = ref('');
-const decoded = ref<null | { exp?: number; header: Record<string, unknown>; iat?: number; payload: Record<string, unknown>; signature: string }>(null);
+const decoded = ref<null | {
+    exp?: number;
+    header: Record<string, unknown>;
+    iat?: number;
+    payload: Record<string, unknown>;
+    signature: string;
+}>(null);
 
 function clear() {
     input.value = '';

@@ -131,7 +131,7 @@ function jsonToYaml(obj: unknown, indent = 0): string {
 
 function yamlToJson(yaml: string): string {
     const lines = yaml.split('\n');
-    const result: Record<string, unknown> = {};
+    const _result: Record<string, unknown> = {};
 
     function parse(lines: string[], start = 0): Record<string, unknown> | unknown[] {
         const obj: Record<string, unknown> = {};

@@ -11,6 +11,16 @@ declare module 'h3' {
     }
 }
 
+declare module 'swiper/css' {
+    const css: string;
+    export default css;
+}
+
+declare module 'swiper/css/navigation' {
+    const css: string;
+    export default css;
+}
+
 export { };
 
 // declare module '@libwebp-wasm/gif2webp' {

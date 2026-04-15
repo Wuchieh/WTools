@@ -82,11 +82,13 @@
                             </v-chip>
                         </div>
 
+                        <!-- eslint-disable vue/no-v-html -->
                         <div
                             v-if="highlightedText"
                             class="bg-grey-lighten-4 pa-3 text-break mt-4 rounded"
                             v-html="highlightedText"
                         />
+                        <!-- eslint-enable vue/no-v-html -->
                     </v-card-text>
                 </v-card>
             </v-col>

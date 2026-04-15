@@ -1,4 +1,4 @@
-// @ts-ignore
+// @ts-expect-error HEIC type definitions are incomplete
 import heic2any from 'heic2any';
 import JSZip from 'jszip';
 import { defineStore } from 'pinia';

@@ -85,7 +85,8 @@
                             v-if="strength !== null"
                             class="text-caption text-medium-emphasis mt-1"
                         >
-                            {{ $t('pwd.strength') }}: {{ [$t('pwd.weak'), $t('pwd.fair'), $t('pwd.good'), $t('pwd.strong')][strength] }}
+                            {{ $t('pwd.strength') }}:
+                            {{ [$t('pwd.weak'), $t('pwd.fair'), $t('pwd.good'), $t('pwd.strong')][strength] }}
                         </div>
                     </v-card-text>
                 </v-card>

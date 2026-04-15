@@ -85,7 +85,8 @@ const relativeTime = computed(() => {
     const diff = Date.now() - new Date(ts.value * 1000).getTime();
     const abs = Math.abs(diff);
     const unit = abs < 60000 ? 's' : abs < 3600000 ? 'm' : abs < 86400000 ? 'h' : 'd';
-    return `${diff < 0 ? 'in ' : ''}${Math.floor(abs / (unit === 's' ? 1000 : unit === 'm' ? 60000 : unit === 'h' ? 3600000 : 86400000))} ${unit}${diff < 0 ? '' : ' ago'}`;
+    const divisor = unit === 's' ? 1000 : unit === 'm' ? 60000 : unit === 'h' ? 3600000 : 86400000;
+    return `${diff < 0 ? 'in ' : ''}${Math.floor(abs / divisor)} ${unit}${diff < 0 ? '' : ' ago'}`;
 });
 
 watch(ts, () => {

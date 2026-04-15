@@ -107,6 +107,7 @@ export const useWhipStore = defineStore('whip', () => {
         setLocalStream,
         setRemoteDescription,
         setStatus,
+        status,
         updateStats,
     };
 });

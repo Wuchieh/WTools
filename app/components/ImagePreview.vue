@@ -113,9 +113,6 @@
 </template>
 
 <script setup lang="ts">
-import 'swiper/css';
-import 'swiper/css/navigation';
-
 import { Navigation as SwiperNavigation } from 'swiper/modules';
 import {
     Swiper,

@@ -71,21 +71,25 @@ export const useIcoStore = defineStore('ico', () => {
         return new Promise((resolve, reject) => {
             const img = new Image();
             img.onload = () => {
-                const blobs: Blob[] = sizes.value.map((size) => {
+                const blobs: Blob[] = [];
+                for (const size of sizes.value) {
                     const canvas = document.createElement('canvas');
                     canvas.width = size;
                     canvas.height = size;
                     const ctx = canvas.getContext('2d');
-                    if (!ctx) return new Blob();
+                    if (!ctx) continue;
                     ctx.drawImage(img, 0, 0, size, size);
                     const p = canvas.toDataURL('image/png');
-                    const binary = atob(p.split(',')[1]);
+                    const parts = p.split(',');
+                    if (parts.length < 2) continue;
+                    const binary = atob(parts[1]!);
                     const arr = new Uint8Array(binary.length);
                     for (let i = 0; i < binary.length; i++) arr[i] = binary.charCodeAt(i);
-                    return new Blob([arr], { type: 'image/png' });
-                });
+                    const blob = new Blob([arr], { type: 'image/png' });
+                    if (blob.size > 0) blobs.push(blob);
+                }
                 // Simple ICO: just return PNG blobs for now (multi-size PNG zip)
-                resolve(blobs.filter((b) => b.size > 0));
+                resolve(blobs);
             };
             img.onerror = () => reject(new Error('Failed to load image'));
             img.src = f.preview;

@@ -96,7 +96,7 @@
                 <v-list-item
                     v-for="f in store.files"
                     :key="f.id"
-                    :subtitle="formatBytes(f.convertedSize ?? f.file.size) + (f.convertedSize ? ` ← ${formatBytes(f.file.size)}` : '')"
+                    :subtitle="(f.convertedSize ? `${formatBytes(f.convertedSize)} ← ` : '') + formatBytes(f.file.size)"
                 >
                     <template #prepend>
                         <v-avatar
@@ -204,7 +204,10 @@ function formatBytes(bytes: number): string {
     return `${Number.parseFloat((bytes / k ** i).toFixed(1))} ${sizes[i]}`;
 }
 
-function handleFiles(files: File[]) {
-    if (files) store.addFiles(files);
+function handleFiles(files: File | File[]) {
+    if (files) {
+        const fileArray = Array.isArray(files) ? files : [files];
+        store.addFiles(fileArray);
+    }
 }
 </script>

@@ -231,8 +231,11 @@ const positions = [
     },
 ];
 
-function handleFiles(files: File[]) {
-    if (files) store.addFiles(files);
+function handleFiles(files: File | File[]) {
+    if (files) {
+        const fileArray = Array.isArray(files) ? files : [files];
+        store.addFiles(fileArray);
+    }
     updatePreview();
 }
 

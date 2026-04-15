@@ -20,11 +20,13 @@
                             :label="$t('markdown.input')"
                             border
                         />
+                        <!-- eslint-disable vue/no-v-html -->
                         <div
                             v-if="html"
                             class="prose"
                             v-html="html"
                         />
+                        <!-- eslint-enable vue/no-v-html -->
                     </v-card-text>
                 </v-card>
             </v-col>
