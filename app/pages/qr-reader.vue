@@ -108,7 +108,13 @@ function stopCamera() {
 }
 
 function copy(text: string) {
-    navigator.clipboard.writeText(text);
+    navigator.clipboard.writeText(text).then(() => {
+        const showCopySnackbar = inject<(text: string, color?: string) => void>('showCopySnackbar');
+        if (showCopySnackbar) showCopySnackbar('已複製到剪貼簿！');
+    }).catch(() => {
+        const showCopySnackbar = inject<(text: string, color?: string) => void>('showCopySnackbar');
+        if (showCopySnackbar) showCopySnackbar('複製失敗', 'error');
+    });
 }
 
 onUnmounted(() => stopCamera());

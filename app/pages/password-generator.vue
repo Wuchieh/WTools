@@ -64,5 +64,11 @@ function generate() {
     strength.value = Math.min(3, Math.floor((poolSize * length.value) / 48));
 }
 
-function copy(text: string) { navigator.clipboard.writeText(text); }
+function copy(text: string) { navigator.clipboard.writeText(text).then(() => {
+    const showCopySnackbar = inject<(text: string, color?: string) => void>('showCopySnackbar');
+    if (showCopySnackbar) showCopySnackbar('已複製到剪貼簿！');
+}).catch(() => {
+    const showCopySnackbar = inject<(text: string, color?: string) => void>('showCopySnackbar');
+    if (showCopySnackbar) showCopySnackbar('複製失敗', 'error');
+}); }
 </script>

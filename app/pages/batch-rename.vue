@@ -10,6 +10,7 @@
                         <v-text-field v-model="pattern" :label="$t('batchrename.pattern')" placeholder="{n}_{date}" border class="mb-2" />
                         <v-select v-model="caseStyle" :items="caseOptions" :label="$t('batchrename.caseStyle')" density="compact" class="mb-4" />
                         <v-btn color="primary" block :disabled="!files?.length" @click="rename">{{ $t('batchrename.rename') }}</v-btn>
+                        <v-btn v-if="results.length" color="success" block class="mt-2" @click="downloadZip">{{ $t('batchrename.downloadZip') }}</v-btn>
                         <v-list v-if="results.length" class="mt-4" border>
                             <v-list-item v-for="(r, i) in results" :key="i">
                                 <template #prepend><v-icon icon="mdi-file" /></template>
@@ -28,6 +29,9 @@
 </template>
 
 <script setup lang="ts">
+import JSZip from 'jszip';
+import { v7 as uuidv7 } from 'uuid';
+
 const { t } = useI18n();
 useHead({ meta: [{ content: t('batchrename.subtitle'), name: 'description' }], title: t('batchrename.title') });
 
@@ -58,5 +62,24 @@ function rename() {
         else newName += ext;
         results.value.push({ old: f.name, new: newName });
     });
+}
+
+async function downloadZip() {
+    if (!files.value || !results.value.length) return;
+    const zip = new JSZip();
+    const fileMap = new Map(files.value.map(f => [f.name, f]));
+    for (const r of results.value) {
+        const originalFile = fileMap.get(r.old);
+        if (originalFile) {
+            const blob = await originalFile.arrayBuffer();
+            zip.file(r.new, blob);
+        }
+    }
+    const content = await zip.generateAsync({ type: 'blob' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(content);
+    link.download = `${uuidv7()}_renamed.zip`;
+    link.click();
+    URL.revokeObjectURL(link.href);
 }
 </script>

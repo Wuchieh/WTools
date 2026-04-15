@@ -47,5 +47,11 @@ function process() {
     }
 }
 
-function copy() { navigator.clipboard.writeText(output.value); }
+function copy() { navigator.clipboard.writeText(output.value).then(() => {
+    const showCopySnackbar = inject<(text: string, color?: string) => void>('showCopySnackbar');
+    if (showCopySnackbar) showCopySnackbar('已複製到剪貼簿！');
+}).catch(() => {
+    const showCopySnackbar = inject<(text: string, color?: string) => void>('showCopySnackbar');
+    if (showCopySnackbar) showCopySnackbar('複製失敗', 'error');
+}); }
 </script>

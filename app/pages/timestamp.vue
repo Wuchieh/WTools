@@ -52,5 +52,11 @@ function applyFormat(fmt: string) {
     else result.value = d.toLocaleString();
 }
 
-function copy(text: string) { navigator.clipboard.writeText(text); }
+function copy(text: string) { navigator.clipboard.writeText(text).then(() => {
+    const showCopySnackbar = inject<(text: string, color?: string) => void>('showCopySnackbar');
+    if (showCopySnackbar) showCopySnackbar('已複製到剪貼簿！');
+}).catch(() => {
+    const showCopySnackbar = inject<(text: string, color?: string) => void>('showCopySnackbar');
+    if (showCopySnackbar) showCopySnackbar('複製失敗', 'error');
+}); }
 </script>
