@@ -232,10 +232,12 @@ const positions = [
 ];
 
 function handleFiles(files: File | File[]) {
-    if (files) {
-        const fileArray = Array.isArray(files) ? files : [files];
-        store.addFiles(fileArray);
+    const fileArray = Array.isArray(files) ? files : (files ? [files] : []);
+    if (fileArray.length === 0) {
+        store.clearAll();
+        return;
     }
+    store.addFiles(fileArray);
     updatePreview();
 }
 
