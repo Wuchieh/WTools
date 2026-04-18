@@ -5,12 +5,12 @@
             flat
         >
             <v-app-bar-title>
-                <NuxtLink
+                <NuxtLinkLocale
                     class="font-weight-bold text-decoration-none text-high-emphasis"
                     to="/"
                 >
                     WTools
-                </NuxtLink>
+                </NuxtLinkLocale>
             </v-app-bar-title>
 
             <template #append>
