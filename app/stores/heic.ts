@@ -76,11 +76,23 @@ export const useHeicStore = defineStore('heic', () => {
     }
 
     async function downloadZip() {
-        const zip = new JSZip();
         const successes = files.value.filter((f) => f.status === 'success' && f.blob);
         if (successes.length === 0) return;
-        const ext = outputFormat.value.split('/')[1];
+        // Single file: direct download, no zip
+        if (successes.length === 1) {
+            const f = successes[0];
+            const ext = outputFormat.value.split('/')[1];
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(f.blob!);
+            link.download = `${f.file.name.replace(/\.[^/.]+$/, '')}.${ext}`;
+            link.click();
+            URL.revokeObjectURL(link.href);
+            return;
+        }
+        // Multiple files: zip
+        const zip = new JSZip();
         for (const f of successes) {
+            const ext = outputFormat.value.split('/')[1];
             const fileName = `${f.file.name.replace(/\.[^/.]+$/, '')}.${ext}`;
             zip.file(fileName, f.blob!);
         }
