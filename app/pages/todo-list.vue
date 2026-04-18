@@ -65,9 +65,16 @@ useSeoMeta({
     twitterImage: '/og/todo-list.png',
 });
 
+const STORAGE_KEY = 'wtools-todo';
 const newTask = ref('');
 const tasks = ref<{ done: boolean; text: string }[]>([]);
 const doneCount = computed(() => tasks.value.filter((t) => t.done).length);
+
+// Auto-save to localStorage whenever tasks change
+watch(tasks, (val) => {
+    if (!localStorage) return;
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(val));
+}, { deep: true });
 
 function addTask() {
     if (!newTask.value.trim()) return;
@@ -81,4 +88,8 @@ function addTask() {
 function remove(i: number) {
     tasks.value.splice(i, 1);
 }
+
+onMounted(() => {
+    tasks.value = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+});
 </script>
