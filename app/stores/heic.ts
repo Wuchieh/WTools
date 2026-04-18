@@ -1,4 +1,4 @@
-import heic2any from 'heic2any';
+// heic2any uses Web Workers which are browser-only — do NOT import at module level (causes SSR crash)
 import JSZip from 'jszip';
 import { defineStore } from 'pinia';
 import { v7 as uuidv7 } from 'uuid';
@@ -52,6 +52,8 @@ export const useHeicStore = defineStore('heic', () => {
     async function convertFiles() {
         if (isConverting.value) return;
         isConverting.value = true;
+        // Dynamically import heic2any so it's only loaded in the browser (uses Web Workers)
+        const heic2any = (await import('heic2any')).default;
         for (const f of files.value) {
             if (f.status === 'converting') continue;
             f.status = 'converting';
