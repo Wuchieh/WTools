@@ -159,10 +159,15 @@ function scanCamera() {
 async function startCamera() {
     showCamera.value = true;
     await nextTick();
-    stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
-    if (videoEl.value) {
-        videoEl.value.srcObject = stream;
-        scanCamera();
+    try {
+        stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+        if (videoEl.value) {
+            videoEl.value.srcObject = stream;
+            scanCamera();
+        }
+    } catch (err) {
+        showCamera.value = false;
+        error.value = t('qrreader.cameraPermissionDenied');
     }
 }
 

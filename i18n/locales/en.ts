@@ -285,6 +285,7 @@ export default {
         title: 'QR Generator',
     },
     qrreader: {
+        cameraPermissionDenied: 'Camera permission denied',
         copied: 'Copied to clipboard!',
         copy: 'Copy',
         copyFailed: 'Copy failed',

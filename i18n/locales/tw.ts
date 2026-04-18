@@ -285,13 +285,14 @@ export default {
         title: 'QR 產生器',
     },
     qrreader: {
+        cameraPermissionDenied: '相機權限被拒絕',
         copied: '已複製到剪貼簿！',
         copy: '複製',
         copyFailed: '複製失敗',
         notFound: '找不到 QR Code',
         selectImage: '選擇圖片',
-        subtitle: '從圖片或相機讀取 QR Code。',
-        title: 'QR 解讀器',
+        subtitle: '從圖片或相機讀取 QR Code',
+        title: 'QR 讀取器',
         useCamera: '使用相機',
     },
     random: {
