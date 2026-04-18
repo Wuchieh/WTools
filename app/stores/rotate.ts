@@ -10,7 +10,7 @@ export interface RotateFile {
     flipV: boolean;
     id: string;
     preview: string;
-    rotation: number;
+    rawRotation: number;
     status: 'converting' | 'error' | 'pending' | 'success';
 }
 
@@ -33,7 +33,7 @@ export const useRotateStore = defineStore('rotate', () => {
                     flipV: false,
                     id: crypto.randomUUID(),
                     preview: e.target?.result as string,
-                    rotation: 0,
+                    rawRotation: 0,
                     status: 'pending',
                 });
             };
@@ -53,7 +53,7 @@ export const useRotateStore = defineStore('rotate', () => {
     function rotate(id: string, angle: number) {
         const f = files.value.find((f) => f.id === id);
         if (f) {
-            f.rotation = (f.rotation + angle + 360) % 360;
+            f.rawRotation += angle;
             f.status = 'pending';
         }
     }
@@ -95,23 +95,27 @@ export const useRotateStore = defineStore('rotate', () => {
         return new Promise((resolve, reject) => {
             const img = new Image();
             img.onload = () => {
-                const rad = (f.rotation * Math.PI) / 180;
+                const rad = (f.rawRotation * Math.PI) / 180;
                 const sin = Math.abs(Math.sin(rad));
                 const cos = Math.abs(Math.cos(rad));
+                // For 90°/270° (sin=1, cos=0): w = img.height, h = img.width
+                // For 0°/180° (sin=0, cos=1): w = img.width, h = img.height
                 const w = img.width * cos + img.height * sin;
                 const h = img.width * sin + img.height * cos;
                 const canvas = document.createElement('canvas');
-                canvas.width = w;
-                canvas.height = h;
+                canvas.width = Math.round(w);
+                canvas.height = Math.round(h);
                 const ctx = canvas.getContext('2d');
                 if (!ctx) {
                     reject(new Error('Canvas context not available'));
                     return;
                 }
-                ctx.translate(w / 2, h / 2);
+                // Translate to center, then rotate around center
+                ctx.translate(Math.round(w) / 2, Math.round(h) / 2);
                 ctx.rotate(rad);
                 if (f.flipH) ctx.scale(-1, 1);
                 if (f.flipV) ctx.scale(1, -1);
+                // Draw image centered (negative half-width/height)
                 ctx.drawImage(img, -img.width / 2, -img.height / 2);
                 canvas.toBlob((blob) => {
                     if (blob) resolve(blob);

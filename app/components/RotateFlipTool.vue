@@ -57,24 +57,24 @@
                     md="6"
                 >
                     <v-card border>
-                        <v-img
-                            class="bg-grey-lighten-3"
-                            max-height="250"
-                            :src="f.preview"
-                            :style="{
-                                transform: `rotate(${f.rotation}deg)
-                                    scaleX(${f.flipH ? -1 : 1})
-                                    scaleY(${f.flipV ? -1 : 1})`,
-                                transition: f.status === 'pending' ? 'transform 0.2s' : 'none',
-                            }"
-                            cover
-                        />
+                        <div class="rotate-wrapper">
+                            <img
+                                class="rotate-image"
+                                :src="f.preview"
+                                :style="{
+                                    transform: `rotate(${f.rawRotation}deg)
+                                        scaleX(${f.flipH ? -1 : 1})
+                                        scaleY(${f.flipV ? -1 : 1})`,
+                                    transition: f.status === 'pending' ? 'transform 0.2s' : 'none',
+                                }"
+                            >
+                        </div>
                         <v-card-text>
                             <div class="text-caption">
                                 {{ f.file.name }}
                             </div>
                             <div class="text-caption text-medium-emphasis">
-                                {{ $t('rotate.rotation') }}: {{ f.rotation }}°
+                                {{ $t('rotate.rotation') }}: {{ ((f.rawRotation % 360) + 360) % 360 }}°
                             </div>
                         </v-card-text>
                         <v-card-actions>
@@ -186,3 +186,19 @@ function handleFiles(files: File | File[]) {
     store.addFiles(fileArray);
 }
 </script>
+
+<style scoped>
+.rotate-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+    padding: 16px;
+    background: rgb(var(--v-theme-surface-variant));
+}
+.rotate-image {
+    max-width: 100%;
+    max-height: 250px;
+    object-fit: contain;
+}
+</style>
