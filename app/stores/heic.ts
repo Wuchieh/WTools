@@ -8,6 +8,7 @@ export interface HeicFile {
     error?: string;
     file: File;
     id: string;
+    isHeic: boolean;
     preview: string;
     status: 'converting' | 'error' | 'pending' | 'success';
 }
@@ -30,6 +31,7 @@ export const useHeicStore = defineStore('heic', () => {
                 files.value.push({
                     file,
                     id: crypto.randomUUID(),
+                    isHeic,
                     preview: e.target?.result as string,
                     status: 'pending',
                 });

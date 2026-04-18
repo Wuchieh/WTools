@@ -62,7 +62,14 @@
                             rounded="0"
                             size="40"
                         >
-                            <v-img :src="f.preview" />
+                            <v-icon
+                                v-if="f.isHeic && f.status !== 'success'"
+                                icon="mdi-image-filter-hdr"
+                            />
+                            <v-img
+                                v-else
+                                :src="f.preview"
+                            />
                         </v-avatar>
                     </template>
                     <v-list-item-title>{{ f.file.name }}</v-list-item-title>
