@@ -6,7 +6,7 @@ export default defineNuxtConfig({
             htmlAttrs: { lang: 'zh-TW' },
             link: [
                 {
-                    href: 'https://wtools-e7g.pages.dev',
+                    href: 'https://wtools.wuchieh.com',
                     rel: 'canonical',
                 },
                 {

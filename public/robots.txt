@@ -2,7 +2,7 @@ User-Agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://wtools-e7g.pages.dev/sitemap.xml
+Sitemap: https://wtools.wuchieh.com/sitemap.xml
 
 # Crawl delay for polite spiders
 Crawl-delay: 1
