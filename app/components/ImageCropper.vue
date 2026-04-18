@@ -68,19 +68,23 @@
                     md="6"
                 >
                     <v-card border>
-                        <v-img
-                            class="crop-container"
-                            max-height="300"
-                            :src="f.preview"
-                            cover
+                        <div
+                            :ref="el => setWrapperRef(el, f.id)"
+                            class="crop-wrapper"
                             @mousedown="startCrop($event, f)"
                             @touchstart.prevent="startCrop($event, f)"
                         >
+                            <img
+                                :ref="el => setImgRef(el, f.id)"
+                                class="crop-image"
+                                draggable="false"
+                                :src="f.preview"
+                            >
                             <div
                                 class="crop-overlay"
                                 :style="getCropStyle(f)"
-                                @mousedown.stop="startCrop($event, f)"
-                                @touchstart.prevent.stop="startCrop($event, f)"
+                                @mousedown.stop="startMove($event, f)"
+                                @touchstart.prevent.stop="startMove($event, f)"
                             >
                                 <!-- Resize handles -->
                                 <div
@@ -124,7 +128,7 @@
                                     @touchstart.prevent.stop="startResize($event, f, 'w')"
                                 />
                             </div>
-                        </v-img>
+                        </div>
                         <v-card-text>
                             <div class="text-caption">
                                 {{ f.file.name }}
@@ -202,44 +206,65 @@ import type { CropFile } from '~/stores/crop';
 const store = useCropStore();
 const selectedFiles = ref<File[]>([]);
 
-const formats = [
-    {
-        title: 'WebP',
-        value: 'image/webp',
-    },
-    {
-        title: 'JPEG',
-        value: 'image/jpeg',
-    },
-    {
-        title: 'PNG',
-        value: 'image/png',
-    },
-];
+// --- Refs for DOM elements ---
+const wrapperRefs = new Map<string, HTMLElement>();
+const imgRefs = new Map<string, HTMLImageElement>();
 
-const ratios = [
-    {
-        title: '1:1',
-        value: 1,
-    },
-    {
-        title: '4:3',
-        value: 4 / 3,
-    },
-    {
-        title: '16:9',
-        value: 16 / 9,
-    },
-    {
-        title: '3:2',
-        value: 3 / 2,
-    },
-    {
-        title: 'Free',
-        value: null,
-    },
-];
+function setImgRef(el: any, id: string) {
+    if (el) imgRefs.set(id, el as HTMLImageElement);
+    else imgRefs.delete(id);
+}
 
+function setWrapperRef(el: any, id: string) {
+    if (el) wrapperRefs.set(id, el as HTMLElement);
+    else wrapperRefs.delete(id);
+}
+
+// formats / ratios 同原本
+const formats: any[] = [];
+const ratios: any[] = [];
+
+const MIN_SIZE = 5;
+
+// --- 核心修正：取得圖片在 contain 模式下的實際渲染 Rect ---
+// object-fit: contain 會在容器內置中圖片，產生 letterbox
+// 必須計算圖片「真實顯示區域」，否則百分比座標會有偏移
+function getImageRenderedRect(imgEl: HTMLImageElement): DOMRect {
+    const containerRect = imgEl.getBoundingClientRect();
+    const naturalW = imgEl.naturalWidth;
+    const naturalH = imgEl.naturalHeight;
+
+    if (!naturalW || !naturalH) return containerRect;
+
+    const containerW = containerRect.width;
+    const containerH = containerRect.height;
+    const containerRatio = containerW / containerH;
+    const imageRatio = naturalW / naturalH;
+
+    let renderedH: number, renderedW: number;
+
+    if (imageRatio > containerRatio) {
+    // 寬度撐滿，上下有空白
+        renderedW = containerW;
+        renderedH = containerW / imageRatio;
+    } else {
+    // 高度撐滿，左右有空白
+        renderedH = containerH;
+        renderedW = containerH * imageRatio;
+    }
+
+    const offsetX = (containerW - renderedW) / 2;
+    const offsetY = (containerH - renderedH) / 2;
+
+    return new DOMRect(
+        containerRect.left + offsetX,
+        containerRect.top + offsetY,
+        renderedW,
+        renderedH,
+    );
+}
+
+// --- Drag state ---
 let dragging = false;
 let dragFile: CropFile | null = null;
 let dragStartX = 0;
@@ -250,22 +275,73 @@ let cropStart = {
     x: 0,
     y: 0,
 };
-let activeRect: DOMRect | null = null;
-let _activeEl: HTMLElement | null = null;
+let activeRenderedRect: DOMRect | null = null; // 改用圖片實際渲染區域
 let dragMode: 'move' | 'resize' | null = null;
 let resizeHandle = '';
 
+function _initDrag(e: MouseEvent | TouchEvent, f: CropFile, mode: 'move' | 'resize') {
+    stopCrop();
+    const rect = getRenderedRectForFile(f);
+    if (!rect) return;
+
+    dragging = true;
+    dragFile = f;
+    dragMode = mode;
+    activeRenderedRect = rect;
+    cropStart = {
+        h: f.crop.height,
+        w: f.crop.width,
+        x: f.crop.x,
+        y: f.crop.y,
+    };
+
+    const { x, y } = getEventPos(e);
+    dragStartX = x - rect.left;
+    dragStartY = y - rect.top;
+
+    document.addEventListener('mousemove', onDrag);
+    document.addEventListener('mouseup', stopCrop);
+    document.addEventListener('touchmove', onDrag, { passive: false });
+    document.addEventListener('touchend', stopCrop);
+}
+
+function clamp(v: number, lo: number, hi: number): number {
+    return Math.max(lo, Math.min(hi, v));
+}
+
 function getCropStyle(f: CropFile): Record<string, string> {
     return {
-        border: '2px solid white',
-        boxShadow: '0 0 0 9999px rgba(0,0,0,0.5)',
-        cursor: 'move',
         height: `${f.crop.height}%`,
         left: `${f.crop.x}%`,
-        position: 'absolute' as const,
         top: `${f.crop.y}%`,
         width: `${f.crop.width}%`,
     };
+}
+
+function getEventPos(e: MouseEvent | TouchEvent): { x: number; y: number } {
+    if (e instanceof MouseEvent) {
+        return {
+            x: e.clientX,
+            y: e.clientY,
+        };
+    }
+    const touch = e.touches[0];
+    return touch
+        ? {
+            x: touch.clientX,
+            y: touch.clientY,
+        }
+        : {
+            x: 0,
+            y: 0,
+        };
+}
+
+// --- 修正：統一從 imgRef 取得正確的渲染 Rect ---
+function getRenderedRectForFile(f: CropFile): DOMRect | null {
+    const imgEl = imgRefs.get(f.id);
+    if (!imgEl) return null;
+    return getImageRenderedRect(imgEl);
 }
 
 function handleFiles(files: File | File[]) {
@@ -278,20 +354,15 @@ function handleFiles(files: File | File[]) {
 }
 
 function onDrag(e: MouseEvent | TouchEvent) {
-    if (!dragging || !dragFile || !activeRect) return;
-    const rect = activeRect;
+    if (e instanceof TouchEvent) e.preventDefault();
+    if (!dragging || !dragFile || !activeRenderedRect) return;
 
-    let cx: number, cy: number;
-    if (e instanceof MouseEvent) {
-        cx = e.clientX - rect.left;
-        cy = e.clientY - rect.top;
-    } else {
-        const touch = e.touches[0];
-        if (!touch) return;
-        cx = touch.clientX - rect.left;
-        cy = touch.clientY - rect.top;
-    }
+    const { x: clientX, y: clientY } = getEventPos(e);
+    const rect = activeRenderedRect;
 
+    // 座標相對於圖片實際渲染區域
+    const cx = clientX - rect.left;
+    const cy = clientY - rect.top;
     const dx = cx - dragStartX;
     const dy = cy - dragStartY;
     const pw = rect.width;
@@ -303,125 +374,98 @@ function onDrag(e: MouseEvent | TouchEvent) {
     let nh = cropStart.h;
 
     if (dragMode === 'resize') {
-        // Resize based on handle position
         if (resizeHandle.includes('e')) nw = cropStart.w + (dx / pw) * 100;
         if (resizeHandle.includes('w')) {
-            nw = cropStart.w - (dx / pw) * 100;
-            nx = cropStart.x + (dx / pw) * 100;
+            const dw = (dx / pw) * 100;
+            nw = cropStart.w - dw;
+            nx = cropStart.x + dw;
         }
         if (resizeHandle.includes('s')) nh = cropStart.h + (dy / ph) * 100;
         if (resizeHandle.includes('n')) {
-            nh = cropStart.h - (dy / ph) * 100;
-            ny = cropStart.y + (dy / ph) * 100;
+            const dh = (dy / ph) * 100;
+            nh = cropStart.h - dh;
+            ny = cropStart.y + dh;
         }
-    } else {
-        // Move
-        nx = cropStart.x + (dx / pw) * 100;
-        ny = cropStart.y + (dy / ph) * 100;
-    }
 
-    if (nx < 0) {
-        if (dragMode === 'resize' && resizeHandle.includes('w')) nw += nx;
-        nx = 0;
-    }
-    if (ny < 0) {
-        if (dragMode === 'resize' && resizeHandle.includes('n')) nh += ny;
-        ny = 0;
-    }
-    if (nx + nw > 100) {
-        nw = 100 - nx;
-    }
-    if (ny + nh > 100) {
-        nh = 100 - ny;
-    }
+        if (nw < MIN_SIZE) nw = MIN_SIZE;
+        if (nh < MIN_SIZE) nh = MIN_SIZE;
 
-    if (store.aspectRatio && dragMode === 'resize') {
-        // Enforce aspect ratio for all resize handles (n, s, e, w, nw, ne, sw, se)
-        if (resizeHandle.includes('e') || resizeHandle.includes('w')) {
-            // Horizontal handles: derive height from width
-            nh = nw / store.aspectRatio;
-        } else {
-            // Vertical handles or corners: derive width from height
-            nw = nh * store.aspectRatio;
+        if (store.aspectRatio) {
+            const ratio = store.aspectRatio;
+            const isCorner = resizeHandle.length === 2;
+            if (isCorner) {
+                if (Math.abs(dx) >= Math.abs(dy)) nh = nw / ratio;
+                else nw = nh * ratio;
+            } else {
+                if (resizeHandle === 'e' || resizeHandle === 'w') nh = nw / ratio;
+                else nw = nh * ratio;
+            }
         }
-        // Clamp to bounds after aspect ratio adjustment
-        if (ny + nh > 100) {
-            ny = 100 - nh;
-        }
+
+        if (resizeHandle.includes('w')) nx = cropStart.x + cropStart.w - nw;
+        if (resizeHandle.includes('n')) ny = cropStart.y + cropStart.h - nh;
+
+        // 邊界夾制
+        nx = clamp(nx, 0, 100 - MIN_SIZE);
+        ny = clamp(ny, 0, 100 - MIN_SIZE);
         if (nx + nw > 100) {
-            nx = 100 - nw;
+            nw = 100 - nx;
+            if (store.aspectRatio) nh = nw / store.aspectRatio;
         }
+        if (ny + nh > 100) {
+            nh = 100 - ny;
+            if (store.aspectRatio) nw = nh * store.aspectRatio;
+        }
+        nw = Math.max(nw, MIN_SIZE);
+        nh = Math.max(nh, MIN_SIZE);
+    } else {
+    // Move
+        nx = clamp(cropStart.x + (dx / pw) * 100, 0, 100 - cropStart.w);
+        ny = clamp(cropStart.y + (dy / ph) * 100, 0, 100 - cropStart.h);
     }
 
     store.updateCrop(dragFile.id, {
-        height: Math.max(5, nh),
-        width: Math.max(5, nw),
-        x: Math.max(0, nx),
-        y: Math.max(0, ny),
+        height: nh,
+        width: nw,
+        x: nx,
+        y: ny,
     });
 }
 
 function startCrop(e: MouseEvent | TouchEvent, f: CropFile) {
-    dragging = true;
-    dragFile = f;
-    dragMode = 'move';
-    cropStart = {
-        h: f.crop.height,
-        w: f.crop.width,
-        x: f.crop.x,
-        y: f.crop.y,
-    };
-    // Use currentTarget to get the specific v-img element for this file
-    const target = e.currentTarget as HTMLElement;
-    const rect = target.getBoundingClientRect();
-    activeRect = rect;
-    _activeEl = target;
-    if (e instanceof MouseEvent) {
-        dragStartX = e.clientX - rect.left;
-        dragStartY = e.clientY - rect.top;
-    } else {
-        const touch = e.touches[0];
-        if (touch) {
-            dragStartX = touch.clientX - rect.left;
-            dragStartY = touch.clientY - rect.top;
-        }
-    }
+    // 在空白區域點擊 → 新建 crop 區域（從點擊位置開始）
+    _initDrag(e, f, 'move');
+}
 
-    document.addEventListener('mousemove', onDrag);
-    document.addEventListener('mouseup', stopCrop);
-    document.addEventListener('touchmove', onDrag);
-    document.addEventListener('touchend', stopCrop);
+// 修正：overlay 上點擊改為 startMove，與 wrapper 上的 startCrop（新建區域）分開
+function startMove(e: MouseEvent | TouchEvent, f: CropFile) {
+    _initDrag(e, f, 'move');
 }
 
 function startResize(e: MouseEvent | TouchEvent, f: CropFile, handle: string) {
+    stopCrop();
+    const rect = getRenderedRectForFile(f);
+    if (!rect) return;
+
     dragging = true;
     dragFile = f;
     resizeHandle = handle;
+    dragMode = 'resize';
+    activeRenderedRect = rect;
     cropStart = {
         h: f.crop.height,
         w: f.crop.width,
         x: f.crop.x,
         y: f.crop.y,
     };
-    dragMode = 'resize';
-    const target = e.currentTarget as HTMLElement;
-    const parentEl = target.closest('.v-img') as HTMLElement;
-    const rect = parentEl.getBoundingClientRect();
-    activeRect = rect;
-    _activeEl = parentEl;
-    if (e instanceof MouseEvent) {
-        dragStartX = e.clientX - rect.left;
-        dragStartY = e.clientY - rect.top;
-    } else {
-        const touch = e.touches[0];
-        if (touch) {
-            dragStartX = touch.clientX - rect.left;
-            dragStartY = touch.clientY - rect.top;
-        }
-    }
+
+    const { x, y } = getEventPos(e);
+    dragStartX = x - rect.left;
+    dragStartY = y - rect.top;
+
     document.addEventListener('mousemove', onDrag);
     document.addEventListener('mouseup', stopCrop);
-    document.addEventListener('touchmove', onDrag);
+    document.addEventListener('touchmove', onDrag, { passive: false });
     document.addEventListener('touchend', stopCrop);
 }
 
@@ -429,67 +473,93 @@ function stopCrop() {
     dragging = false;
     dragFile = null;
     dragMode = null;
-    activeRect = null;
-    _activeEl = null;
+    activeRenderedRect = null;
     document.removeEventListener('mousemove', onDrag);
     document.removeEventListener('mouseup', stopCrop);
-    document.removeEventListener('touchmove', onDrag);
+    document.removeEventListener('touchmove', onDrag, { passive: false } as any);
     document.removeEventListener('touchend', stopCrop);
 }
+
+onBeforeUnmount(() => {
+    stopCrop();
+});
 </script>
 
 <style scoped>
+.crop-wrapper {
+  position: relative;
+  width: 100%;
+  margin: 0 auto;
+  user-select: none;
+}
+
+.crop-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 400px;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.crop-overlay {
+  position: absolute;
+  border: 2px solid white;
+  box-shadow: 0 0 0 9999px rgba(0,0,0,0.5);
+  cursor: move;
+}
+
 .resize-handle {
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    background: white;
-    border: 1px solid #888;
-    border-radius: 2px;
-    z-index: 10;
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: white;
+  border: 1px solid #888;
+  border-radius: 2px;
+  z-index: 10;
 }
 .resize-handle.nw {
-    top: -5px;
-    left: -5px;
-    cursor: nw-resize;
+  top: -5px;
+  left: -5px;
+  cursor: nw-resize;
 }
 .resize-handle.ne {
-    top: -5px;
-    right: -5px;
-    cursor: ne-resize;
+  top: -5px;
+  right: -5px;
+  cursor: ne-resize;
 }
 .resize-handle.sw {
-    bottom: -5px;
-    left: -5px;
-    cursor: sw-resize;
+  bottom: -5px;
+  left: -5px;
+  cursor: sw-resize;
 }
 .resize-handle.se {
-    bottom: -5px;
-    right: -5px;
-    cursor: se-resize;
+  bottom: -5px;
+  right: -5px;
+  cursor: se-resize;
 }
 .resize-handle.n {
-    top: -5px;
-    left: 50%;
-    transform: translateX(-50%);
-    cursor: n-resize;
+  top: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  cursor: n-resize;
 }
 .resize-handle.s {
-    bottom: -5px;
-    left: 50%;
-    transform: translateX(-50%);
-    cursor: s-resize;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  cursor: s-resize;
 }
 .resize-handle.e {
-    right: -5px;
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: e-resize;
+  right: -5px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: e-resize;
 }
 .resize-handle.w {
-    left: -5px;
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: w-resize;
+  left: -5px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: w-resize;
 }
 </style>

@@ -81,31 +81,27 @@ export const useCropStore = defineStore('crop', () => {
         return new Promise((resolve, reject) => {
             const img = new Image();
             img.onload = () => {
+                const naturalW = img.naturalWidth;
+                const naturalH = img.naturalHeight;
+
+                // 百分比直接對應原始圖片尺寸（因為我們的座標已相對於圖片本身）
+                const sx = (f.crop.x / 100) * naturalW;
+                const sy = (f.crop.y / 100) * naturalH;
+                const sw = (f.crop.width / 100) * naturalW;
+                const sh = (f.crop.height / 100) * naturalH;
+
                 const canvas = document.createElement('canvas');
-                const {
-                    height,
-                    width,
-                    x,
-                    y,
-                } = f.crop;
-                const sw = img.width * (width / 100);
-                const sh = img.height * (height / 100);
-                const sx = img.width * (x / 100);
-                const sy = img.height * (y / 100);
-                canvas.width = sw;
-                canvas.height = sh;
-                const ctx = canvas.getContext('2d');
-                if (!ctx) {
-                    reject(new Error('Canvas context not available'));
-                    return;
-                }
-                ctx.drawImage(img, sx, sy, sw, sh, 0, 0, sw, sh);
+                canvas.width = Math.round(sw);
+                canvas.height = Math.round(sh);
+                const ctx = canvas.getContext('2d')!;
+                ctx.drawImage(img, sx, sy, sw, sh, 0, 0, canvas.width, canvas.height);
+
                 canvas.toBlob((blob) => {
                     if (blob) resolve(blob);
                     else reject(new Error('Canvas toBlob failed'));
                 }, outputFormat.value, quality.value);
             };
-            img.onerror = () => reject(new Error('Failed to load image'));
+            img.onerror = reject;
             img.src = f.preview;
         });
     }
