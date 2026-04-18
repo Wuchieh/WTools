@@ -205,7 +205,7 @@ function formatBytes(bytes: number): string {
 }
 
 function handleFiles(files: File | File[]) {
-    const fileArray = Array.isArray(files) ? files : (files ? [files] : []);
+    const fileArray = Array.isArray(files) ? files : files ? [files] : [];
     if (fileArray.length === 0) {
         store.clearAll();
         return;

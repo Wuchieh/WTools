@@ -422,10 +422,13 @@ export default {
             desc: 'Caesar 密碼與 ROT13 文字加解密。',
             title: '文字加解密',
         },
+        fileExceededMaxFiles: '{name}: 超過最大檔案數量（上限：{max}）',
+        fileExceededMaxFilesSingle: '{name}: 超過最大檔案數量（上限：{max}）',
         fileSize: {
             desc: '位元組與各種單位大小換算。',
             title: '檔案大小換算',
         },
+        fileTooLarge: '{name}: 檔案過大（{size} > {max}）',
         gifEditor: {
             description: '編輯與調整 GIF 圖片尺寸與格式。',
             title: 'GIF 編輯器',
@@ -562,9 +565,6 @@ export default {
             desc: '統計文字的字數、字元數與行數。',
             title: '字數統計',
         },
-        fileExceededMaxFilesSingle: '{name}: 超過最大檔案數量（上限：{max}）',
-        fileExceededMaxFiles: '{name}: 超過最大檔案數量（上限：{max}）',
-        fileTooLarge: '{name}: 檔案過大（{size} > {max}）',
     },
     unit: {
         category: '類別',
@@ -610,7 +610,7 @@ export default {
         positions: {
             'bottom-left': '左下',
             'bottom-right': '右下',
-            center: '置中',
+            'center': '置中',
             'top-left': '左上',
             'top-right': '右上',
         },

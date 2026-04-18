@@ -191,6 +191,7 @@
 import { useWatermarkStore } from '~/stores/watermark';
 
 const store = useWatermarkStore();
+const { t } = useI18n();
 const selectedFiles = ref<File[]>([]);
 
 const formats = [
@@ -232,7 +233,7 @@ const positions = computed(() => [
 ]);
 
 function handleFiles(files: File | File[]) {
-    const fileArray = Array.isArray(files) ? files : (files ? [files] : []);
+    const fileArray = Array.isArray(files) ? files : files ? [files] : [];
     if (fileArray.length === 0) {
         store.clearAll();
         return;

@@ -418,10 +418,13 @@ export default {
             description: 'Caesar cipher and ROT13 text encryption.',
             title: 'Text Encrypt/Decrypt',
         },
+        fileExceededMaxFiles: '{name}: Exceeds maximum file count (max: {max})',
+        fileExceededMaxFilesSingle: '{name}: Exceeds maximum file count (max: {max})',
         fileSize: {
             description: 'Convert bytes to various size units.',
             title: 'File Size',
         },
+        fileTooLarge: '{name}: File too large ({size} > {max})',
         gifEditor: {
             description: 'Edit and resize GIF images.',
             title: 'GIF Editor',
@@ -530,9 +533,6 @@ export default {
             description: 'Count words, characters and lines in text.',
             title: 'Word Counter',
         },
-        fileExceededMaxFilesSingle: '{name}: Exceeds maximum file count (max: {max})',
-        fileExceededMaxFiles: '{name}: Exceeds maximum file count (max: {max})',
-        fileTooLarge: '{name}: File too large ({size} > {max})',
     },
     unit: {
         category: 'Category',
@@ -578,7 +578,7 @@ export default {
         positions: {
             'bottom-left': 'Bottom Left',
             'bottom-right': 'Bottom Right',
-            center: 'Center',
+            'center': 'Center',
             'top-left': 'Top Left',
             'top-right': 'Top Right',
         },

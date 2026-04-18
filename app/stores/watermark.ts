@@ -150,6 +150,7 @@ export const useWatermarkStore = defineStore('watermark', () => {
         // Single file: direct download, no zip
         if (successes.length === 1) {
             const f = successes[0];
+            if (!f) return;
             const ext = outputFormat.value.split('/')[1];
             const link = document.createElement('a');
             link.href = URL.createObjectURL(f.blob!);

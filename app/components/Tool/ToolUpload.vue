@@ -180,6 +180,7 @@ const emit = defineEmits<{
     'update:modelValue': [files: FileItem[]];
 }>();
 
+const { t } = useI18n();
 const fileInput = ref<HTMLInputElement | null>(null);
 const isDragOver = ref(false);
 
@@ -264,15 +265,18 @@ async function processFiles(fileList: File[] | FileList): Promise<void> {
         if (props.maxFiles && props.modelValue.length + validFiles.length >= props.maxFiles) {
             errors.push(props.maxFiles === 1
                 ? t('tools.fileExceededMaxFilesSingle', { name: file.name })
-                : t('tools.fileExceededMaxFiles', { name: file.name, max: props.maxFiles }));
+                : t('tools.fileExceededMaxFiles', {
+                    max: props.maxFiles,
+                    name: file.name,
+                }));
             continue;
         }
 
         if (props.maxSize && file.size > props.maxSize) {
             errors.push(t('tools.fileTooLarge', {
+                max: formatBytes(props.maxSize),
                 name: file.name,
                 size: formatBytes(file.size),
-                max: formatBytes(props.maxSize),
             }));
             continue;
         }

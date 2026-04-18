@@ -1,5 +1,5 @@
 export default defineEventHandler(() => {
-    const base = 'https://wtools-e7g.pages.dev';
+    const base = 'https://wtools.wuchieh.com';
 
     const staticPages = [
         {
