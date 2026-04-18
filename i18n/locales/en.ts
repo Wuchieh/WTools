@@ -387,7 +387,7 @@ export default {
     },
     tools: {
         base64File: {
-            description: 'Encode files to Base64 or decode Base64 to files.',
+            desc: 'Encode files to Base64 or decode Base64 to files.',
             title: 'Base64 File',
         },
         base64Tool: {
@@ -395,33 +395,37 @@ export default {
             title: 'Base64 Encoder',
         },
         batchRename: {
-            description: 'Batch rename multiple files.',
+            desc: 'Batch rename multiple files.',
             title: 'Batch Rename',
         },
         binaryCalc: {
-            description: 'Convert between binary, decimal, and hexadecimal.',
+            desc: 'Convert between binary, decimal, and hexadecimal.',
             title: 'Base Converter',
+        },
+        colorPicker: {
+            description: 'Pick colors and convert HEX, RGB, HSL formats.',
+            title: 'Color Picker',
         },
         cronParser: {
             description: 'Parse cron expressions and show next run times.',
             title: 'Cron Parser',
         },
         cssFormatter: {
-            description: 'Format and beautify CSS code.',
+            desc: 'Format and beautify CSS code.',
             title: 'CSS Formatter',
         },
         csvViewer: {
-            description: 'View and convert CSV/TSV data tables.',
+            desc: 'View and convert CSV/TSV data tables.',
             title: 'CSV Viewer',
         },
         encDecText: {
-            description: 'Caesar cipher and ROT13 text encryption.',
+            desc: 'Caesar cipher and ROT13 text encryption.',
             title: 'Text Encrypt/Decrypt',
         },
         fileExceededMaxFiles: '{name}: Exceeds maximum file count (max: {max})',
         fileExceededMaxFilesSingle: '{name}: Exceeds maximum file count (max: {max})',
         fileSize: {
-            description: 'Convert bytes to various size units.',
+            desc: 'Convert bytes to various size units.',
             title: 'File Size',
         },
         fileTooLarge: '{name}: File too large ({size} > {max})',
@@ -430,8 +434,12 @@ export default {
             title: 'GIF Editor',
         },
         hashChecker: {
-            description: 'Compute MD5, SHA1, SHA256 hashes for files.',
+            desc: 'Compute MD5, SHA1, SHA256 hashes for files.',
             title: 'Hash Checker',
+        },
+        hashGenerator: {
+            description: 'Generate cryptographic hashes (MD5, SHA1, SHA256, etc.).',
+            title: 'Hash Generator',
         },
         htmlEscape: {
             description: 'HTML entity escape and unescape tool.',
@@ -466,11 +474,11 @@ export default {
             title: 'Watermark',
         },
         jsonFormatter: {
-            description: 'Format, minify and validate JSON.',
+            desc: 'Format, minify and validate JSON.',
             title: 'JSON Formatter',
         },
         jsonYaml: {
-            description: 'Convert between JSON and YAML formats.',
+            desc: 'Convert between JSON and YAML formats.',
             title: 'JSON/YAML Converter',
         },
         jwtDecoder: {
@@ -482,27 +490,47 @@ export default {
             title: 'Lorem Ipsum',
         },
         markdownPreview: {
-            description: 'Live preview Markdown documents.',
+            desc: 'Live preview Markdown documents.',
             title: 'Markdown Preview',
         },
+        passwordGenerator: {
+            description: 'Generate secure random passwords with custom length and character sets.',
+            title: 'Password Generator',
+        },
         percent: {
-            description: 'Percentage calculation tool.',
+            desc: 'Percentage calculation tool.',
             title: 'Percentage Calculator',
+        },
+        qrGenerator: {
+            description: 'Generate QR Code images.',
+            title: 'QR Generator',
+        },
+        qrReader: {
+            description: 'Read QR Code from image or camera.',
+            title: 'QR Reader',
         },
         randomPicker: {
             description: 'Randomly pick items from a list.',
             title: 'Random Picker',
         },
+        regexTester: {
+            description: 'Test regular expressions in real-time with match highlighting.',
+            title: 'Regex Tester',
+        },
         sentenceCounter: {
-            description: 'Count sentences in text.',
+            desc: 'Count sentences in text.',
             title: 'Sentence Counter',
+        },
+        slugGenerator: {
+            description: 'Convert text to URL-friendly slugs.',
+            title: 'Slug Generator',
         },
         svgConvert: {
             description: 'Convert SVG vector images to PNG, JPG or WebP.',
             title: 'SVG Converter',
         },
         textDiff: {
-            description: 'Compare differences between two texts.',
+            desc: 'Compare differences between two texts.',
             title: 'Text Diff',
         },
         timer: {
@@ -510,7 +538,7 @@ export default {
             title: 'Timer',
         },
         timestamp: {
-            description: 'Unix timestamp to date format conversion.',
+            desc: 'Unix timestamp to date format conversion.',
             title: 'Timestamp',
         },
         todoList: {
@@ -525,12 +553,16 @@ export default {
             description: 'URL encode and decode text.',
             title: 'URL Encoder',
         },
+        uuidGenerator: {
+            description: 'Generate UUID v4 random and v7 timestamp versions.',
+            title: 'UUID Generator',
+        },
         whipStream: {
             description: 'Push WebRTC live streams via WHIP protocol.',
             title: 'WHIP Stream',
         },
         wordCounter: {
-            description: 'Count words, characters and lines in text.',
+            desc: 'Count words, characters and lines in text.',
             title: 'Word Counter',
         },
     },
