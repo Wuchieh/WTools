@@ -91,13 +91,8 @@ import JSZip from 'jszip';
 import { v7 as uuidv7 } from 'uuid';
 
 const { t } = useI18n();
-useHead({
-    meta: [
-        {
-            content: t('batchRename.subtitle'),
-            name: 'description',
-        },
-    ],
+useSeoMeta({
+    description: t('batchRename.subtitle'),
     ogImage: '/og/batch-rename.png',
 
     title: t('batchRename.title'),

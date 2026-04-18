@@ -31,13 +31,8 @@ import { useConverterStore } from '~/stores/converter';
 const { t } = useI18n();
 const store = useConverterStore();
 
-useHead({
-    meta: [
-        {
-            content: t('description'),
-            name: 'description',
-        },
-    ],
+useSeoMeta({
+    description: t('description'),
     ogImage: '/og/image-to-webp.png',
 
     title: t('title'),

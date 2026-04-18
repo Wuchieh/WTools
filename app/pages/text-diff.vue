@@ -67,13 +67,8 @@
 
 <script setup lang="ts">
 const { t } = useI18n();
-useHead({
-    meta: [
-        {
-            content: t('textDiff.subtitle'),
-            name: 'description',
-        },
-    ],
+useSeoMeta({
+    description: t('textDiff.subtitle'),
     ogImage: '/og/text-diff.png',
 
     title: t('textDiff.title'),

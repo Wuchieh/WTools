@@ -20,13 +20,8 @@
 
 <script setup lang="ts">
 const { t } = useI18n();
-useHead({
-    meta: [
-        {
-            content: t('heic.subtitle'),
-            name: 'description',
-        },
-    ],
+useSeoMeta({
+    description: t('heic.subtitle'),
     ogImage: '/og/image-heic.png',
 
     title: t('heic.title'),

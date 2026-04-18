@@ -63,13 +63,8 @@
 
 <script setup lang="ts">
 const { t } = useI18n();
-useHead({
-    meta: [
-        {
-            content: t('timestamp.subtitle'),
-            name: 'description',
-        },
-    ],
+useSeoMeta({
+    description: t('timestamp.subtitle'),
     ogImage: '/og/timestamp.png',
 
     title: t('timestamp.title'),

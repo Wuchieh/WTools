@@ -85,13 +85,8 @@ import QRCode from 'qrcode';
 
 const { t } = useI18n();
 
-useHead({
-    meta: [
-        {
-            content: t('qr.subtitle'),
-            name: 'description',
-        },
-    ],
+useSeoMeta({
+    description: t('qr.subtitle'),
     ogImage: '/og/qr-generator.png',
 
     title: t('qr.title'),

@@ -56,13 +56,8 @@
 
 <script setup lang="ts">
 const { t } = useI18n();
-useHead({
-    meta: [
-        {
-            content: t('random.subtitle'),
-            name: 'description',
-        },
-    ],
+useSeoMeta({
+    description: t('random.subtitle'),
     ogImage: '/og/random-picker.png',
 
     title: t('random.title'),

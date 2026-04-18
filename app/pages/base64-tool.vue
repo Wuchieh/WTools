@@ -83,13 +83,8 @@
 <script setup lang="ts">
 const { t } = useI18n();
 
-useHead({
-    meta: [
-        {
-            content: t('base64.subtitle'),
-            name: 'description',
-        },
-    ],
+useSeoMeta({
+    description: t('base64.subtitle'),
     ogImage: '/og/base64-tool.png',
 
     title: t('base64.title'),

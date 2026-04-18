@@ -96,15 +96,10 @@
 
 <script setup lang="ts">
 const { t } = useI18n();
-useHead({
-    meta: [
-        {
-            content: t('base64File.subtitle'),
-            name: 'description',
-        },
-    ],
-    ogImage: '/og/base64-file.png',
 
+useSeoMeta({
+    description: t('base64File.subtitle'),
+    ogImage: '/og/base64-file.png',
     title: t('base64File.title'),
     twitterCard: 'summary_large_image',
     twitterImage: '/og/base64-file.png',

@@ -102,13 +102,8 @@
 
 <script setup lang="ts">
 const { t } = useI18n();
-useHead({
-    meta: [
-        {
-            content: t('color.subtitle'),
-            name: 'description',
-        },
-    ],
+useSeoMeta({
+    description: t('color.subtitle'),
     ogImage: '/og/color-picker.png',
 
     title: t('color.title'),

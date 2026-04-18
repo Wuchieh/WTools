@@ -79,13 +79,8 @@
 <script setup lang="ts">
 const { t } = useI18n();
 
-useHead({
-    meta: [
-        {
-            content: t('hash.subtitle'),
-            name: 'description',
-        },
-    ],
+useSeoMeta({
+    description: t('hash.subtitle'),
     ogImage: '/og/hash-generator.png',
 
     title: t('hash.title'),

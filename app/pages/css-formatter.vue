@@ -55,13 +55,8 @@
 
 <script setup lang="ts">
 const { t } = useI18n();
-useHead({
-    meta: [
-        {
-            content: t('cssFormatter.subtitle'),
-            name: 'description',
-        },
-    ],
+useSeoMeta({
+    description: t('cssFormatter.subtitle'),
     ogImage: '/og/css-formatter.png',
 
     title: t('cssFormatter.title'),

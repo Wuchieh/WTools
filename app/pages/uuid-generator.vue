@@ -96,13 +96,8 @@ import { v7 as uuidv7 } from 'uuid';
 
 const { t } = useI18n();
 
-useHead({
-    meta: [
-        {
-            content: t('uuid.subtitle'),
-            name: 'description',
-        },
-    ],
+useSeoMeta({
+    description: t('uuid.subtitle'),
     ogImage: '/og/uuid-generator.png',
 
     title: t('uuid.title'),

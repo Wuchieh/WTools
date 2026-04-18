@@ -56,13 +56,8 @@
 
 <script setup lang="ts">
 const { t } = useI18n();
-useHead({
-    meta: [
-        {
-            content: t('todo.subtitle'),
-            name: 'description',
-        },
-    ],
+useSeoMeta({
+    description: t('todo.subtitle'),
     ogImage: '/og/todo-list.png',
 
     title: t('todo.title'),

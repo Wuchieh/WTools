@@ -88,13 +88,8 @@
 
 <script setup lang="ts">
 const { t } = useI18n();
-useHead({
-    meta: [
-        {
-            content: t('timer.subtitle'),
-            name: 'description',
-        },
-    ],
+useSeoMeta({
+    description: t('timer.subtitle'),
     ogImage: '/og/timer.png',
 
     title: t('timer.title'),

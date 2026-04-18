@@ -74,13 +74,8 @@
 
 <script setup lang="ts">
 const { t } = useI18n();
-useHead({
-    meta: [
-        {
-            content: t('jsonYaml.subtitle'),
-            name: 'description',
-        },
-    ],
+useSeoMeta({
+    description: t('jsonYaml.subtitle'),
     ogImage: '/og/json-yaml.png',
 
     title: t('jsonYaml.title'),

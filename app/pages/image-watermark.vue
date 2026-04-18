@@ -20,13 +20,8 @@
 
 <script setup lang="ts">
 const { t } = useI18n();
-useHead({
-    meta: [
-        {
-            content: t('watermark.subtitle'),
-            name: 'description',
-        },
-    ],
+useSeoMeta({
+    description: t('watermark.subtitle'),
     ogImage: '/og/image-watermark.png',
 
     title: t('watermark.title'),

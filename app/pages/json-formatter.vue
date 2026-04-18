@@ -82,13 +82,8 @@
 
 <script setup lang="ts">
 const { t } = useI18n();
-useHead({
-    meta: [
-        {
-            content: t('jsonFormatter.subtitle'),
-            name: 'description',
-        },
-    ],
+useSeoMeta({
+    description: t('jsonFormatter.subtitle'),
     ogImage: '/og/json-formatter.png',
 
     title: t('jsonFormatter.title'),

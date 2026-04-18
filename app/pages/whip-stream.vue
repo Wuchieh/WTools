@@ -22,13 +22,8 @@
 <script setup lang="ts">
 const { t } = useI18n();
 
-useHead({
-    meta: [
-        {
-            content: t('tools.whipStream.description'),
-            name: 'description',
-        },
-    ],
+useSeoMeta({
+    description: t('tools.whipStream.description'),
     ogImage: '/og/whip-stream.png',
 
     title: t('tools.whipStream.title'),

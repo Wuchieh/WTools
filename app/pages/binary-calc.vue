@@ -64,13 +64,8 @@
 
 <script setup lang="ts">
 const { t } = useI18n();
-useHead({
-    meta: [
-        {
-            content: t('binary.subtitle'),
-            name: 'description',
-        },
-    ],
+useSeoMeta({
+    description: t('binary.subtitle'),
     ogImage: '/og/binary-calc.png',
 
     title: t('binary.title'),

@@ -17,7 +17,7 @@ export interface UseDownloadOptions {
 }
 
 export function useDownload(options: UseDownloadOptions = {}) {
-    function downloadBlob(blob: Blob, filename: string): Promise<void> {
+    function downloadBlob(blob: Blob, filename: string): void {
         try {
             options.onStart?.();
             const url = URL.createObjectURL(blob);

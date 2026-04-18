@@ -83,13 +83,8 @@
 <script setup lang="ts">
 const { t } = useI18n();
 
-useHead({
-    meta: [
-        {
-            content: t('urlenc.subtitle'),
-            name: 'description',
-        },
-    ],
+useSeoMeta({
+    description: t('urlenc.subtitle'),
     ogImage: '/og/url-encoder.png',
 
     title: t('urlenc.title'),

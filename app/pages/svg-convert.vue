@@ -20,13 +20,8 @@
 
 <script setup lang="ts">
 const { t } = useI18n();
-useHead({
-    meta: [
-        {
-            content: t('svg.subtitle'),
-            name: 'description',
-        },
-    ],
+useSeoMeta({
+    description: t('svg.subtitle'),
     ogImage: '/og/svg-convert.png',
 
     title: t('svg.title'),

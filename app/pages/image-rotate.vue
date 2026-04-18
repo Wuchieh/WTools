@@ -20,13 +20,8 @@
 
 <script setup lang="ts">
 const { t } = useI18n();
-useHead({
-    meta: [
-        {
-            content: t('rotate.subtitle'),
-            name: 'description',
-        },
-    ],
+useSeoMeta({
+    description: t('rotate.subtitle'),
     ogImage: '/og/image-rotate.png',
 
     title: t('rotate.title'),

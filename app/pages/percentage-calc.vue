@@ -56,13 +56,8 @@
 
 <script setup lang="ts">
 const { t } = useI18n();
-useHead({
-    meta: [
-        {
-            content: t('percent.subtitle'),
-            name: 'description',
-        },
-    ],
+useSeoMeta({
+    description: t('percent.subtitle'),
     ogImage: '/og/percentage-calc.png',
 
     title: t('percent.title'),

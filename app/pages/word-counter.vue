@@ -49,13 +49,8 @@
 
 <script setup lang="ts">
 const { t } = useI18n();
-useHead({
-    meta: [
-        {
-            content: t('wordCounter.subtitle'),
-            name: 'description',
-        },
-    ],
+useSeoMeta({
+    description: t('wordCounter.subtitle'),
     ogImage: '/og/word-counter.png',
 
     title: t('wordCounter.title'),

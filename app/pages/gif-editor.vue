@@ -20,13 +20,8 @@
 
 <script setup lang="ts">
 const { t } = useI18n();
-useHead({
-    meta: [
-        {
-            content: t('gif.subtitle'),
-            name: 'description',
-        },
-    ],
+useSeoMeta({
+    description: t('gif.subtitle'),
     ogImage: '/og/gif-editor.png',
 
     title: t('gif.title'),

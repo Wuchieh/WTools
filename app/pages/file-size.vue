@@ -40,13 +40,8 @@
 
 <script setup lang="ts">
 const { t } = useI18n();
-useHead({
-    meta: [
-        {
-            content: t('fileSize.subtitle'),
-            name: 'description',
-        },
-    ],
+useSeoMeta({
+    description: t('fileSize.subtitle'),
     ogImage: '/og/file-size.png',
 
     title: t('fileSize.title'),

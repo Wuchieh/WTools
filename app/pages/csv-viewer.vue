@@ -71,13 +71,8 @@
 
 <script setup lang="ts">
 const { t } = useI18n();
-useHead({
-    meta: [
-        {
-            content: t('csvViewer.subtitle'),
-            name: 'description',
-        },
-    ],
+useSeoMeta({
+    description: t('csvViewer.subtitle'),
     ogImage: '/og/csv-viewer.png',
 
     title: t('csvViewer.title'),

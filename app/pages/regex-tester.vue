@@ -98,13 +98,8 @@
 
 <script setup lang="ts">
 const { t } = useI18n();
-useHead({
-    meta: [
-        {
-            content: t('regex.subtitle'),
-            name: 'description',
-        },
-    ],
+useSeoMeta({
+    description: t('regex.subtitle'),
     ogImage: '/og/regex-tester.png',
 
     title: t('regex.title'),

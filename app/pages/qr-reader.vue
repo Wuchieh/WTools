@@ -79,13 +79,8 @@
 import jsQR from 'jsqr';
 
 const { t } = useI18n();
-useHead({
-    meta: [
-        {
-            content: t('qrreader.subtitle'),
-            name: 'description',
-        },
-    ],
+useSeoMeta({
+    description: t('qrreader.subtitle'),
     ogImage: '/og/qr-reader.png',
 
     title: t('qrreader.title'),

@@ -82,13 +82,8 @@
 
 <script setup lang="ts">
 const { t } = useI18n();
-useHead({
-    meta: [
-        {
-            content: t('cron.subtitle'),
-            name: 'description',
-        },
-    ],
+useSeoMeta({
+    description: t('cron.subtitle'),
     ogImage: '/og/cron-parser.png',
 
     title: t('cron.title'),

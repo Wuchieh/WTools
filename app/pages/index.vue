@@ -117,12 +117,11 @@
 const localePath = useLocalePath();
 const { t } = useI18n();
 
-useHead({
+useSeoMeta({
     ogImage: '/og/index.png',
     title: t('home'),
     twitterCard: 'summary_large_image',
     twitterImage: '/og/index.png',
-
 });
 
 definePageMeta({ name: 'index' });

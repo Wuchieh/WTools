@@ -20,13 +20,8 @@
 
 <script setup lang="ts">
 const { t } = useI18n();
-useHead({
-    meta: [
-        {
-            content: t('ico.subtitle'),
-            name: 'description',
-        },
-    ],
+useSeoMeta({
+    description: t('ico.subtitle'),
     ogImage: '/og/ico-generator.png',
 
     title: t('ico.title'),

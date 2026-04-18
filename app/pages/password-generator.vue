@@ -97,13 +97,8 @@
 
 <script setup lang="ts">
 const { t } = useI18n();
-useHead({
-    meta: [
-        {
-            content: t('pwd.subtitle'),
-            name: 'description',
-        },
-    ],
+useSeoMeta({
+    description: t('pwd.subtitle'),
     ogImage: '/og/password-generator.png',
 
     title: t('pwd.title'),

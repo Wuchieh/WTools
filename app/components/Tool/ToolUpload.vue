@@ -188,7 +188,7 @@ function clearFiles(): void {
 }
 
 function createPreview(file: File): Promise<string> {
-    if (!isImage(file)) return '';
+    if (!isImage(file)) return Promise.resolve('');
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.onload = (e) => resolve(e.target?.result as string);

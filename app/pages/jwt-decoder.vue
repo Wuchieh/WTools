@@ -112,13 +112,8 @@
 <script setup lang="ts">
 const { t } = useI18n();
 
-useHead({
-    meta: [
-        {
-            content: t('jwt.subtitle'),
-            name: 'description',
-        },
-    ],
+useSeoMeta({
+    description: t('jwt.subtitle'),
     ogImage: '/og/jwt-decoder.png',
 
     title: t('jwt.title'),

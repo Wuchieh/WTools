@@ -36,13 +36,8 @@
 
 <script setup lang="ts">
 const { t } = useI18n();
-useHead({
-    meta: [
-        {
-            content: t('markdownPreview.subtitle'),
-            name: 'description',
-        },
-    ],
+useSeoMeta({
+    description: t('markdownPreview.subtitle'),
     ogImage: '/og/markdown-preview.png',
 
     title: t('markdownPreview.title'),

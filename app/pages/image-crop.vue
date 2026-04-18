@@ -22,13 +22,8 @@
 <script setup lang="ts">
 const { t } = useI18n();
 
-useHead({
-    meta: [
-        {
-            content: t('crop.subtitle'),
-            name: 'description',
-        },
-    ],
+useSeoMeta({
+    description: t('crop.subtitle'),
     ogImage: '/og/image-crop.png',
 
     title: t('crop.title'),
