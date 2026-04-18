@@ -208,28 +208,28 @@ const formats = [
     },
 ];
 
-const positions = [
+const positions = computed(() => [
     {
-        title: 'Top Left',
+        title: t('watermark.positions.top-left'),
         value: 'top-left',
     },
     {
-        title: 'Top Right',
+        title: t('watermark.positions.top-right'),
         value: 'top-right',
     },
     {
-        title: 'Bottom Left',
+        title: t('watermark.positions.bottom-left'),
         value: 'bottom-left',
     },
     {
-        title: 'Bottom Right',
+        title: t('watermark.positions.bottom-right'),
         value: 'bottom-right',
     },
     {
-        title: 'Center',
+        title: t('watermark.positions.center'),
         value: 'center',
     },
-];
+]);
 
 function handleFiles(files: File | File[]) {
     const fileArray = Array.isArray(files) ? files : (files ? [files] : []);

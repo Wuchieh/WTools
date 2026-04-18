@@ -572,6 +572,13 @@ export default {
         opacity: 'Opacity ({v}%)',
         outputFormat: 'Output Format',
         position: 'Position',
+        positions: {
+            'bottom-left': 'Bottom Left',
+            'bottom-right': 'Bottom Right',
+            center: 'Center',
+            'top-left': 'Top Left',
+            'top-right': 'Top Right',
+        },
         settings: 'Watermark Settings',
         subtitle: 'Add text watermarks to your photos.',
         text: 'Watermark Text',
