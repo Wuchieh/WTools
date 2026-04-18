@@ -206,7 +206,7 @@ const allTools: Tool[] = [
     {
         category: 'image',
         descKey: 'tools.icoGenerator.description',
-        icon: 'mdi-favicon',
+        icon: 'mdi-star',
         id: 'ico-generator',
         route: 'ico-generator',
         titleKey: 'tools.icoGenerator.title',
@@ -214,7 +214,7 @@ const allTools: Tool[] = [
     {
         category: 'image',
         descKey: 'tools.gifEditor.description',
-        icon: 'mdi-gif',
+        icon: 'mdi-file-gif-box',
         id: 'gif-editor',
         route: 'gif-editor',
         titleKey: 'tools.gifEditor.title',
