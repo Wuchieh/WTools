@@ -333,10 +333,21 @@ function onDrag(e: MouseEvent | TouchEvent) {
         nh = 100 - ny;
     }
 
-    if (store.aspectRatio && dragMode === 'resize' && (resizeHandle === 'n' || resizeHandle === 's')) {
-        nh = nw / store.aspectRatio;
+    if (store.aspectRatio && dragMode === 'resize') {
+        // Enforce aspect ratio for all resize handles (n, s, e, w, nw, ne, sw, se)
+        if (resizeHandle.includes('e') || resizeHandle.includes('w')) {
+            // Horizontal handles: derive height from width
+            nh = nw / store.aspectRatio;
+        } else {
+            // Vertical handles or corners: derive width from height
+            nw = nh * store.aspectRatio;
+        }
+        // Clamp to bounds after aspect ratio adjustment
         if (ny + nh > 100) {
             ny = 100 - nh;
+        }
+        if (nx + nw > 100) {
+            nx = 100 - nw;
         }
     }
 
