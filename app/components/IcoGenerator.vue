@@ -7,7 +7,7 @@
                     variant="tonal"
                     rounded
                 >
-                    <v-icon icon="mdi-favicon" />
+                    <v-icon icon="mdi-star" />
                 </v-avatar>
             </template>
             <v-card-title>{{ $t('ico.title') }}</v-card-title>

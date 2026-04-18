@@ -7,7 +7,7 @@
                     variant="tonal"
                     rounded
                 >
-                    <v-icon icon="mdi-gif" />
+                    <v-icon icon="mdi-file-gif-box" />
                 </v-avatar>
             </template>
             <v-card-title>{{ $t('gif.title') }}</v-card-title>
