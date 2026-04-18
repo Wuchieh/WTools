@@ -97,7 +97,6 @@ useSeoMeta({
     twitterImage: '/og/timer.png',
 });
 
-const _totalSeconds = ref(0);
 const remaining = ref(0);
 const running = ref(false);
 const alarm = ref(false);
@@ -105,9 +104,12 @@ const setHours = ref(0);
 const setMinutes = ref(5);
 const setSeconds = ref(0);
 let interval: null | ReturnType<typeof setInterval> = null;
+let targetTime = 0; // Unix ms when timer should reach 0
+let audioCtx: AudioContext | null = null;
+let beepTimeout: null | ReturnType<typeof setTimeout> = null;
 
 const display = computed(() => {
-    const s = remaining.value;
+    const s = Math.max(0, Math.floor(remaining.value));
     const h = Math.floor(s / 3600);
     const m = Math.floor((s % 3600) / 60);
     const sec = s % 60;
@@ -122,31 +124,83 @@ function pause() {
     }
 }
 
+function playBeep(ctx: AudioContext) {
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.type = 'sine';
+    osc.frequency.value = 880;
+    gain.gain.setValueAtTime(0.3, ctx.currentTime);
+    osc.start(ctx.currentTime);
+    osc.stop(ctx.currentTime + 0.25);
+}
+
 function reset() {
     pause();
+    stopAlarmSound();
+    targetTime = 0;
     remaining.value = 0;
     alarm.value = false;
 }
 
+function scheduleNextBeep(ctx: AudioContext) {
+    beepTimeout = setTimeout(() => {
+        if (!alarm.value) return; // stopped
+        playBeep(ctx);
+        scheduleNextBeep(ctx);
+    }, 500);
+}
+
 function start() {
-    if (remaining.value === 0) {
+    if (running.value) return;
+
+    if (remaining.value <= 0) {
         remaining.value = setHours.value * 3600 + setMinutes.value * 60 + setSeconds.value;
     }
+    // Use wall-clock time for accuracy: target is now + remaining seconds
+    targetTime = Date.now() + remaining.value * 1000;
     running.value = true;
     alarm.value = false;
+    stopAlarmSound(); // clean up any previous alarm
+
     interval = setInterval(() => {
-        if (remaining.value > 0) remaining.value--;
-        else {
+        // Recalculate from wall-clock to avoid setInterval drift
+        remaining.value = Math.max(0, (targetTime - Date.now()) / 1000);
+        if (remaining.value <= 0) {
+            remaining.value = 0;
             pause();
             alarm.value = true;
+            startAlarmSound();
         }
-    }, 1000);
+    }, 100); // Update frequently for smooth display
+}
+
+function startAlarmSound() {
+    try {
+        if (!audioCtx) {
+            audioCtx = new AudioContext();
+        }
+        playBeep(audioCtx);
+        scheduleNextBeep(audioCtx);
+    } catch {
+        // Audio not supported
+    }
+}
+
+function stopAlarmSound() {
+    if (beepTimeout) {
+        clearTimeout(beepTimeout);
+        beepTimeout = null;
+    }
+    if (audioCtx) {
+        audioCtx.close();
+        audioCtx = null;
+    }
 }
 
 onUnmounted(() => {
-    if (interval) {
-        clearInterval(interval);
-        interval = null;
-    }
+    if (interval) clearInterval(interval);
+    stopAlarmSound();
 });
 </script>
