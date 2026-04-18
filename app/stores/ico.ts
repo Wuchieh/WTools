@@ -101,7 +101,9 @@ export const useIcoStore = defineStore('ico', () => {
         for (const f of files.value.filter((f) => f.status === 'success' && f.blobs)) {
             const base = f.file.name.replace(/\.[^/.]+$/, '');
             f.blobs!.forEach((blob, i) => {
-                zip.file(`${base}_${sizes.value[i]}x${sizes.value[i]}.png`, blob);
+                const size = sizes.value[i];
+                if (size === undefined || blob.size === 0) return;
+                zip.file(`${base}_${size}x${size}.png`, blob);
             });
         }
         const content = await zip.generateAsync({ type: 'blob' });
