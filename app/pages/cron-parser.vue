@@ -46,12 +46,12 @@
                                     :key="k"
                                 >
                                     <td
-                                        class="font-weight-bold"
+                                        class="font-weight-bold nowrap"
                                         style="width:100px"
                                     >
                                         {{ k }}
                                     </td>
-                                    <td class="font-monospace">
+                                    <td class="font-monospace nowrap">
                                         {{ v }}
                                     </td>
                                 </tr>
@@ -203,3 +203,9 @@ function parseField(field: string, min: number, max: number): number[] {
     return [...new Set(values)].sort((a, b) => a - b);
 }
 </script>
+
+<style scoped>
+.nowrap {
+    white-space: nowrap;
+}
+</style>
