@@ -62,6 +62,10 @@
                             max-height="250"
                             :src="f.preview"
                             cover
+                            :style="{
+                                transform: `rotate(${f.rotation}deg) scaleX(${f.flipH ? -1 : 1}) scaleY(${f.flipV ? -1 : 1})`,
+                                transition: f.status === 'pending' ? 'transform 0.2s' : 'none'
+                            }"
                         />
                         <v-card-text>
                             <div class="text-caption">
