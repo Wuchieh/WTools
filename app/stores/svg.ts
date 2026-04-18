@@ -68,8 +68,17 @@ export const useSvgStore = defineStore('svg', () => {
             const img = new Image();
             img.onload = () => {
                 const canvas = document.createElement('canvas');
-                canvas.width = width.value ?? img.width;
-                canvas.height = height.value ?? img.height;
+                // Auto-calculate the other dimension if only one is set, to maintain aspect ratio
+                if (width.value && !height.value) {
+                    canvas.width = width.value;
+                    canvas.height = Math.round((img.height * width.value) / img.width);
+                } else if (height.value && !width.value) {
+                    canvas.height = height.value;
+                    canvas.width = Math.round((img.width * height.value) / img.height);
+                } else {
+                    canvas.width = width.value ?? img.width;
+                    canvas.height = height.value ?? img.height;
+                }
                 const ctx = canvas.getContext('2d');
                 if (!ctx) {
                     reject(new Error('Canvas context not available'));
