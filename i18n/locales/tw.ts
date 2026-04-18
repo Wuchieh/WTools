@@ -562,6 +562,9 @@ export default {
             desc: '統計文字的字數、字元數與行數。',
             title: '字數統計',
         },
+        fileExceededMaxFilesSingle: '{name}: 超過最大檔案數量（上限：{max}）',
+        fileExceededMaxFiles: '{name}: 超過最大檔案數量（上限：{max}）',
+        fileTooLarge: '{name}: 檔案過大（{size} > {max}）',
     },
     unit: {
         category: '類別',

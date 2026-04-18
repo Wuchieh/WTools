@@ -262,12 +262,18 @@ async function processFiles(fileList: File[] | FileList): Promise<void> {
 
     for (const file of files) {
         if (props.maxFiles && props.modelValue.length + validFiles.length >= props.maxFiles) {
-            errors.push(`${file.name}: 超過最大檔案數量 (${props.maxFiles})`);
+            errors.push(props.maxFiles === 1
+                ? t('tools.fileExceededMaxFilesSingle', { name: file.name })
+                : t('tools.fileExceededMaxFiles', { name: file.name, max: props.maxFiles }));
             continue;
         }
 
         if (props.maxSize && file.size > props.maxSize) {
-            errors.push(`${file.name}: 檔案過大 (${formatBytes(file.size)} > ${formatBytes(props.maxSize)})`);
+            errors.push(t('tools.fileTooLarge', {
+                name: file.name,
+                size: formatBytes(file.size),
+                max: formatBytes(props.maxSize),
+            }));
             continue;
         }
 

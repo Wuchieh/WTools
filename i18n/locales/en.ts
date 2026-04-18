@@ -530,6 +530,9 @@ export default {
             description: 'Count words, characters and lines in text.',
             title: 'Word Counter',
         },
+        fileExceededMaxFilesSingle: '{name}: Exceeds maximum file count (max: {max})',
+        fileExceededMaxFiles: '{name}: Exceeds maximum file count (max: {max})',
+        fileTooLarge: '{name}: File too large ({size} > {max})',
     },
     unit: {
         category: 'Category',
