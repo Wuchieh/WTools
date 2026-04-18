@@ -61,11 +61,13 @@
                             class="bg-grey-lighten-3"
                             max-height="250"
                             :src="f.preview"
-                            cover
                             :style="{
-                                transform: `rotate(${f.rotation}deg) scaleX(${f.flipH ? -1 : 1}) scaleY(${f.flipV ? -1 : 1})`,
-                                transition: f.status === 'pending' ? 'transform 0.2s' : 'none'
+                                transform: `rotate(${f.rotation}deg)
+                                    scaleX(${f.flipH ? -1 : 1})
+                                    scaleY(${f.flipV ? -1 : 1})`,
+                                transition: f.status === 'pending' ? 'transform 0.2s' : 'none',
                             }"
+                            cover
                         />
                         <v-card-text>
                             <div class="text-caption">
@@ -176,7 +178,7 @@ const formats = [
 ];
 
 function handleFiles(files: File | File[]) {
-    const fileArray = Array.isArray(files) ? files : (files ? [files] : []);
+    const fileArray = Array.isArray(files) ? files : files ? [files] : [];
     if (fileArray.length === 0) {
         store.clearAll();
         return;

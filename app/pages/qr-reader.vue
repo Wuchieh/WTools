@@ -165,7 +165,7 @@ async function startCamera() {
             videoEl.value.srcObject = stream;
             scanCamera();
         }
-    } catch (err) {
+    } catch {
         showCamera.value = false;
         error.value = t('qrreader.cameraPermissionDenied');
     }
