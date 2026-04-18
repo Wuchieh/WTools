@@ -1,16 +1,3 @@
-import { antfu } from '@antfu/eslint-config';
-import { createBaseConfigs } from '@kikiutils/eslint-config/base';
-import { createStyleFilesConfigs } from '@kikiutils/eslint-config/style';
-import { createVueConfig } from '@kikiutils/eslint-config/vue';
+import { createConfig } from '@kikiutils/eslint-config';
 
-export default antfu(
-    {
-        formatters: { css: true },
-        ignores: ['public/animation-btn/*.json'],
-        typescript: true,
-        vue: true,
-    },
-    createBaseConfigs(),
-    createStyleFilesConfigs(),
-    createVueConfig(),
-);
+export default createConfig('node', { ignores: ['app/composables/swag/**/*'] });
