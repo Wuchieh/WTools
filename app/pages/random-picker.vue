@@ -21,14 +21,20 @@
                             :placeholder="$t('random.placeholder')"
                             border
                         />
-                        <v-slider
-                            v-model="pickCount"
-                            class="mb-4"
-                            :label="$t('random.pickCount', { v: pickCount })"
-                            :max="Math.max(1, items.length)"
-                            :min="1"
-                            thumb-label
-                        />
+                        <v-row class="mb-4">
+                            <v-col cols="12">
+                                <div class="text-body-2 mb-1">
+                                    {{ $t('random.pickCount', { v: pickCount }) }}
+                                </div>
+                                <v-slider
+                                    v-model="pickCount"
+                                    step="1"
+                                    :max="Math.max(1, items.length)"
+                                    :min="1"
+                                    thumb-label
+                                />
+                            </v-col>
+                        </v-row>
                         <v-btn
                             color="primary"
                             :disabled="items.length < pickCount"
@@ -74,7 +80,8 @@ const items = computed(() => itemsText.value.split('\n').map((s) => s.trim()).fi
 function pick() {
     const pool = [...items.value];
     const result: string[] = [];
-    for (let i = 0; i < Math.min(pickCount.value, pool.length); i++) {
+    const t = Math.min(pickCount.value, pool.length);
+    for (let i = 0; i < t; i++) {
         const idx = Math.floor(Math.random() * pool.length);
         const picked_item = pool.splice(idx, 1)[0];
         if (picked_item !== undefined) {
