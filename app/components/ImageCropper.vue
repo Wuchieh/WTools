@@ -351,6 +351,7 @@ function onDrag(e: MouseEvent | TouchEvent) {
 function startCrop(e: MouseEvent | TouchEvent, f: CropFile) {
     dragging = true;
     dragFile = f;
+    dragMode = 'move';
     cropStart = {
         h: f.crop.height,
         w: f.crop.width,
