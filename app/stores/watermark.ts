@@ -54,10 +54,10 @@ export const useWatermarkStore = defineStore('watermark', () => {
 
     function applyWatermarkToCanvas(ctx: CanvasRenderingContext2D, w: number, h: number) {
         ctx.save();
-        ctx.globalAlpha = opacity.value;
         ctx.font = `${fontSize.value}px sans-serif`;
-        ctx.fillStyle = fontColor.value;
-        ctx.strokeStyle = 'rgba(0,0,0,0.5)';
+        // Use consistent opacity for both stroke and fill by incorporating
+        // it directly into the color alpha channels
+        ctx.strokeStyle = hexToRgba(fontColor.value, opacity.value * 0.5);
         ctx.lineWidth = 2;
         const text = watermarkText.value;
         const metrics = ctx.measureText(text);
@@ -81,13 +81,30 @@ export const useWatermarkStore = defineStore('watermark', () => {
             tx = (w - tw) / 2;
             ty = (h + th) / 2;
         }
+        ctx.fillStyle = hexToRgba(fontColor.value, opacity.value);
         ctx.strokeText(text, tx, ty);
         ctx.fillText(text, tx, ty);
         ctx.restore();
     }
 
+    function hexToRgba(hex: string, alpha: number): string {
+        const r = Number.parseInt(hex.slice(1, 3), 16);
+        const g = Number.parseInt(hex.slice(3, 5), 16);
+        const b = Number.parseInt(hex.slice(5, 7), 16);
+        return `rgba(${r},${g},${b},${alpha})`;
+    }
+
     async function convertFiles() {
         if (isConverting.value) return;
+        if (!watermarkText.value.trim()) {
+            // Show error on first file
+            const firstFile = files.value[0];
+            if (firstFile) {
+                firstFile.status = 'error';
+                firstFile.error = 'Watermark text cannot be empty';
+            }
+            return;
+        }
         isConverting.value = true;
         for (const f of files.value) {
             if (f.status === 'converting') continue;
