@@ -89,11 +89,12 @@ useHead({
             name: 'description',
         },
     ],
-    title: t('cron.title'),
-
     ogImage: '/og/cron-parser.png',
+
+    title: t('cron.title'),
     twitterCard: 'summary_large_image',
-    twitterImage: '/og/cron-parser.png'});
+    twitterImage: '/og/cron-parser.png',
+});
 
 const expression = ref('');
 const error = ref('');

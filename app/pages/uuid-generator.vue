@@ -103,11 +103,12 @@ useHead({
             name: 'description',
         },
     ],
-    title: t('uuid.title'),
-
     ogImage: '/og/uuid-generator.png',
+
+    title: t('uuid.title'),
     twitterCard: 'summary_large_image',
-    twitterImage: '/og/uuid-generator.png'});
+    twitterImage: '/og/uuid-generator.png',
+});
 
 const version = ref('v4');
 const generated = ref('');

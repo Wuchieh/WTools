@@ -1,7 +1,7 @@
 export default {
     base64: {
-        copy: '複製',
         copied: '已複製到剪貼簿！',
+        copy: '複製',
         copyFailed: '複製失敗',
         decode: '解碼',
         encode: '編碼',
@@ -45,8 +45,8 @@ export default {
         title: '進位計算器',
     },
     color: {
-        copy: '複製',
         copied: '已複製到剪貼簿！',
+        copy: '複製',
         copyFailed: '複製失敗',
         palette: '調色盤',
         preview: '預覽',
@@ -111,8 +111,8 @@ export default {
     description: '在瀏覽器中輕鬆安全地將您的圖片轉換為 WebP 格式。',
     encDecText: {
         cipher: '加密法',
-        copy: '複製',
         copied: '已複製到剪貼簿！',
+        copy: '複製',
         copyFailed: '複製失敗',
         decrypt: '解密',
         encrypt: '加密',
@@ -148,8 +148,8 @@ export default {
         title: 'GIF 編輯器',
     },
     hash: {
-        copy: '複製',
         copied: '已複製到剪貼簿！',
+        copy: '複製',
         copyFailed: '複製失敗',
         generate: '產生',
         input: '輸入文字',
@@ -157,10 +157,10 @@ export default {
         title: 'Hash 產生器',
     },
     hashChecker: {
-        copy: '複製',
-        copied: '已複製到剪貼簿！',
-        copyFailed: '複製失敗',
         compute: '計算',
+        copied: '已複製到剪貼簿！',
+        copy: '複製',
+        copyFailed: '複製失敗',
         selectFiles: '選擇檔案',
         subtitle: '計算檔案的 MD5、SHA1、SHA256 等 Hash 值。',
         title: 'Hash 校驗器',
@@ -178,8 +178,8 @@ export default {
     },
     home: '首頁',
     html: {
-        copy: '複製',
         copied: '已複製到剪貼簿！',
+        copy: '複製',
         copyFailed: '複製失敗',
         escape: 'Escape',
         input: '輸入',
@@ -195,8 +195,8 @@ export default {
         title: 'ICO 產生器',
     },
     jsonFormatter: {
-        copy: '複製',
         copied: '已複製到剪貼簿！',
+        copy: '複製',
         copyFailed: '複製失敗',
         format: '格式化',
         input: '輸入 JSON',
@@ -209,8 +209,8 @@ export default {
     },
     jsonYaml: {
         convert: '轉換',
-        copy: '複製',
         copied: '已複製到剪貼簿！',
+        copy: '複製',
         copyFailed: '複製失敗',
         json2yaml: 'JSON → YAML',
         subtitle: 'JSON 與 YAML 格式互轉。',
@@ -230,8 +230,8 @@ export default {
         title: 'JWT 解碼器',
     },
     lorem: {
-        copy: '複製',
         copied: '已複製到剪貼簿！',
+        copy: '複製',
         count: '數量 ({v})',
         generate: '產生',
         stepConfigure: '設定',
@@ -258,6 +258,8 @@ export default {
         selectedImages: '已選圖片',
     },
     pwd: {
+        copied: '已複製到剪貼簿！',
+        copyFailed: '複製失敗',
         fair: '中等',
         generate: '產生',
         good: '良好',
@@ -271,8 +273,6 @@ export default {
         title: '密碼產生器',
         uppercase: '大寫字母',
         weak: '弱',
-        copied: '已複製到剪貼簿！',
-        copyFailed: '複製失敗',
     },
     qr: {
         download: '下載',
@@ -285,8 +285,8 @@ export default {
         title: 'QR 產生器',
     },
     qrreader: {
-        copy: '複製',
         copied: '已複製到剪貼簿！',
+        copy: '複製',
         copyFailed: '複製失敗',
         notFound: '找不到 QR Code',
         selectImage: '選擇圖片',
@@ -334,14 +334,14 @@ export default {
         title: '句子計數',
     },
     slug: {
+        copied: '已複製到剪貼簿！',
+        copyFailed: '複製失敗',
         generate: '產生',
         input: '輸入文字',
         lowercase: '轉小寫',
         strict: '嚴格模式',
         subtitle: '將文字轉為 URL 友善的 slug。',
         title: 'Slug 產生器',
-        copied: '已複製到剪貼簿！',
-        copyFailed: '複製失敗',
     },
     svg: {
         convert: '轉換',
@@ -370,8 +370,8 @@ export default {
         title: '計時器',
     },
     timestamp: {
-        copy: '複製',
         copied: '已複製到剪貼簿！',
+        copy: '複製',
         copyFailed: '複製失敗',
         subtitle: 'Unix 時間戳記與日期格式轉換。',
         timestamp: '時間戳記',
@@ -577,8 +577,8 @@ export default {
         selectFiles: '選擇檔案',
     },
     urlenc: {
-        copy: '複製',
         copied: '已複製到剪貼簿！',
+        copy: '複製',
         copyFailed: '複製失敗',
         decode: '解碼',
         encode: '編碼',
@@ -589,12 +589,12 @@ export default {
     },
     uuid: {
         clearHistory: '清除歷史',
+        copied: '已複製到剪貼簿！',
+        copyFailed: '複製失敗',
         generate: '產生',
         subtitle: '產生 UUID v4 隨機碼與 v7 時間戳版本。',
         title: 'UUID 產生器',
         version: '版本',
-        copied: '已複製到剪貼簿！',
-        copyFailed: '複製失敗',
     },
     watermark: {
         apply: '加入浮水印',

@@ -119,11 +119,12 @@ useHead({
             name: 'description',
         },
     ],
-    title: t('jwt.title'),
-
     ogImage: '/og/jwt-decoder.png',
+
+    title: t('jwt.title'),
     twitterCard: 'summary_large_image',
-    twitterImage: '/og/jwt-decoder.png'});
+    twitterImage: '/og/jwt-decoder.png',
+});
 
 const input = ref('');
 const tab = ref('header');

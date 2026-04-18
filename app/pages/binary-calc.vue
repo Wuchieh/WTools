@@ -71,11 +71,12 @@ useHead({
             name: 'description',
         },
     ],
-    title: t('binary.title'),
-
     ogImage: '/og/binary-calc.png',
+
+    title: t('binary.title'),
     twitterCard: 'summary_large_image',
-    twitterImage: '/og/binary-calc.png'});
+    twitterImage: '/og/binary-calc.png',
+});
 
 const input = ref('255');
 const fromBase = ref(10);

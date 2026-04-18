@@ -101,13 +101,14 @@ useHead({
         {
             content: t('base64File.subtitle'),
             name: 'description',
-        }
+        },
     ],
-    title: t('base64File.title'),
-
     ogImage: '/og/base64-file.png',
+
+    title: t('base64File.title'),
     twitterCard: 'summary_large_image',
-    twitterImage: '/og/base64-file.png'});
+    twitterImage: '/og/base64-file.png',
+});
 
 const mode = ref<'decode' | 'encode'>('encode');
 const file = ref<File[] | null>(null);

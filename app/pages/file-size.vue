@@ -45,13 +45,14 @@ useHead({
         {
             content: t('fileSize.subtitle'),
             name: 'description',
-        }
+        },
     ],
-    title: t('fileSize.title'),
-
     ogImage: '/og/file-size.png',
+
+    title: t('fileSize.title'),
     twitterCard: 'summary_large_image',
-    twitterImage: '/og/file-size.png'});
+    twitterImage: '/og/file-size.png',
+});
 
 const bytes = ref(1024);
 const units = [

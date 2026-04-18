@@ -86,11 +86,12 @@ useHead({
             name: 'description',
         },
     ],
-    title: t('qrreader.title'),
-
     ogImage: '/og/qr-reader.png',
+
+    title: t('qrreader.title'),
     twitterCard: 'summary_large_image',
-    twitterImage: '/og/qr-reader.png'});
+    twitterImage: '/og/qr-reader.png',
+});
 
 const file = ref<File[] | null>(null);
 const result = ref('');

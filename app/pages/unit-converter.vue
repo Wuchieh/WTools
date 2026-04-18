@@ -74,11 +74,12 @@ useHead({
             name: 'description',
         },
     ],
-    title: t('unit.title'),
-
     ogImage: '/og/unit-converter.png',
+
+    title: t('unit.title'),
     twitterCard: 'summary_large_image',
-    twitterImage: '/og/unit-converter.png'});
+    twitterImage: '/og/unit-converter.png',
+});
 
 const category = ref('length');
 const fromValue = ref(1);

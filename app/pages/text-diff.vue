@@ -72,13 +72,14 @@ useHead({
         {
             content: t('textDiff.subtitle'),
             name: 'description',
-        }
+        },
     ],
-    title: t('textDiff.title'),
-
     ogImage: '/og/text-diff.png',
+
+    title: t('textDiff.title'),
     twitterCard: 'summary_large_image',
-    twitterImage: '/og/text-diff.png'});
+    twitterImage: '/og/text-diff.png',
+});
 
 const text1 = ref('');
 const text2 = ref('');

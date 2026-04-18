@@ -41,13 +41,14 @@ useHead({
         {
             content: t('markdownPreview.subtitle'),
             name: 'description',
-        }
+        },
     ],
-    title: t('markdownPreview.title'),
-
     ogImage: '/og/markdown-preview.png',
+
+    title: t('markdownPreview.title'),
     twitterCard: 'summary_large_image',
-    twitterImage: '/og/markdown-preview.png'});
+    twitterImage: '/og/markdown-preview.png',
+});
 
 const input = ref('');
 

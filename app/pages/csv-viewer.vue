@@ -76,13 +76,14 @@ useHead({
         {
             content: t('csvViewer.subtitle'),
             name: 'description',
-        }
+        },
     ],
-    title: t('csvViewer.title'),
-
     ogImage: '/og/csv-viewer.png',
+
+    title: t('csvViewer.title'),
     twitterCard: 'summary_large_image',
-    twitterImage: '/og/csv-viewer.png'});
+    twitterImage: '/og/csv-viewer.png',
+});
 
 const file = ref<File[] | null>(null);
 const text = ref('');

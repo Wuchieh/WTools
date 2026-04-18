@@ -95,11 +95,12 @@ useHead({
             name: 'description',
         },
     ],
-    title: t('timer.title'),
-
     ogImage: '/og/timer.png',
+
+    title: t('timer.title'),
     twitterCard: 'summary_large_image',
-    twitterImage: '/og/timer.png'});
+    twitterImage: '/og/timer.png',
+});
 
 const _totalSeconds = ref(0);
 const remaining = ref(0);

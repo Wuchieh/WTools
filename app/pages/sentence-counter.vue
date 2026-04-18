@@ -44,13 +44,14 @@ useHead({
         {
             content: t('sentenceCounter.subtitle'),
             name: 'description',
-        }
+        },
     ],
-    title: t('sentenceCounter.title'),
-
     ogImage: '/og/sentence-counter.png',
+
+    title: t('sentenceCounter.title'),
     twitterCard: 'summary_large_image',
-    twitterImage: '/og/sentence-counter.png'});
+    twitterImage: '/og/sentence-counter.png',
+});
 const text = ref('');
 const count = computed(() => (text.value.match(/[.!?]+/g) || []).length);
 </script>

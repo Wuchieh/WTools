@@ -27,9 +27,10 @@ useHead({
             name: 'description',
         },
     ],
-    title: t('ico.title'),
-
     ogImage: '/og/ico-generator.png',
+
+    title: t('ico.title'),
     twitterCard: 'summary_large_image',
-    twitterImage: '/og/ico-generator.png'});
+    twitterImage: '/og/ico-generator.png',
+});
 </script>

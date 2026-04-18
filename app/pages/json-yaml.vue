@@ -79,13 +79,14 @@ useHead({
         {
             content: t('jsonYaml.subtitle'),
             name: 'description',
-        }
+        },
     ],
-    title: t('jsonYaml.title'),
-
     ogImage: '/og/json-yaml.png',
+
+    title: t('jsonYaml.title'),
     twitterCard: 'summary_large_image',
-    twitterImage: '/og/json-yaml.png'});
+    twitterImage: '/og/json-yaml.png',
+});
 
 const mode = ref('json2yaml');
 const input = ref('');

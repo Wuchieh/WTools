@@ -29,9 +29,10 @@ useHead({
             name: 'description',
         },
     ],
-    title: t('compressor.title'),
-
     ogImage: '/og/image-compress.png',
+
+    title: t('compressor.title'),
     twitterCard: 'summary_large_image',
-    twitterImage: '/og/image-compress.png'});
+    twitterImage: '/og/image-compress.png',
+});
 </script>

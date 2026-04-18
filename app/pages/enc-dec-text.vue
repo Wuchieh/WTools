@@ -93,13 +93,14 @@ useHead({
         {
             content: t('encDecText.subtitle'),
             name: 'description',
-        }
+        },
     ],
-    title: t('encDecText.title'),
-
     ogImage: '/og/enc-dec-text.png',
+
+    title: t('encDecText.title'),
     twitterCard: 'summary_large_image',
-    twitterImage: '/og/enc-dec-text.png'});
+    twitterImage: '/og/enc-dec-text.png',
+});
 
 const cipher = ref('caesar');
 const key = ref(3);

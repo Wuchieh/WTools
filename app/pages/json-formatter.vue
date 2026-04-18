@@ -87,13 +87,14 @@ useHead({
         {
             content: t('jsonFormatter.subtitle'),
             name: 'description',
-        }
+        },
     ],
-    title: t('jsonFormatter.title'),
-
     ogImage: '/og/json-formatter.png',
+
+    title: t('jsonFormatter.title'),
     twitterCard: 'summary_large_image',
-    twitterImage: '/og/json-formatter.png'});
+    twitterImage: '/og/json-formatter.png',
+});
 
 const mode = ref('format');
 const input = ref('');

@@ -86,11 +86,12 @@ useHead({
             name: 'description',
         },
     ],
-    title: t('hash.title'),
-
     ogImage: '/og/hash-generator.png',
+
+    title: t('hash.title'),
     twitterCard: 'summary_large_image',
-    twitterImage: '/og/hash-generator.png'});
+    twitterImage: '/og/hash-generator.png',
+});
 
 const input = ref('');
 const algorithms = ref(['sha256']);

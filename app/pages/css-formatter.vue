@@ -60,13 +60,14 @@ useHead({
         {
             content: t('cssFormatter.subtitle'),
             name: 'description',
-        }
+        },
     ],
-    title: t('cssFormatter.title'),
-
     ogImage: '/og/css-formatter.png',
+
+    title: t('cssFormatter.title'),
     twitterCard: 'summary_large_image',
-    twitterImage: '/og/css-formatter.png'});
+    twitterImage: '/og/css-formatter.png',
+});
 
 const input = ref('');
 const output = ref('');

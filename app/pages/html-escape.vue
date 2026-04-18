@@ -77,11 +77,12 @@ useHead({
             name: 'description',
         },
     ],
-    title: t('html.title'),
-
     ogImage: '/og/html-escape.png',
+
+    title: t('html.title'),
     twitterCard: 'summary_large_image',
-    twitterImage: '/og/html-escape.png'});
+    twitterImage: '/og/html-escape.png',
+});
 
 const mode = ref<'escape' | 'unescape'>('escape');
 const input = ref('');

@@ -81,11 +81,12 @@ useHead({
             name: 'description',
         },
     ],
-    title: t('slug.title'),
-
     ogImage: '/og/slug-generator.png',
+
+    title: t('slug.title'),
     twitterCard: 'summary_large_image',
-    twitterImage: '/og/slug-generator.png'});
+    twitterImage: '/og/slug-generator.png',
+});
 
 const input = ref('');
 const slug = ref('');

@@ -38,9 +38,10 @@ useHead({
             name: 'description',
         },
     ],
-    title: t('title'),
-
     ogImage: '/og/image-to-webp.png',
+
+    title: t('title'),
     twitterCard: 'summary_large_image',
-    twitterImage: '/og/image-to-webp.png'});
+    twitterImage: '/og/image-to-webp.png',
+});
 </script>

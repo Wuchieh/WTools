@@ -63,11 +63,12 @@ useHead({
             name: 'description',
         },
     ],
-    title: t('todo.title'),
-
     ogImage: '/og/todo-list.png',
+
+    title: t('todo.title'),
     twitterCard: 'summary_large_image',
-    twitterImage: '/og/todo-list.png'});
+    twitterImage: '/og/todo-list.png',
+});
 
 const newTask = ref('');
 const tasks = ref<{ done: boolean; text: string }[]>([]);

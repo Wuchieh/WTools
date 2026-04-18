@@ -92,11 +92,12 @@ useHead({
             name: 'description',
         },
     ],
-    title: t('qr.title'),
-
     ogImage: '/og/qr-generator.png',
+
+    title: t('qr.title'),
     twitterCard: 'summary_large_image',
-    twitterImage: '/og/qr-generator.png'});
+    twitterImage: '/og/qr-generator.png',
+});
 
 const input = ref('');
 const format = ref<'image/jpeg' | 'image/png' | 'image/webp'>('image/png');

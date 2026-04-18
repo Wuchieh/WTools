@@ -90,11 +90,12 @@ useHead({
             name: 'description',
         },
     ],
-    title: t('base64.title'),
-
     ogImage: '/og/base64-tool.png',
+
+    title: t('base64.title'),
     twitterCard: 'summary_large_image',
-    twitterImage: '/og/base64-tool.png'});
+    twitterImage: '/og/base64-tool.png',
+});
 
 const mode = ref<'decode' | 'encode'>('encode');
 const input = ref('');

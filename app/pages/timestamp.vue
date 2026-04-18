@@ -70,11 +70,12 @@ useHead({
             name: 'description',
         },
     ],
-    title: t('timestamp.title'),
-
     ogImage: '/og/timestamp.png',
+
+    title: t('timestamp.title'),
     twitterCard: 'summary_large_image',
-    twitterImage: '/og/timestamp.png'});
+    twitterImage: '/og/timestamp.png',
+});
 
 const ts = ref(Math.floor(Date.now() / 1000));
 const formats = [

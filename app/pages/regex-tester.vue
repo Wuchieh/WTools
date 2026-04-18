@@ -105,11 +105,12 @@ useHead({
             name: 'description',
         },
     ],
-    title: t('regex.title'),
-
     ogImage: '/og/regex-tester.png',
+
+    title: t('regex.title'),
     twitterCard: 'summary_large_image',
-    twitterImage: '/og/regex-tester.png'});
+    twitterImage: '/og/regex-tester.png',
+});
 
 const pattern = ref('');
 const text = ref('');

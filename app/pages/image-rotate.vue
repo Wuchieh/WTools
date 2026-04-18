@@ -27,9 +27,10 @@ useHead({
             name: 'description',
         },
     ],
-    title: t('rotate.title'),
-
     ogImage: '/og/image-rotate.png',
+
+    title: t('rotate.title'),
     twitterCard: 'summary_large_image',
-    twitterImage: '/og/image-rotate.png'});
+    twitterImage: '/og/image-rotate.png',
+});
 </script>

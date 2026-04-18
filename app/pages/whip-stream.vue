@@ -29,9 +29,10 @@ useHead({
             name: 'description',
         },
     ],
-    title: t('tools.whipStream.title'),
-
     ogImage: '/og/whip-stream.png',
+
+    title: t('tools.whipStream.title'),
     twitterCard: 'summary_large_image',
-    twitterImage: '/og/whip-stream.png'});
+    twitterImage: '/og/whip-stream.png',
+});
 </script>

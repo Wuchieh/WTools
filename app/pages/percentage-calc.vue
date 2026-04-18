@@ -63,11 +63,12 @@ useHead({
             name: 'description',
         },
     ],
-    title: t('percent.title'),
-
     ogImage: '/og/percentage-calc.png',
+
+    title: t('percent.title'),
     twitterCard: 'summary_large_image',
-    twitterImage: '/og/percentage-calc.png'});
+    twitterImage: '/og/percentage-calc.png',
+});
 
 const mode = ref('whatIsXOfY');
 const a = ref(0);

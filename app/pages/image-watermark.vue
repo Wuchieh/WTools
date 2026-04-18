@@ -27,9 +27,10 @@ useHead({
             name: 'description',
         },
     ],
-    title: t('watermark.title'),
-
     ogImage: '/og/image-watermark.png',
+
+    title: t('watermark.title'),
     twitterCard: 'summary_large_image',
-    twitterImage: '/og/image-watermark.png'});
+    twitterImage: '/og/image-watermark.png',
+});
 </script>

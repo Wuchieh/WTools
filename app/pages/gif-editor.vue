@@ -27,9 +27,10 @@ useHead({
             name: 'description',
         },
     ],
-    title: t('gif.title'),
-
     ogImage: '/og/gif-editor.png',
+
+    title: t('gif.title'),
     twitterCard: 'summary_large_image',
-    twitterImage: '/og/gif-editor.png'});
+    twitterImage: '/og/gif-editor.png',
+});
 </script>

@@ -1,7 +1,7 @@
 export default {
     base64: {
-        copy: 'Copy',
         copied: 'Copied to clipboard!',
+        copy: 'Copy',
         copyFailed: 'Copy failed',
         decode: 'Decode',
         encode: 'Encode',
@@ -45,8 +45,8 @@ export default {
         title: 'Base Converter',
     },
     color: {
-        copy: 'Copy',
         copied: 'Copied to clipboard!',
+        copy: 'Copy',
         copyFailed: 'Copy failed',
         palette: 'Palette',
         preview: 'Preview',
@@ -111,8 +111,8 @@ export default {
     description: 'Convert your images to WebP format easily and securely in your browser.',
     encDecText: {
         cipher: 'Cipher',
-        copy: 'Copy',
         copied: 'Copied to clipboard!',
+        copy: 'Copy',
         copyFailed: 'Copy failed',
         decrypt: 'Decrypt',
         encrypt: 'Encrypt',
@@ -148,8 +148,8 @@ export default {
         title: 'GIF Editor',
     },
     hash: {
-        copy: 'Copy',
         copied: 'Copied to clipboard!',
+        copy: 'Copy',
         copyFailed: 'Copy failed',
         generate: 'Generate',
         input: 'Input Text',
@@ -157,10 +157,10 @@ export default {
         title: 'Hash Generator',
     },
     hashChecker: {
-        copy: 'Copy',
-        copied: 'Copied to clipboard!',
-        copyFailed: 'Copy failed',
         compute: 'Compute',
+        copied: 'Copied to clipboard!',
+        copy: 'Copy',
+        copyFailed: 'Copy failed',
         selectFiles: 'Select Files',
         subtitle: 'Compute MD5, SHA1, SHA256 hashes for files.',
         title: 'Hash Checker',
@@ -178,8 +178,8 @@ export default {
     },
     home: 'Home',
     html: {
-        copy: 'Copy',
         copied: 'Copied to clipboard!',
+        copy: 'Copy',
         copyFailed: 'Copy failed',
         escape: 'Escape',
         input: 'Input',
@@ -195,8 +195,8 @@ export default {
         title: 'ICO Generator',
     },
     jsonFormatter: {
-        copy: 'Copy',
         copied: 'Copied to clipboard!',
+        copy: 'Copy',
         copyFailed: 'Copy failed',
         format: 'Format',
         input: 'Input JSON',
@@ -209,8 +209,8 @@ export default {
     },
     jsonYaml: {
         convert: 'Convert',
-        copy: 'Copy',
         copied: 'Copied to clipboard!',
+        copy: 'Copy',
         copyFailed: 'Copy failed',
         json2yaml: 'JSON → YAML',
         subtitle: 'Convert between JSON and YAML formats.',
@@ -230,8 +230,8 @@ export default {
         title: 'JWT Decoder',
     },
     lorem: {
-        copy: 'Copy',
         copied: 'Copied to clipboard!',
+        copy: 'Copy',
         count: 'Count ({v})',
         generate: 'Generate',
         stepConfigure: 'Configure',
@@ -258,6 +258,8 @@ export default {
         selectedImages: 'Selected Images',
     },
     pwd: {
+        copied: 'Copied to clipboard!',
+        copyFailed: 'Copy failed',
         fair: 'Fair',
         generate: 'Generate',
         good: 'Good',
@@ -271,8 +273,6 @@ export default {
         title: 'Password Generator',
         uppercase: 'Uppercase',
         weak: 'Weak',
-        copied: 'Copied to clipboard!',
-        copyFailed: 'Copy failed',
     },
     qr: {
         download: 'Download',
@@ -285,8 +285,8 @@ export default {
         title: 'QR Generator',
     },
     qrreader: {
-        copy: 'Copy',
         copied: 'Copied to clipboard!',
+        copy: 'Copy',
         copyFailed: 'Copy failed',
         notFound: 'QR Code not found',
         selectImage: 'Select Image',
@@ -334,14 +334,14 @@ export default {
         title: 'Sentence Counter',
     },
     slug: {
+        copied: 'Copied to clipboard!',
+        copyFailed: 'Copy failed',
         generate: 'Generate',
         input: 'Input Text',
         lowercase: 'Lowercase',
         strict: 'Strict Mode',
         subtitle: 'Convert text to URL-friendly slugs.',
         title: 'Slug Generator',
-        copied: 'Copied to clipboard!',
-        copyFailed: 'Copy failed',
     },
     svg: {
         convert: 'Convert',
@@ -370,8 +370,8 @@ export default {
         title: 'Timer',
     },
     timestamp: {
-        copy: 'Copy',
         copied: 'Copied to clipboard!',
+        copy: 'Copy',
         copyFailed: 'Copy failed',
         subtitle: 'Unix timestamp to date format conversion.',
         timestamp: 'Timestamp',
@@ -545,8 +545,8 @@ export default {
         selectFiles: 'Select Files',
     },
     urlenc: {
-        copy: 'Copy',
         copied: 'Copied to clipboard!',
+        copy: 'Copy',
         copyFailed: 'Copy failed',
         decode: 'Decode',
         encode: 'Encode',
@@ -557,12 +557,12 @@ export default {
     },
     uuid: {
         clearHistory: 'Clear History',
+        copied: 'Copied to clipboard!',
+        copyFailed: 'Copy failed',
         generate: 'Generate',
         subtitle: 'Generate UUID v4 random and v7 timestamp versions.',
         title: 'UUID Generator',
         version: 'Version',
-        copied: 'Copied to clipboard!',
-        copyFailed: 'Copy failed',
     },
     watermark: {
         apply: 'Apply Watermark',

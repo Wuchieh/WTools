@@ -27,9 +27,10 @@ useHead({
             name: 'description',
         },
     ],
-    title: t('heic.title'),
-
     ogImage: '/og/image-heic.png',
+
+    title: t('heic.title'),
     twitterCard: 'summary_large_image',
-    twitterImage: '/og/image-heic.png'});
+    twitterImage: '/og/image-heic.png',
+});
 </script>

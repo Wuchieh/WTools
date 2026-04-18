@@ -54,13 +54,14 @@ useHead({
         {
             content: t('wordCounter.subtitle'),
             name: 'description',
-        }
+        },
     ],
-    title: t('wordCounter.title'),
-
     ogImage: '/og/word-counter.png',
+
+    title: t('wordCounter.title'),
     twitterCard: 'summary_large_image',
-    twitterImage: '/og/word-counter.png'});
+    twitterImage: '/og/word-counter.png',
+});
 
 const text = ref('');
 const stats = computed(() => {

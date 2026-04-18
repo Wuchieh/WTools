@@ -63,11 +63,12 @@ useHead({
             name: 'description',
         },
     ],
-    title: t('random.title'),
-
     ogImage: '/og/random-picker.png',
+
+    title: t('random.title'),
     twitterCard: 'summary_large_image',
-    twitterImage: '/og/random-picker.png'});
+    twitterImage: '/og/random-picker.png',
+});
 
 const itemsText = ref('');
 const pickCount = ref(1);
