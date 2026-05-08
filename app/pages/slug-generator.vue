@@ -56,7 +56,7 @@
                             variant="outlined"
                         >
                             <div class="align-center d-flex gap-2">
-                                <code class="flex-grow-1 text-break text-h6">{{ slug }}</code>
+                                <code class="text-break text-h6 grow-1">{{ slug }}</code>
                                 <v-btn
                                     icon="mdi-content-copy"
                                     size="small"

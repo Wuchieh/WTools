@@ -25,7 +25,7 @@
                             <v-chip
                                 v-for="u in units"
                                 :key="u.key"
-                                class="mb-2 mr-2"
+                                class="mr-2 mb-2"
                                 variant="outlined"
                             >
                                 {{ u.key }}: <strong class="ml-1">{{ formatSize(bytes, u.div) }}</strong>

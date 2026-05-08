@@ -24,7 +24,7 @@
                             <v-chip
                                 v-for="fmt in formats"
                                 :key="fmt"
-                                class="mb-2 mr-2"
+                                class="mr-2 mb-2"
                                 variant="outlined"
                                 @click="applyFormat(fmt)"
                             >

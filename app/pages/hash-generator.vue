@@ -58,7 +58,7 @@
                                         {{ r.alg.toUpperCase() }}
                                     </div>
                                     <div class="align-center d-flex gap-2">
-                                        <code class="flex-grow-1 text-break">{{ r.hash }}</code>
+                                        <code class="text-break grow-1">{{ r.hash }}</code>
                                         <v-btn
                                             icon="mdi-content-copy"
                                             size="x-small"

@@ -63,7 +63,7 @@
             </v-card-item>
             <v-card-text>
                 <!-- Video preview -->
-                <div class="video-wrapper mb-3 rounded">
+                <div class="video-wrapper mb-3 rounded-sm">
                     <video
                         ref="localVideoRef"
                         class="local-video"

@@ -75,7 +75,7 @@
                             <v-chip
                                 v-for="(m, i) in matches"
                                 :key="i"
-                                class="mb-2 mr-2"
+                                class="mr-2 mb-2"
                                 color="success"
                             >
                                 {{ m }}
@@ -85,7 +85,7 @@
                         <!-- eslint-disable vue/no-v-html -->
                         <div
                             v-if="highlightedText"
-                            class="bg-grey-lighten-4 pa-3 text-break mt-4 rounded"
+                            class="bg-grey-lighten-4 pa-3 text-break mt-4 rounded-sm"
                             v-html="highlightedText"
                         />
                         <!-- eslint-enable vue/no-v-html -->

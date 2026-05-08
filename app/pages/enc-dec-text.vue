@@ -128,10 +128,10 @@ function process() {
     const step = mode.value === 'encrypt' ? k : 26 - k;
     let result = '';
     for (const ch of input.value) {
-        if (ch.match(/[a-z]/)) {
+        if (/[a-z]/.test(ch)) {
             const code = ((ch.charCodeAt(0) - 97 + step) % 26) + 97;
             result += String.fromCharCode(code);
-        } else if (ch.match(/[A-Z]/)) {
+        } else if (/[A-Z]/.test(ch)) {
             const code = ((ch.charCodeAt(0) - 65 + step) % 26) + 65;
             result += String.fromCharCode(code);
         } else {

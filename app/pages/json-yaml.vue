@@ -137,11 +137,11 @@ function yamlToJson(yaml: string): string {
         let i = start;
         while (i < lines.length) {
             const line = lines[i];
-            if (!line || !line.trim() || line.match(/^\s*#/)) {
+            if (!line || !line.trim() || /^\s*#/.test(line)) {
                 i++;
                 continue;
             }
-            if (line.match(/^\s*-\s*(.+)/)) {
+            if (/^\s*-\s*.+/.test(line)) {
                 const items: unknown[] = [];
                 while (i < lines.length && lines[i]?.match(/^\s*-\s*(.+)/)) {
                     const match = lines[i]?.match(/^\s*-\s*(.+)/);

@@ -487,79 +487,79 @@ onBeforeUnmount(() => {
 
 <style scoped>
 .crop-wrapper {
-  position: relative;
-  width: 100%;
-  margin: 0 auto;
-  user-select: none;
+    position: relative;
+    width: 100%;
+    margin: 0 auto;
+    user-select: none;
 }
 
 .crop-image {
-  display: block;
-  width: 100%;
-  height: auto;
-  max-height: 400px;
-  object-fit: contain;
-  pointer-events: none;
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 400px;
+    object-fit: contain;
+    pointer-events: none;
 }
 
 .crop-overlay {
-  position: absolute;
-  border: 2px solid white;
-  box-shadow: 0 0 0 9999px rgba(0,0,0,0.5);
-  cursor: move;
+    position: absolute;
+    border: 2px solid white;
+    box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.5);
+    cursor: move;
 }
 
 .resize-handle {
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  background: white;
-  border: 1px solid #888;
-  border-radius: 2px;
-  z-index: 10;
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: white;
+    border: 1px solid #888;
+    border-radius: 2px;
+    z-index: 10;
 }
 .resize-handle.nw {
-  top: -5px;
-  left: -5px;
-  cursor: nw-resize;
+    top: -5px;
+    left: -5px;
+    cursor: nw-resize;
 }
 .resize-handle.ne {
-  top: -5px;
-  right: -5px;
-  cursor: ne-resize;
+    top: -5px;
+    right: -5px;
+    cursor: ne-resize;
 }
 .resize-handle.sw {
-  bottom: -5px;
-  left: -5px;
-  cursor: sw-resize;
+    bottom: -5px;
+    left: -5px;
+    cursor: sw-resize;
 }
 .resize-handle.se {
-  bottom: -5px;
-  right: -5px;
-  cursor: se-resize;
+    bottom: -5px;
+    right: -5px;
+    cursor: se-resize;
 }
 .resize-handle.n {
-  top: -5px;
-  left: 50%;
-  transform: translateX(-50%);
-  cursor: n-resize;
+    top: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    cursor: n-resize;
 }
 .resize-handle.s {
-  bottom: -5px;
-  left: 50%;
-  transform: translateX(-50%);
-  cursor: s-resize;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    cursor: s-resize;
 }
 .resize-handle.e {
-  right: -5px;
-  top: 50%;
-  transform: translateY(-50%);
-  cursor: e-resize;
+    right: -5px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: e-resize;
 }
 .resize-handle.w {
-  left: -5px;
-  top: 50%;
-  transform: translateY(-50%);
-  cursor: w-resize;
+    left: -5px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: w-resize;
 }
 </style>

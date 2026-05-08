@@ -20,7 +20,7 @@ function useLongTouch(callback: (e: MouseEvent) => void, touchDuration: number =
     let timeout: NodeJS.Timeout | number;
     return {
         onPointerdown(e: MouseEvent) {
-            timeout = setTimeout(() => callback(e), touchDuration);
+            timeout = setTimeout(callback, touchDuration, e);
         },
         onPointerout() {
             clearTimeout(timeout);

@@ -30,7 +30,7 @@
                 thumb-label
             />
 
-            <div class="text-subtitle-2 mb-2 mt-4">
+            <div class="text-subtitle-2 mt-4 mb-2">
                 {{ $t('preview.concurrency') }}: {{ store.concurrency }}
             </div>
             <v-slider
@@ -45,7 +45,7 @@
         </div>
 
         <div class="position-relative">
-            <div class="image-counter text-caption rounded bg-black px-2 py-1 text-white opacity-70">
+            <div class="image-counter text-caption rounded-sm bg-black px-2 py-1 text-white opacity-70">
                 {{ currentIndex + 1 }} / {{ store.images.length }}
             </div>
 
@@ -84,7 +84,7 @@
                                 </div>
                                 <div
                                     class="image-info pa-2 text-truncate mx-4 mb-4
-                                 rounded bg-black text-white opacity-70"
+                                 rounded-sm bg-black text-white opacity-70"
                                 >
                                     {{ img.file.name }} ({{ (img.file.size / 1024).toFixed(1) }} KB)
                                 </div>

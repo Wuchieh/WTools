@@ -67,7 +67,7 @@
                             <v-chip
                                 v-for="(r, i) in nextRuns"
                                 :key="i"
-                                class="mb-2 mr-2"
+                                class="mr-2 mb-2"
                                 size="small"
                             >
                                 {{ r }}

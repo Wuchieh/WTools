@@ -67,12 +67,12 @@
                             v-model="tab"
                         >
                             <v-window-item value="header">
-                                <pre class="bg-grey-lighten-4 pa-3 rounded">
+                                <pre class="bg-grey-lighten-4 pa-3 rounded-sm">
                                     {{ JSON.stringify(decoded.header, null, 2) }}
                                 </pre>
                             </v-window-item>
                             <v-window-item value="payload">
-                                <pre class="bg-grey-lighten-4 pa-3 rounded">
+                                <pre class="bg-grey-lighten-4 pa-3 rounded-sm">
                                     {{ JSON.stringify(decoded.payload, null, 2) }}
                                 </pre>
                                 <div
@@ -91,7 +91,7 @@
                                 </div>
                             </v-window-item>
                             <v-window-item value="signature">
-                                <pre class="bg-grey-lighten-4 pa-3 rounded">{{ decoded.signature }}</pre>
+                                <pre class="bg-grey-lighten-4 pa-3 rounded-sm">{{ decoded.signature }}</pre>
                             </v-window-item>
                         </v-window>
 
